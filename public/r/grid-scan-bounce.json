@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-scan-bounce",
+  "title": "Matrix bounce",
+  "description": "A bright row scans down and back up without moving the dots.",
+  "files": [
+    {
+      "path": "registry/loaders/grid-scan-bounce.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type GridScanBounceProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function GridScanBounce({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: GridScanBounceProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"grid-scan-bounce-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"grid-scan-bounce-loader-grid\">\n        {Array.from({ length: 16 }, (_, i) => (\n          <span\n            key={i}\n            style={{\n              animationName: `grid-scan-bounce-loader-row-${Math.floor(i / 4)}`,\n            }}\n          />\n        ))}\n      </span>\n      <style>{`\n        .grid-scan-bounce-loader { display: inline-flex; flex-shrink: 0; }\n        .grid-scan-bounce-loader-grid { display: grid; width: 100%; height: 100%; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); gap: 8%; }\n        .grid-scan-bounce-loader-grid > span { background: currentColor; border-radius: 50%; opacity: .16; animation-duration: var(--loader-duration); animation-timing-function: ease-in-out; animation-iteration-count: infinite; }\n        @keyframes grid-scan-bounce-loader-row-0 { 0.0000% { opacity: 1; } 12.0000% { opacity: 0.16; } 88.0000% { opacity: 0.16; } 100.0000% { opacity: 1; } }\n        @keyframes grid-scan-bounce-loader-row-1 { 0.0000% { opacity: 0.16; } 4.6667% { opacity: 0.16; } 16.6667% { opacity: 1; } 28.6667% { opacity: 0.16; } 71.3333% { opacity: 0.16; } 83.3333% { opacity: 1; } 95.3333% { opacity: 0.16; } 100.0000% { opacity: 0.16; } }\n        @keyframes grid-scan-bounce-loader-row-2 { 0.0000% { opacity: 0.16; } 21.3333% { opacity: 0.16; } 33.3333% { opacity: 1; } 45.3333% { opacity: 0.16; } 54.6667% { opacity: 0.16; } 66.6667% { opacity: 1; } 78.6667% { opacity: 0.16; } 100.0000% { opacity: 0.16; } }\n        @keyframes grid-scan-bounce-loader-row-3 { 0.0000% { opacity: 0.16; } 38.0000% { opacity: 0.16; } 50.0000% { opacity: 1; } 62.0000% { opacity: 0.16; } 100.0000% { opacity: 0.16; } }\n        @media (prefers-reduced-motion: reduce) { .grid-scan-bounce-loader-grid > span { animation: none !important; opacity: .65; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "grid"
+  ],
+  "type": "registry:ui"
+}

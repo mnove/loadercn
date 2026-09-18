@@ -127,3 +127,22 @@
     @apply font-sans;
     }
 }
+/* A warm paper surface keeps the motion in focus. */
+:root:not(.dark) {
+  --background: oklch(0.985 0.003 85);
+  --card: oklch(0.994 0.002 85);
+  --primary: oklch(0.60 0.19 41);
+  --primary-foreground: oklch(0.99 0 0);
+}
+
+.preview-surface {
+  background-image: radial-gradient(var(--border) 0.6px, transparent 0.6px);
+  background-size: 12px 12px;
+}
+.loader-gallery[data-color="orange"] .preview-loader { color: var(--primary); }
+.loader-gallery[data-color="blue"] .preview-loader { color: #3b82f6; }
+.animations-paused .preview-loader * { animation-play-state: paused !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

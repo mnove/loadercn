@@ -1,19 +1,20 @@
-import { Button } from "@/components/ui/button"
+import { readFile } from "node:fs/promises"
+import path from "node:path"
+import registry from "@/registry.json"
+import { LoaderGallery } from "@/components/loader-gallery"
 
-export default function Page() {
-  return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+export default async function Page() {
+  const items = await Promise.all(
+    registry.items.map(async (item) => ({
+      name: item.name,
+      title: item.title,
+      description: item.description,
+      category: item.categories[0],
+      source: await readFile(
+        path.join(process.cwd(), item.files[0].path),
+        "utf8"
+      ),
+    }))
   )
+  return <LoaderGallery items={items} />
 }

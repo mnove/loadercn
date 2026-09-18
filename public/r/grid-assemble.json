@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-assemble",
+  "title": "Assemble / scatter",
+  "description": "Loose particles settle into a grid, pause, and drift apart.",
+  "files": [
+    {
+      "path": "registry/loaders/grid-assemble.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type GridAssembleProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function GridAssemble({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: GridAssembleProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"grid-assemble-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"grid-assemble-loader-grid\">\n        {/* Fixed positions keep server and client rendering identical. */}\n        {[\n          [8, 20],\n          [63, 8],\n          [91, 32],\n          [26, 42],\n          [78, 59],\n          [46, 27],\n          [9, 81],\n          [43, 92],\n          [88, 87],\n        ].map(([x, y], i) => (\n          <span\n            key={i}\n            style={\n              {\n                \"--scatter-x\": `${x}%`,\n                \"--scatter-y\": `${y}%`,\n                \"--grid-x\": `${18 + (i % 3) * 32}%`,\n                \"--grid-y\": `${18 + Math.floor(i / 3) * 32}%`,\n              } as CSSProperties\n            }\n          />\n        ))}\n      </span>\n      <style>{`\n        .grid-assemble-loader { display: inline-flex; flex-shrink: 0; }\n        .grid-assemble-loader-grid { position: relative; width: 100%; height: 100%; }\n        .grid-assemble-loader-grid > span { position: absolute; width: 15%; height: 15%; background: currentColor; border-radius: 15%; left: var(--grid-x); top: var(--grid-y); transform: translate(-50%, -50%); animation: grid-assemble-loader-settle var(--loader-duration) cubic-bezier(.65, 0, .35, 1) infinite; }\n        @keyframes grid-assemble-loader-settle { 0%, 12%, 100% { left: var(--scatter-x); top: var(--scatter-y); opacity: .4; border-radius: 50%; transform: translate(-50%, -50%) rotate(90deg); } 40%, 65% { left: var(--grid-x); top: var(--grid-y); opacity: 1; border-radius: 15%; transform: translate(-50%, -50%) rotate(0deg); } }\n        @media (prefers-reduced-motion: reduce) { .grid-assemble-loader-grid > span { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "grid"
+  ],
+  "type": "registry:ui"
+}

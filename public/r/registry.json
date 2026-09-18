@@ -1,0 +1,457 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "loadercn",
+  "homepage": "http://localhost:3000",
+  "items": [
+    {
+      "name": "grid-wave",
+      "type": "registry:ui",
+      "title": "Grid wave",
+      "description": "A diagonal wave, one cell at a time.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-wave.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-pulse",
+      "type": "registry:ui",
+      "title": "Grid pulse",
+      "description": "Nine points. One steady heartbeat.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-pulse.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-snake",
+      "type": "registry:ui",
+      "title": "Grid snake",
+      "description": "A little light taking the scenic route.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-snake.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-shuffle",
+      "type": "registry:ui",
+      "title": "Grid shuffle",
+      "description": "An orderly grid with a playful rhythm.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-shuffle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-ripple",
+      "type": "registry:ui",
+      "title": "Grid ripple",
+      "description": "A soft ripple across a field of square cells.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-ripple.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-checker",
+      "type": "registry:ui",
+      "title": "Grid checker",
+      "description": "Two halves, perfectly out of step.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-checker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-perimeter",
+      "type": "registry:ui",
+      "title": "Perimeter chase",
+      "description": "A bright cell traces the edge, leaving a soft trail.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-perimeter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-puzzle",
+      "type": "registry:ui",
+      "title": "Sliding puzzle",
+      "description": "Eight tiles take turns making room for one another.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-puzzle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-flip",
+      "type": "registry:ui",
+      "title": "Tile flip",
+      "description": "A diagonal ripple of tiles turning over in space.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-flip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-spiral",
+      "type": "registry:ui",
+      "title": "Spiral",
+      "description": "A light winds into the center, then retraces its steps.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-spiral.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-lattice",
+      "type": "registry:ui",
+      "title": "Breathing lattice",
+      "description": "Nine fixed-size dots breathe through the space between them.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-lattice.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-assemble",
+      "type": "registry:ui",
+      "title": "Assemble / scatter",
+      "description": "Loose particles settle into a grid, pause, and drift apart.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-assemble.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-scan",
+      "type": "registry:ui",
+      "title": "Matrix scan",
+      "description": "A compact dot matrix with a bright band scanning row by row.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-scan.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-scan-squares",
+      "type": "registry:ui",
+      "title": "Matrix scan squares",
+      "description": "A row-by-row light scan across sixteen fixed square cells.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-scan-squares.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-column-scan",
+      "type": "registry:ui",
+      "title": "Column scan",
+      "description": "A bright band travels down each column, then moves to the next.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-column-scan.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-diagonal-scan",
+      "type": "registry:ui",
+      "title": "Diagonal scan",
+      "description": "A diagonal light band sweeps across a fixed square matrix.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-diagonal-scan.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-diagonal-flow",
+      "type": "registry:ui",
+      "title": "Diagonal flow",
+      "description": "A broad diagonal band smoothly brightens and fades across fixed square cells.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-diagonal-flow.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-scan-bounce",
+      "type": "registry:ui",
+      "title": "Matrix bounce",
+      "description": "A bright row scans down and back up without moving the dots.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-scan-bounce.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-binary",
+      "type": "registry:ui",
+      "title": "Binary orbit",
+      "description": "Two bodies in a shared little universe.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-binary.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-atom",
+      "type": "registry:ui",
+      "title": "Atom",
+      "description": "Three intersecting paths. Endless motion.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-atom.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-satellite",
+      "type": "registry:ui",
+      "title": "Satellite",
+      "description": "A small companion, always in motion.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-satellite.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-eclipse",
+      "type": "registry:ui",
+      "title": "Eclipse",
+      "description": "Two paths that meet, then drift apart.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-eclipse.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-resonance",
+      "type": "registry:ui",
+      "title": "Resonance",
+      "description": "Concentric orbits finding their rhythm.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-resonance.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-trio",
+      "type": "registry:ui",
+      "title": "Orbital trio",
+      "description": "Three points moving in perfect company.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-trio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-figure-eight",
+      "type": "registry:ui",
+      "title": "Figure eight",
+      "description": "Two particles weave through a continuous infinity loop.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-figure-eight.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-comet",
+      "type": "registry:ui",
+      "title": "Comet",
+      "description": "A bright head pulls a tapered trail around its orbit.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-comet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-nested",
+      "type": "registry:ui",
+      "title": "Nested satellite",
+      "description": "A moon circles a planet while both orbit their star.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-nested.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-precession",
+      "type": "registry:ui",
+      "title": "Precession",
+      "description": "A particle circles an ellipse as the whole orbit slowly turns.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-precession.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-exchange",
+      "type": "registry:ui",
+      "title": "Orbital exchange",
+      "description": "Two particles trade inner and outer tracks as they circle.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-exchange.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-slingshot",
+      "type": "registry:ui",
+      "title": "Slingshot",
+      "description": "A particle races past its star and coasts around the far side.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-slingshot.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

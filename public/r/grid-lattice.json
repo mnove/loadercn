@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-lattice",
+  "title": "Breathing lattice",
+  "description": "Nine fixed-size dots breathe through the space between them.",
+  "files": [
+    {
+      "path": "registry/loaders/grid-lattice.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type GridLatticeProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function GridLattice({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: GridLatticeProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"grid-lattice-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"grid-lattice-loader-grid\">\n        {Array.from({ length: 9 }, (_, i) => (\n          <span\n            key={i}\n            style={\n              {\n                \"--x\": (i % 3) - 1,\n                \"--y\": Math.floor(i / 3) - 1,\n              } as CSSProperties\n            }\n          />\n        ))}\n      </span>\n      <style>{`\n        .grid-lattice-loader { display: inline-flex; flex-shrink: 0; }\n        .grid-lattice-loader-grid { position: relative; width: 100%; height: 100%; }\n        .grid-lattice-loader-grid > span { position: absolute; width: 16%; height: 16%; border-radius: 50%; background: currentColor; left: calc(50% + var(--x) * 32%); top: calc(50% + var(--y) * 32%); transform: translate(-50%, -50%); animation: grid-lattice-loader-breathe var(--loader-duration) ease-in-out infinite; }\n        @keyframes grid-lattice-loader-breathe { 0%, 100% { left: calc(50% + var(--x) * 32%); top: calc(50% + var(--y) * 32%); } 50% { left: calc(50% + var(--x) * 19%); top: calc(50% + var(--y) * 19%); } }\n        @media (prefers-reduced-motion: reduce) { .grid-lattice-loader-grid > span { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "grid"
+  ],
+  "type": "registry:ui"
+}
