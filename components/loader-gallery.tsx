@@ -13,6 +13,7 @@ import {
   Grid2X2,
   Moon,
   Orbit,
+  LoaderCircle,
   Pause,
   Play,
   Search,
@@ -221,7 +222,9 @@ export function LoaderGallery({ items }: { items: Item[] }) {
             </div>
             <div>
               <span className="block text-2xl tracking-[-.08em] text-foreground">
-                02
+                {String(
+                  new Set(items.map((item) => item.category)).size
+                ).padStart(2, "0")}
               </span>
               FAMILIES
             </div>
@@ -243,7 +246,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
           </div>
           <div className="mb-6 flex flex-wrap items-center justify-between gap-5">
             <div
-              className="flex items-center gap-1"
+              className="flex flex-wrap items-center gap-1"
               role="group"
               aria-label="Filter by loader family"
             >
@@ -267,6 +270,13 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                   count: items.filter((item) => item.category === "orbital")
                     .length,
                   icon: Orbit,
+                },
+                {
+                  id: "classic",
+                  label: "Classic",
+                  count: items.filter((item) => item.category === "classic")
+                    .length,
+                  icon: LoaderCircle,
                 },
               ].map((filter) => (
                 <Button
@@ -363,7 +373,15 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                       {String(items.indexOf(item) + 1).padStart(2, "0")}
                     </span>
                     <span aria-hidden="true" className="preview-loader">
-                      <Loader size={item.category === "grid" ? 38 : 48} />
+                      <Loader
+                        size={
+                          item.name === "classic-progress"
+                            ? 72
+                            : item.category === "grid"
+                              ? 38
+                              : 48
+                        }
+                      />
                     </span>
                     <span className="absolute right-4 bottom-4 flex items-center gap-1.5 text-[10px] text-muted-foreground opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100">
                       View component <ArrowUpRight className="size-3" />
@@ -373,7 +391,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                     <div>
                       <h2 className="text-xs font-medium">{item.title}</h2>
                       <p className="mt-1 font-mono text-[9px] tracking-wide text-muted-foreground">
-                        {item.category === "grid" ? "GRID" : "ORBITAL"} / CSS
+                        {item.category.toUpperCase()} / CSS
                       </p>
                     </div>
                     <Button

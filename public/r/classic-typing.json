@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-typing",
+  "title": "Typing indicator",
+  "description": "Three dots gently swell and fade in a familiar typing rhythm.",
+  "files": [
+    {
+      "path": "registry/loaders/classic-typing.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicTypingProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicTyping({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicTypingProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-typing-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-size\": `${size}px`,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"classic-typing-loader-body\">\n        {[0, 1, 2].map((i) => (\n          <span\n            key={i}\n            className=\"classic-typing-loader-dot\"\n            style={{\n              left: `${i * 36}%`,\n              animationDelay: `${(i / 6 - 1) * Math.max(0.1, speed)}s`,\n            }}\n          />\n        ))}\n      </span>\n      <style>{`\n        .classic-typing-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-typing-loader-body { position: relative; width: 100%; height: 100%; }\n        .classic-typing-loader-dot { position: absolute; top: 42%; width: 22%; height: 22%; border-radius: 50%; background: currentColor; animation: classic-typing-loader-pulse var(--loader-duration) ease-in-out infinite; }\n        @keyframes classic-typing-loader-pulse { 0%, 70%, 100% { transform: scale(.7); opacity: .3; } 35% { transform: scale(1); opacity: 1; } }\n        @media (prefers-reduced-motion: reduce) { .classic-typing-loader-body, .classic-typing-loader-body * { animation: none !important; }  }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

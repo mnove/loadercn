@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-folding-cube",
+  "title": "Folding cube",
+  "description": "Four tiles fold and unfold in a continuous clockwise sequence.",
+  "files": [
+    {
+      "path": "registry/loaders/classic-folding-cube.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicFoldingCubeProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicFoldingCube({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicFoldingCubeProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-folding-cube-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-size\": `${size}px`,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"classic-folding-cube-loader-body\">\n        {[0, 1, 3, 2].map((phase, i) => (\n          <span\n            key={i}\n            className=\"classic-folding-cube-loader-cell\"\n            style={\n              {\n                left: `${(i % 2) * 52}%`,\n                top: `${Math.floor(i / 2) * 52}%`,\n                \"--turn\": `${phase * 90}deg`,\n              } as CSSProperties\n            }\n          >\n            <span\n              style={{\n                animationDelay: `${(phase / 4 - 1) * Math.max(0.1, speed)}s`,\n              }}\n            />\n          </span>\n        ))}\n      </span>\n      <style>{`\n        .classic-folding-cube-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-folding-cube-loader-body { position: relative; width: 100%; height: 100%; }\n        .classic-folding-cube-loader-body { transform: rotate(45deg) scale(.7); }\n        .classic-folding-cube-loader-cell { position: absolute; width: 48%; height: 48%; perspective: 120px; transform: rotate(var(--turn)); }\n        .classic-folding-cube-loader-cell > span { display: block; width: 100%; height: 100%; background: currentColor; transform-origin: 100% 100%; animation: classic-folding-cube-loader-fold var(--loader-duration) linear infinite; backface-visibility: hidden; }\n        @keyframes classic-folding-cube-loader-fold { 0%, 10% { transform: rotateX(-180deg); opacity: 0; } 25%, 75% { transform: rotateX(0deg); opacity: 1; } 90%, 100% { transform: rotateY(180deg); opacity: 0; } }\n\n        @media (prefers-reduced-motion: reduce) { .classic-folding-cube-loader-body, .classic-folding-cube-loader-body * { animation: none !important; }  }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

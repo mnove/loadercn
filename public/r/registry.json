@@ -527,6 +527,276 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "orbit-tilted-atom",
+      "type": "registry:ui",
+      "title": "Tilted atom",
+      "description": "Two luminous arcs travel around crossing, tilted orbital planes.",
+      "categories": [
+        "orbital"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-tilted-atom.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-ring",
+      "type": "registry:ui",
+      "title": "Ring spinner",
+      "description": "A clean, incomplete ring in continuous rotation.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-ring.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-spokes",
+      "type": "registry:ui",
+      "title": "Fading spokes",
+      "description": "Twelve radial spokes brighten in sequence.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-spokes.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-dotted",
+      "type": "registry:ui",
+      "title": "Dotted spinner",
+      "description": "A circle of dots passes a soft light around its edge.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-dotted.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-dual-ring",
+      "type": "registry:ui",
+      "title": "Dual ring",
+      "description": "Two concentric arcs rotate in opposite directions.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-dual-ring.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-chasing-dots",
+      "type": "registry:ui",
+      "title": "Chasing dots",
+      "description": "Two dots chase around a circle, growing and shrinking.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-chasing-dots.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-chasing-dots-trio",
+      "type": "registry:ui",
+      "title": "Chasing dots trio",
+      "description": "Three evenly spaced dots chase around a circle, growing and shrinking in sequence.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-chasing-dots-trio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-bouncing-dots",
+      "type": "registry:ui",
+      "title": "Bouncing dots",
+      "description": "Three dots take turns rising and landing.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-bouncing-dots.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-typing",
+      "type": "registry:ui",
+      "title": "Typing indicator",
+      "description": "Three dots gently swell and fade in a familiar typing rhythm.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-typing.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-equalizer",
+      "type": "registry:ui",
+      "title": "Equalizer bars",
+      "description": "Five rounded bars rise and fall in a smooth, flowing wave.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-equalizer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-progress",
+      "type": "registry:ui",
+      "title": "Indeterminate bar",
+      "description": "A short segment glides across a quiet horizontal track.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-ripple",
+      "type": "registry:ui",
+      "title": "Expanding rings",
+      "description": "Three rings expand outward and dissolve.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-ripple.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-squares",
+      "type": "registry:ui",
+      "title": "Rotating squares",
+      "description": "Two outlined squares turn around a shared center.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-squares.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-folding-cube",
+      "type": "registry:ui",
+      "title": "Folding cube",
+      "description": "Four tiles fold and unfold in a continuous clockwise sequence.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-folding-cube.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-dot-stream",
+      "type": "registry:ui",
+      "title": "Dot stream",
+      "description": "Five dots flow across a line, growing at the center and fading at the edges.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-dot-stream.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-liquid-stream",
+      "type": "registry:ui",
+      "title": "Liquid dot stream",
+      "description": "A flowing stream of dots softly merges and separates.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-liquid-stream.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-pulsing-spokes",
+      "type": "registry:ui",
+      "title": "Pulsing spokes",
+      "description": "A radial wave of spokes stretches into view and fades away.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-pulsing-spokes.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-circular-tail",
+      "type": "registry:ui",
+      "title": "Circular tail",
+      "description": "A continuous fading arc sweeps around a circular track.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-circular-tail.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-progress",
+  "title": "Indeterminate bar",
+  "description": "A short segment glides across a quiet horizontal track.",
+  "files": [
+    {
+      "path": "registry/loaders/classic-progress.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicProgressProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicProgress({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicProgressProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-progress-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-size\": `${size}px`,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"classic-progress-loader-body\">\n        <span className=\"classic-progress-loader-track\">\n          <span className=\"classic-progress-loader-segment\" />\n        </span>\n      </span>\n      <style>{`\n        .classic-progress-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-progress-loader-body { position: relative; width: 100%; height: 100%; }\n        .classic-progress-loader-track { position: absolute; top: 44%; left: 0; width: 100%; height: 12%; overflow: hidden; border-radius: 999px; background: color-mix(in srgb, currentColor 15%, transparent); }\n        .classic-progress-loader-segment { position: absolute; inset: 0 auto 0 0; width: 40%; border-radius: inherit; background: currentColor; animation: classic-progress-loader-travel var(--loader-duration) cubic-bezier(.65, 0, .35, 1) infinite; }\n        @keyframes classic-progress-loader-travel { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }\n\n        @media (prefers-reduced-motion: reduce) { .classic-progress-loader-body, .classic-progress-loader-body * { animation: none !important; } .classic-progress-loader-segment { left: 30%; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

@@ -17,7 +17,7 @@ const fontMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "loadercn — Worth the wait.",
   description:
-    "A considered collection of animated grid and orbital loaders. Preview, customize, and copy React components or install with the shadcn CLI.",
+    "A considered collection of animated grid, orbital, and classic loaders. Preview, customize, and copy React components or install with the shadcn CLI.",
 }
 
 export default function RootLayout({

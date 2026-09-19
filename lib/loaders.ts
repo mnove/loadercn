@@ -1,3 +1,21 @@
+import { ClassicDotStream } from "@/registry/loaders/classic-dot-stream"
+import { ClassicLiquidStream } from "@/registry/loaders/classic-liquid-stream"
+import { ClassicPulsingSpokes } from "@/registry/loaders/classic-pulsing-spokes"
+import { ClassicCircularTail } from "@/registry/loaders/classic-circular-tail"
+import { OrbitTiltedAtom } from "@/registry/loaders/orbit-tilted-atom"
+import { ClassicChasingDotsTrio } from "@/registry/loaders/classic-chasing-dots-trio"
+import { ClassicRing } from "@/registry/loaders/classic-ring"
+import { ClassicSpokes } from "@/registry/loaders/classic-spokes"
+import { ClassicDotted } from "@/registry/loaders/classic-dotted"
+import { ClassicDualRing } from "@/registry/loaders/classic-dual-ring"
+import { ClassicChasingDots } from "@/registry/loaders/classic-chasing-dots"
+import { ClassicBouncingDots } from "@/registry/loaders/classic-bouncing-dots"
+import { ClassicTyping } from "@/registry/loaders/classic-typing"
+import { ClassicEqualizer } from "@/registry/loaders/classic-equalizer"
+import { ClassicProgress } from "@/registry/loaders/classic-progress"
+import { ClassicRipple } from "@/registry/loaders/classic-ripple"
+import { ClassicSquares } from "@/registry/loaders/classic-squares"
+import { ClassicFoldingCube } from "@/registry/loaders/classic-folding-cube"
 import { GridFlowDown } from "@/registry/loaders/grid-flow-down"
 import { GridFlowUp } from "@/registry/loaders/grid-flow-up"
 import { GridFlowRight } from "@/registry/loaders/grid-flow-right"
@@ -35,6 +53,26 @@ import { OrbitResonance } from "@/registry/loaders/orbit-resonance"
 import { OrbitTrio } from "@/registry/loaders/orbit-trio"
 
 export const loaderComponents = {
+  "classic-dot-stream": ClassicDotStream,
+  "classic-liquid-stream": ClassicLiquidStream,
+  "classic-pulsing-spokes": ClassicPulsingSpokes,
+  "classic-circular-tail": ClassicCircularTail,
+  "orbit-tilted-atom": OrbitTiltedAtom,
+
+  "classic-chasing-dots-trio": ClassicChasingDotsTrio,
+  "classic-ring": ClassicRing,
+  "classic-spokes": ClassicSpokes,
+  "classic-dotted": ClassicDotted,
+  "classic-dual-ring": ClassicDualRing,
+  "classic-chasing-dots": ClassicChasingDots,
+  "classic-bouncing-dots": ClassicBouncingDots,
+  "classic-typing": ClassicTyping,
+  "classic-equalizer": ClassicEqualizer,
+  "classic-progress": ClassicProgress,
+  "classic-ripple": ClassicRipple,
+  "classic-squares": ClassicSquares,
+  "classic-folding-cube": ClassicFoldingCube,
+
   "grid-flow-down": GridFlowDown,
   "grid-flow-up": GridFlowUp,
   "grid-flow-right": GridFlowRight,

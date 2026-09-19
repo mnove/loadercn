@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-spokes",
+  "title": "Fading spokes",
+  "description": "Twelve radial spokes brighten in sequence.",
+  "files": [
+    {
+      "path": "registry/loaders/classic-spokes.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicSpokesProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicSpokes({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicSpokesProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-spokes-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-size\": `${size}px`,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"classic-spokes-loader-body\">\n        {Array.from({ length: 12 }, (_, i) => (\n          <span\n            key={i}\n            className=\"classic-spokes-loader-arm\"\n            style={{ transform: `rotate(${i * 30.0}deg)` }}\n          >\n            <span\n              style={{\n                animationDelay: `${(i / 12 - 1) * Math.max(0.1, speed)}s`,\n              }}\n            />\n          </span>\n        ))}\n      </span>\n      <style>{`\n        .classic-spokes-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-spokes-loader-body { position: relative; width: 100%; height: 100%; }\n        .classic-spokes-loader-arm { position: absolute; inset: 8%; }\n        .classic-spokes-loader-arm > span { position: absolute; top: 0; left: 50%; width: 9%; height: 26%; border-radius: 999px; transform: translateX(-50%); background: currentColor; animation: classic-spokes-loader-fade var(--loader-duration) linear infinite; }\n        @keyframes classic-spokes-loader-fade { 0%, 100% { opacity: 1; } 75%, 90% { opacity: .15; } }\n\n        @media (prefers-reduced-motion: reduce) { .classic-spokes-loader-body, .classic-spokes-loader-body * { animation: none !important; }  }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

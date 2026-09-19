@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-squares",
+  "title": "Rotating squares",
+  "description": "Two outlined squares turn around a shared center.",
+  "files": [
+    {
+      "path": "registry/loaders/classic-squares.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicSquaresProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicSquares({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicSquaresProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-squares-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-size\": `${size}px`,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"classic-squares-loader-body\">\n        <span className=\"classic-squares-loader-square\" />\n        <span className=\"classic-squares-loader-square classic-squares-loader-inner\" />\n      </span>\n      <style>{`\n        .classic-squares-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-squares-loader-body { position: relative; width: 100%; height: 100%; }\n        .classic-squares-loader-square { position: absolute; inset: 18%; border: calc(var(--loader-size) * .055) solid currentColor; animation: classic-squares-loader-spin var(--loader-duration) ease-in-out infinite; }\n        .classic-squares-loader-inner { inset: 33%; opacity: .55; animation-direction: reverse; }\n        @keyframes classic-squares-loader-spin { to { transform: rotate(360deg); } }\n\n        @media (prefers-reduced-motion: reduce) { .classic-squares-loader-body, .classic-squares-loader-body * { animation: none !important; }  }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

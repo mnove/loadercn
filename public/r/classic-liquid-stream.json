@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-liquid-stream",
+  "title": "Liquid dot stream",
+  "description": "A flowing stream of dots softly merges and separates.",
+  "files": [
+    {
+      "path": "registry/loaders/classic-liquid-stream.tsx",
+      "content": "\"use client\"\n\nimport { useId } from \"react\"\nimport type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicLiquidStreamProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicLiquidStream({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicLiquidStreamProps) {\n  const filterId = `classic-liquid-stream-${useId().replace(/:/g, \"\")}`\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-liquid-stream-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-size\": `${size}px`,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n      >\n        <defs>\n          <filter\n            id={filterId}\n            x=\"-25%\"\n            y=\"-100%\"\n            width=\"150%\"\n            height=\"300%\"\n            colorInterpolationFilters=\"sRGB\"\n          >\n            <feGaussianBlur\n              in=\"SourceGraphic\"\n              stdDeviation=\"2.5\"\n              result=\"blur\"\n            />\n            <feColorMatrix\n              in=\"blur\"\n              mode=\"matrix\"\n              values=\"1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7\"\n              result=\"liquid\"\n            />\n            <feBlend in=\"SourceGraphic\" in2=\"liquid\" />\n          </filter>\n        </defs>\n        <g filter={`url(#${filterId})`}>\n          {[0, 1, 2, 3, 4].map((i) => (\n            <circle\n              key={i}\n              cx=\"0\"\n              cy=\"50\"\n              r=\"11\"\n              style={\n                {\n                  \"--rest-x\": `${14 + i * 18}px`,\n                  animationDelay: `${(-i / 5) * Math.max(0.1, speed)}s`,\n                } as CSSProperties\n              }\n            />\n          ))}\n        </g>\n      </svg>\n      <style>{`\n        .classic-liquid-stream-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-liquid-stream-loader circle { fill: currentColor; transform-origin: 0px 50px; transform: translateX(var(--rest-x)); animation: classic-liquid-stream-loader-flow var(--loader-duration) linear infinite; }\n        @keyframes classic-liquid-stream-loader-flow { 0% { transform: translateX(8px) scale(0); } 50% { transform: translateX(50px) scale(1); } 100% { transform: translateX(92px) scale(0); } }\n        @media (prefers-reduced-motion: reduce) { .classic-liquid-stream-loader circle { animation: none; } .classic-liquid-stream-loader g { filter: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

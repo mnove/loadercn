@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-dual-ring",
+  "title": "Dual ring",
+  "description": "Two concentric arcs rotate in opposite directions.",
+  "files": [
+    {
+      "path": "registry/loaders/classic-dual-ring.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicDualRingProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicDualRing({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicDualRingProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-dual-ring-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-size\": `${size}px`,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"classic-dual-ring-loader-body\">\n        <span className=\"classic-dual-ring-loader-outer\" />\n        <span className=\"classic-dual-ring-loader-inner\" />\n      </span>\n      <style>{`\n        .classic-dual-ring-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-dual-ring-loader-body { position: relative; width: 100%; height: 100%; }\n        .classic-dual-ring-loader-outer, .classic-dual-ring-loader-inner { position: absolute; border: calc(var(--loader-size) * .06) solid currentColor; border-right-color: transparent; border-bottom-color: transparent; border-radius: 50%; animation: classic-dual-ring-loader-spin var(--loader-duration) linear infinite; }\n        .classic-dual-ring-loader-outer { inset: 4%; }\n        .classic-dual-ring-loader-inner { inset: 25%; animation-direction: reverse; opacity: .6; }\n        @keyframes classic-dual-ring-loader-spin { to { transform: rotate(360deg); } }\n\n        @media (prefers-reduced-motion: reduce) { .classic-dual-ring-loader-body, .classic-dual-ring-loader-body * { animation: none !important; }  }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}
