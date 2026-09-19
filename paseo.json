@@ -1,0 +1,19 @@
+{
+  "worktree": {
+    "setup": "pnpm install "
+  },
+  "scripts": {
+    "dev": {
+      "command": "pnpm run dev "
+    },
+    "lint": {
+      "command": "pnpm run lint"
+    },
+    "build": {
+      "command": "pnpm run build"
+    },
+    "typecheck": {
+      "command": "pnpm run typecheck"
+    }
+  }
+}
