@@ -30,7 +30,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CodeBlock, CodeInline } from "@/components/code-block"
+import { CodeBlock } from "@/components/code-block"
 import { loaderComponents } from "@/lib/loaders"
 
 type Item = {
@@ -523,10 +523,9 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                     Run this command in a project initialized with shadcn.
                   </p>
                   <div className="flex items-center gap-3 border bg-muted/50 p-3">
-                    <CodeInline
-                      code={command(selected.name)}
-                      className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap"
-                    />
+                    <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
+                      {command(selected.name)}
+                    </code>
                     <CopyButton value={command(selected.name)} />
                   </div>
                   <p className="text-xs text-muted-foreground">
@@ -577,10 +576,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                 Already using shadcn? You can skip this step.
               </p>
               <div className="flex items-center justify-between gap-2 border bg-muted/50 p-3">
-                <CodeInline
-                  code="npx shadcn@latest init"
-                  className="text-xs"
-                />
+                <code className="text-xs">npx shadcn@latest init</code>
                 <CopyButton value="npx shadcn@latest init" />
               </div>
             </li>

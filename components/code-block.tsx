@@ -16,20 +16,3 @@ export function CodeBlock({
     </pre>
   )
 }
-
-export function CodeInline({
-  code,
-  lang = "shell",
-  className,
-}: {
-  code: string
-  lang?: LanguageName
-  className?: string
-}) {
-  return (
-    <code
-      className={cn("sh-code", className)}
-      dangerouslySetInnerHTML={{ __html: highlight(code, { lang }) }}
-    />
-  )
-}
