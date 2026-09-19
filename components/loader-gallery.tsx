@@ -513,12 +513,12 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                   </span>
                 </label>
               </div>
-              <Tabs defaultValue="install">
+              <Tabs defaultValue="install" className="min-w-0">
                 <TabsList variant="line">
                   <TabsTrigger value="install">CLI</TabsTrigger>
                   <TabsTrigger value="source">Source</TabsTrigger>
                 </TabsList>
-                <TabsContent value="install" className="space-y-5 pt-4">
+                <TabsContent value="install" className="min-w-0 space-y-5 pt-4">
                   <p className="text-xs leading-6 text-muted-foreground">
                     Run this command in a project initialized with shadcn.
                   </p>
@@ -541,7 +541,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                     loading label. Respects reduced-motion preferences.
                   </p>
                 </TabsContent>
-                <TabsContent value="source" className="space-y-3 pt-4">
+                <TabsContent value="source" className="min-w-0 space-y-3 pt-4">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-xs text-muted-foreground">
                       {selected.name}.tsx

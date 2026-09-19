@@ -11,7 +11,7 @@ export function CodeBlock({
   className?: string
 }) {
   return (
-    <pre className={cn("sh-code overflow-x-auto", className)}>
+    <pre className={cn("sh-code w-full min-w-0 overflow-x-auto", className)}>
       <code dangerouslySetInnerHTML={{ __html: highlight(code, { lang }) }} />
     </pre>
   )
