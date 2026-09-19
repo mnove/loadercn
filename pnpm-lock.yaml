@@ -35,6 +35,9 @@ importers:
       shadcn:
         specifier: ^4.21.0
         version: 4.21.0(typescript@5.9.3)
+      sugar-high:
+        specifier: ^2.4.1
+        version: 2.4.1
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
@@ -2808,6 +2811,14 @@ packages:
       '@babel/core':
         optional: true
       babel-plugin-macros:
+        optional: true
+
+  sugar-high@2.4.1:
+    resolution: {integrity: sha512-w4uhunMgEP+9f/2W/ZLBjvrVBLY14oL4b6a2+Ca/JWECd0Rc45KqL89bDvUOVFGrr0D14q5hoEqBXkgxwxL6RQ==}
+    peerDependencies:
+      gpu-lexer: '>=0.0.2'
+    peerDependenciesMeta:
+      gpu-lexer:
         optional: true
 
   supports-color@7.2.0:
@@ -5896,6 +5907,8 @@ snapshots:
       react: 19.2.8
     optionalDependencies:
       '@babel/core': 7.29.7
+
+  sugar-high@2.4.1: {}
 
   supports-color@7.2.0:
     dependencies:

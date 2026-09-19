@@ -146,3 +146,24 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* sugar-high syntax highlighting — warm palette to match the paper surface. */
+.sh-code {
+  --sh-identifier: var(--foreground);
+  --sh-sign: color-mix(in oklch, var(--foreground) 45%, transparent);
+  --sh-comment: color-mix(in oklch, var(--foreground) 40%, transparent);
+  --sh-keyword: oklch(0.55 0.2 24);
+  --sh-string: oklch(0.55 0.13 155);
+  --sh-class: oklch(0.55 0.13 250);
+  --sh-property: oklch(0.55 0.15 285);
+  --sh-entity: oklch(0.56 0.12 200);
+  --sh-jsxliterals: oklch(0.56 0.14 300);
+}
+.dark .sh-code {
+  --sh-keyword: oklch(0.76 0.15 24);
+  --sh-string: oklch(0.8 0.13 155);
+  --sh-class: oklch(0.78 0.11 250);
+  --sh-property: oklch(0.78 0.12 285);
+  --sh-entity: oklch(0.79 0.1 200);
+  --sh-jsxliterals: oklch(0.78 0.12 300);
+}

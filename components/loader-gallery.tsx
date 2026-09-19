@@ -30,6 +30,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock, CodeInline } from "@/components/code-block"
 import { loaderComponents } from "@/lib/loaders"
 
 type Item = {
@@ -522,17 +523,19 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                     Run this command in a project initialized with shadcn.
                   </p>
                   <div className="flex items-center gap-3 border bg-muted/50 p-3">
-                    <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
-                      {command(selected.name)}
-                    </code>
+                    <CodeInline
+                      code={command(selected.name)}
+                      className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap"
+                    />
                     <CopyButton value={command(selected.name)} />
                   </div>
                   <p className="text-xs text-muted-foreground">
                     Then add it to your interface:
                   </p>
-                  <pre className="overflow-x-auto border bg-muted/50 p-4 text-[11px] leading-6">
-                    <code>{`import { ${componentName} } from "@/components/ui/${selected.name}"\n\n<${componentName} size={${size}} speed={${speed}} />`}</code>
-                  </pre>
+                  <CodeBlock
+                    code={`import { ${componentName} } from "@/components/ui/${selected.name}"\n\n<${componentName} size={${size}} speed={${speed}} />`}
+                    className="border bg-muted/50 p-4 text-[11px] leading-6"
+                  />
                   <p className="text-[11px] leading-5 text-muted-foreground">
                     Inherits text color. Accepts className, style, and a custom
                     loading label. Respects reduced-motion preferences.
@@ -545,9 +548,10 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                     </span>
                     <CopyButton value={selected.source} label="Copy source" />
                   </div>
-                  <pre className="max-h-72 overflow-auto border bg-muted/50 p-4 text-[11px] leading-5">
-                    <code>{selected.source}</code>
-                  </pre>
+                  <CodeBlock
+                    code={selected.source}
+                    className="max-h-72 overflow-auto border bg-muted/50 p-4 text-[11px] leading-5"
+                  />
                   <p className="text-xs text-muted-foreground">
                     Copy the complete file into your components directory.
                     Styles are included.
@@ -573,7 +577,10 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                 Already using shadcn? You can skip this step.
               </p>
               <div className="flex items-center justify-between gap-2 border bg-muted/50 p-3">
-                <code className="text-xs">npx shadcn@latest init</code>
+                <CodeInline
+                  code="npx shadcn@latest init"
+                  className="text-xs"
+                />
                 <CopyButton value="npx shadcn@latest init" />
               </div>
             </li>
