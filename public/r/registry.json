@@ -274,6 +274,81 @@
       ]
     },
     {
+      "name": "grid-flow-down",
+      "type": "registry:ui",
+      "title": "Flow down",
+      "description": "A broad, eased brightness wave flows top to bottom across fixed square cells.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-flow-down.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-flow-up",
+      "type": "registry:ui",
+      "title": "Flow up",
+      "description": "A broad, eased brightness wave flows bottom to top across fixed square cells.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-flow-up.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-flow-right",
+      "type": "registry:ui",
+      "title": "Flow right",
+      "description": "A broad, eased brightness wave flows left to right across fixed square cells.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-flow-right.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-flow-left",
+      "type": "registry:ui",
+      "title": "Flow left",
+      "description": "A broad, eased brightness wave flows right to left across fixed square cells.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-flow-left.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-scan-bounce-horizontal",
+      "type": "registry:ui",
+      "title": "Matrix bounce horizontal",
+      "description": "A bright column scans left to right and back across fixed dots.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-scan-bounce-horizontal.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "orbit-binary",
       "type": "registry:ui",
       "title": "Binary orbit",

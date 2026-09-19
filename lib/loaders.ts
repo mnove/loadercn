@@ -1,3 +1,8 @@
+import { GridFlowDown } from "@/registry/loaders/grid-flow-down"
+import { GridFlowUp } from "@/registry/loaders/grid-flow-up"
+import { GridFlowRight } from "@/registry/loaders/grid-flow-right"
+import { GridFlowLeft } from "@/registry/loaders/grid-flow-left"
+import { GridScanBounceHorizontal } from "@/registry/loaders/grid-scan-bounce-horizontal"
 import { GridDiagonalFlow } from "@/registry/loaders/grid-diagonal-flow"
 import { GridScan } from "@/registry/loaders/grid-scan"
 import { GridScanSquares } from "@/registry/loaders/grid-scan-squares"
@@ -30,6 +35,12 @@ import { OrbitResonance } from "@/registry/loaders/orbit-resonance"
 import { OrbitTrio } from "@/registry/loaders/orbit-trio"
 
 export const loaderComponents = {
+  "grid-flow-down": GridFlowDown,
+  "grid-flow-up": GridFlowUp,
+  "grid-flow-right": GridFlowRight,
+  "grid-flow-left": GridFlowLeft,
+  "grid-scan-bounce-horizontal": GridScanBounceHorizontal,
+
   "grid-scan": GridScan,
   "grid-scan-squares": GridScanSquares,
   "grid-column-scan": GridColumnScan,

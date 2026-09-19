@@ -1,10 +1,10 @@
 # loadercn
 
-A shadcn-compatible registry of 30 React loaders: eighteen grid animations and twelve orbital animations. The homepage includes live previews, family filters, search, color controls, pause/play, light/dark themes, and a source/installation dialog for every component.
+A shadcn-compatible registry of 35 React loaders: twenty-three grid animations and twelve orbital animations. The homepage includes live previews, family filters, search, color controls, pause/play, light/dark themes, and a source/installation dialog for every component.
 
 Patterns include perimeter chase, sliding puzzle, tile flip, figure eight, comet, and nested satellite. The latest batch adds spiral, breathing lattice, assemble/scatter, precession, orbital exchange, and slingshot.
 
-The matrix scan family uses fixed 4×4 cells with animated brightness: Matrix scan (dots), Matrix scan squares, Column scan, Diagonal scan, Diagonal flow, and Matrix bounce. Diagonal flow uses a broad, eased brightness wave with synchronized diagonals. Grid ripple uses square cells.
+The matrix scan family uses fixed 4×4 cells with animated brightness: Matrix scan (dots), Matrix scan squares, Column scan, Diagonal scan, Diagonal flow, and Matrix bounce. Diagonal flow uses a broad, eased brightness wave with synchronized diagonals. Grid ripple uses square cells. Directional flow variants run top to bottom, bottom to top, left to right, and right to left. Matrix bounce also has a horizontal variant.
 
 ## Development
 
