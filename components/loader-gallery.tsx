@@ -83,6 +83,28 @@ function CopyButton({
   )
 }
 
+// A mix of families for the hero strip.
+const SHOWCASE = [
+  "grid-flip",
+  "orbit-comet",
+  "classic-dual-ring",
+  "grid-checker",
+  "orbit-nested",
+  "classic-typing",
+  "classic-ring",
+  "grid-spiral",
+  "orbit-atom",
+  "classic-equalizer",
+  "grid-wave",
+  "orbit-eclipse",
+  "classic-bouncing-dots",
+  "grid-snake",
+  "orbit-trio",
+  "classic-ripple",
+  "grid-ripple",
+  "orbit-satellite",
+] as const satisfies readonly (keyof typeof loaderComponents)[]
+
 function Mark({ small = false }: { small?: boolean }) {
   return (
     <span
@@ -182,46 +204,59 @@ export function LoaderGallery({ items }: { items: Item[] }) {
       </header>
 
       <main className="mx-auto max-w-[1280px] px-6 md:px-10">
-        <section className="relative flex flex-col justify-between gap-10 border-b py-16 md:flex-row md:items-end md:py-24">
-          <div>
-            <div className="mb-7 flex items-center gap-2.5 font-mono text-[10px] tracking-[.16em] text-muted-foreground uppercase">
-              <span className="size-1.5 rounded-full bg-primary" />
-              Small components. Continuous possibilities.
-            </div>
-            <h1 className="text-[clamp(3rem,6.5vw,5.5rem)] leading-[1.02] font-medium tracking-[-.065em]">
-              Worth the wait<span className="text-primary">.</span>
-            </h1>
-            <p className="mt-6 max-w-[450px] text-sm leading-7 text-muted-foreground">
-              A considered collection of loaders for your next interface.
-              <br className="hidden sm:block" /> Copy the code. Make it yours.
-              Keep things moving.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button
-                nativeButton={false}
-                render={<a href="#collection" />}
-                className="gap-3 bg-foreground text-background hover:bg-foreground/85"
-              >
-                Explore loaders <ArrowDown />
-              </Button>
-              <Button
-                variant="outline"
-                className="gap-3"
-                onClick={() => setGuideOpen(true)}
-              >
-                <Terminal /> Get started
-              </Button>
-            </div>
+        <section className="flex flex-col items-center border-b py-16 text-center md:py-24">
+          <div className="mb-6 flex items-center gap-2.5 font-mono text-[10px] tracking-[.16em] text-muted-foreground uppercase">
+            <span className="size-1.5 rounded-full bg-primary" />
+            Open source loaders for shadcn/ui
           </div>
-          <div className="flex gap-8 font-mono text-[10px] leading-6 tracking-wide text-muted-foreground md:pb-1">
+          <h1 className="text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.05] font-medium tracking-[-.06em]">
+            Worth the wait<span className="text-primary">.</span>
+          </h1>
+          <p className="mt-5 max-w-[420px] text-sm leading-7 text-muted-foreground">
+            A considered collection of loaders for your next interface. Copy the
+            code. Make it yours. Keep things moving.
+          </p>
+          <div
+            aria-hidden="true"
+            className="mt-10 flex w-full max-w-4xl items-center justify-center gap-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]"
+          >
+            {SHOWCASE.map((name) => {
+              const Loader = loaderComponents[name]
+              return (
+                <span
+                  key={name}
+                  className="flex size-10 shrink-0 items-center justify-center"
+                >
+                  <Loader size={name.startsWith("grid") ? 26 : 32} />
+                </span>
+              )
+            })}
+          </div>
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <Button
+              nativeButton={false}
+              render={<a href="#collection" />}
+              className="gap-3 bg-foreground text-background hover:bg-foreground/85"
+            >
+              Explore loaders <ArrowDown />
+            </Button>
+            <Button
+              variant="outline"
+              className="gap-3"
+              onClick={() => setGuideOpen(true)}
+            >
+              <Terminal /> Get started
+            </Button>
+          </div>
+          <div className="mt-12 flex gap-10 font-mono text-[10px] leading-6 tracking-wide text-muted-foreground">
             <div>
-              <span className="block text-2xl tracking-[-.08em] text-foreground">
+              <span className="block text-xl tracking-[-.08em] text-foreground">
                 {items.length}
               </span>
               LOADERS
             </div>
             <div>
-              <span className="block text-2xl tracking-[-.08em] text-foreground">
+              <span className="block text-xl tracking-[-.08em] text-foreground">
                 {String(
                   new Set(items.map((item) => item.category)).size
                 ).padStart(2, "0")}
@@ -229,7 +264,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               FAMILIES
             </div>
             <div>
-              <span className="block text-2xl tracking-[-.08em] text-foreground">
+              <span className="block text-xl tracking-[-.08em] text-foreground">
                 ∞
               </span>
               POSSIBILITIES
@@ -352,7 +387,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
           </div>
 
           <div
-            className={`loader-gallery grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ${paused ? "animations-paused" : ""}`}
+            className={`loader-gallery grid border-t border-l sm:grid-cols-2 lg:grid-cols-3 ${paused ? "animations-paused" : ""}`}
             data-color={color}
           >
             {filtered.map((item) => {
@@ -361,7 +396,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               return (
                 <article
                   key={item.name}
-                  className="group border bg-card transition-colors hover:border-foreground/30"
+                  className="group border-r border-b bg-card transition-colors hover:bg-muted/40"
                 >
                   <button
                     type="button"
