@@ -25,31 +25,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CodeBlock } from "@/components/code-block"
-import { CopyButton } from "@/components/copy-button"
-import { InstallCommand, useOrigin } from "@/components/install-command"
+import { InstallCommand } from "@/components/install-command"
+import { LoaderDetail } from "@/components/loader-detail"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { loaderComponents } from "@/lib/loaders"
+import type { LoaderItem } from "@/lib/loader-items"
 
-type Item = {
-  name: string
-  title: string
-  description: string
-  category: string
-  source: string
-}
-
-export function LoaderGallery({ items }: { items: Item[] }) {
+export function LoaderGallery({ items }: { items: LoaderItem[] }) {
   const [category, setCategory] = useState("all")
   const [query, setQuery] = useState("")
   const [paused, setPaused] = useState(false)
   const [color, setColor] = useState("default")
-  const [selected, setSelected] = useState<Item | null>(null)
-  const [size, setSize] = useState(48)
-  const [speed, setSpeed] = useState(1.6)
-  const origin = useOrigin()
+  const [selected, setSelected] = useState<LoaderItem | null>(null)
   const filtered = items.filter(
     (item) =>
       (category === "all" || item.category === category) &&
@@ -57,21 +45,6 @@ export function LoaderGallery({ items }: { items: Item[] }) {
         .toLowerCase()
         .includes(query.toLowerCase())
   )
-  const SelectedLoader = selected
-    ? loaderComponents[selected.name as keyof typeof loaderComponents]
-    : null
-  const componentName = selected?.name
-    .split("-")
-    .map((part) => part[0].toUpperCase() + part.slice(1))
-    .join("")
-  const command = (name: string) =>
-    `npx shadcn@latest add ${origin}/r/${name}.json`
-  const openItem = (item: Item) => {
-    setSize(48)
-    setSpeed(1.6)
-    setSelected(item)
-  }
-
   return (
     <div className="min-h-screen">
       <SiteHeader />
@@ -237,7 +210,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                 >
                   <button
                     type="button"
-                    onClick={() => openItem(item)}
+                    onClick={() => setSelected(item)}
                     aria-label={`View ${item.title} code and installation`}
                     className="preview-surface relative flex h-52 w-full cursor-pointer items-center justify-center overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset sm:h-60"
                   >
@@ -261,7 +234,14 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                   </button>
                   <div className="flex items-center justify-between border-t px-4 py-3.5">
                     <div>
-                      <h2 className="text-xs font-medium">{item.title}</h2>
+                      <h2 className="text-xs font-medium">
+                        <Link
+                          href={`/docs/${item.name}`}
+                          className="hover:underline hover:underline-offset-4"
+                        >
+                          {item.title}
+                        </Link>
+                      </h2>
                       <p className="mt-1 font-mono text-[9px] tracking-wide text-muted-foreground">
                         {item.category.toUpperCase()} / CSS
                       </p>
@@ -270,7 +250,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                       variant="ghost"
                       size="icon-sm"
                       aria-label={`Get ${item.title} code`}
-                      onClick={() => openItem(item)}
+                      onClick={() => setSelected(item)}
                     >
                       <Code2 />
                     </Button>
@@ -338,102 +318,22 @@ export function LoaderGallery({ items }: { items: Item[] }) {
         }}
       >
         <DialogContent className="max-h-[90svh] overflow-y-auto sm:max-w-2xl">
-          {selected && SelectedLoader && (
+          {selected && (
             <>
               <DialogHeader>
                 <DialogTitle>{selected.title}</DialogTitle>
                 <DialogDescription>{selected.description}</DialogDescription>
               </DialogHeader>
-              <div className="preview-surface flex h-36 items-center justify-center border">
-                <SelectedLoader
-                  size={size}
-                  speed={speed}
-                  className={
-                    color === "orange"
-                      ? "text-primary"
-                      : color === "blue"
-                        ? "text-blue-500"
-                        : ""
-                  }
-                />
-              </div>
-              <div className="flex flex-wrap gap-x-8 gap-y-4 text-xs">
-                <label className="flex items-center gap-3">
-                  Size{" "}
-                  <input
-                    aria-label="Loader size"
-                    type="range"
-                    min="20"
-                    max="80"
-                    value={size}
-                    onChange={(e) => setSize(Number(e.target.value))}
-                    className="w-24 accent-primary"
-                  />
-                  <span className="w-9 font-mono text-muted-foreground">
-                    {size}px
-                  </span>
-                </label>
-                <label className="flex items-center gap-3">
-                  Cycle{" "}
-                  <input
-                    aria-label="Animation cycle duration"
-                    type="range"
-                    min="0.6"
-                    max="3"
-                    step="0.2"
-                    value={speed}
-                    onChange={(e) => setSpeed(Number(e.target.value))}
-                    className="w-24 accent-primary"
-                  />
-                  <span className="font-mono text-muted-foreground">
-                    {speed}s
-                  </span>
-                </label>
-              </div>
-              <Tabs defaultValue="install" className="min-w-0">
-                <TabsList variant="line">
-                  <TabsTrigger value="install">CLI</TabsTrigger>
-                  <TabsTrigger value="source">Source</TabsTrigger>
-                </TabsList>
-                <TabsContent value="install" className="min-w-0 space-y-5 pt-4">
-                  <p className="text-xs leading-6 text-muted-foreground">
-                    Run this command in a project initialized with shadcn.
-                  </p>
-                  <div className="flex items-center gap-3 border bg-muted/50 p-3">
-                    <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
-                      {command(selected.name)}
-                    </code>
-                    <CopyButton value={command(selected.name)} />
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Then add it to your interface:
-                  </p>
-                  <CodeBlock
-                    code={`import { ${componentName} } from "@/components/ui/${selected.name}"\n\n<${componentName} size={${size}} speed={${speed}} />`}
-                    className="border bg-muted/50 p-4 text-[11px] leading-6"
-                  />
-                  <p className="text-[11px] leading-5 text-muted-foreground">
-                    Inherits text color. Accepts className, style, and a custom
-                    loading label. Respects reduced-motion preferences.
-                  </p>
-                </TabsContent>
-                <TabsContent value="source" className="min-w-0 space-y-3 pt-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {selected.name}.tsx
-                    </span>
-                    <CopyButton value={selected.source} label="Copy source" />
-                  </div>
-                  <CodeBlock
-                    code={selected.source}
-                    className="max-h-72 overflow-auto border bg-muted/50 p-4 text-[11px] leading-5"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Copy the complete file into your components directory.
-                    Styles are included.
-                  </p>
-                </TabsContent>
-              </Tabs>
+              <LoaderDetail key={selected.name} item={selected} color={color} />
+              <Button
+                variant="outline"
+                size="sm"
+                nativeButton={false}
+                render={<Link href={`/docs/${selected.name}`} />}
+                className="gap-2 justify-self-start"
+              >
+                Open component page <ArrowRight />
+              </Button>
             </>
           )}
         </DialogContent>

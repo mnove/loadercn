@@ -4,17 +4,35 @@ import Link from "next/link"
 import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Mark } from "@/components/mark"
+import { cn } from "@/lib/utils"
 
-export function SiteHeader() {
+export function SiteHeader({
+  sidebarTrigger = false,
+}: {
+  /** Full-width, sticky layout with a mobile sidebar toggle, for docs pages. */
+  sidebarTrigger?: boolean
+}) {
   const { resolvedTheme, setTheme } = useTheme()
   return (
-    <header className="border-b">
-      <div className="mx-auto flex h-14 max-w-[1280px] items-center justify-between px-6 md:px-10">
+    <header
+      className={cn(
+        "border-b",
+        sidebarTrigger && "sticky top-0 z-20 bg-background"
+      )}
+    >
+      <div
+        className={cn(
+          "mx-auto flex h-14 items-center justify-between gap-3 px-6",
+          sidebarTrigger ? "md:px-6" : "max-w-[1280px] md:px-10"
+        )}
+      >
+        {sidebarTrigger && <SidebarTrigger className="-ml-2 md:hidden" />}
         <Link
           href="/"
           aria-label="loadercn home"
-          className="flex items-center gap-2.5"
+          className="mr-auto flex items-center gap-2.5"
         >
           <Mark small />
           <span className="text-lg font-semibold tracking-[-.06em]">
@@ -32,7 +50,7 @@ export function SiteHeader() {
             Components
           </Link>
           <Link href="/docs" className="text-xs font-medium">
-            Get started
+            Docs
           </Link>
           <span className="h-5 border-l" />
           <Button
