@@ -77,16 +77,13 @@ export function LoaderGallery({ items }: { items: Item[] }) {
       <SiteHeader />
       <main className="mx-auto max-w-[1280px] px-6 md:px-10">
         <section className="flex flex-col items-center border-b bg-[radial-gradient(ellipse_60%_70%_at_50%_0%,color-mix(in_oklch,var(--primary)_12%,transparent),transparent)] py-16 text-center md:py-24">
-          <div className="mb-6 flex items-center gap-2.5 font-mono text-[10px] tracking-[.16em] text-muted-foreground uppercase">
-            <span className="size-1.5 rounded-full bg-primary" />
-            Copy-paste loaders for shadcn/ui
-          </div>
-          <h1 className="text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.05] font-medium tracking-[-.06em]">
+          <h1 className="font-heading text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.05] font-medium tracking-[-.03em]">
             Worth the wait<span className="text-primary">.</span>
           </h1>
-          <p className="mt-5 max-w-[420px] text-sm leading-7 text-muted-foreground">
-            Each loader is a single React file with its CSS inside. No animation
-            library, no dependencies. Paste it in or add it with the shadcn CLI.
+          <p className="mt-5 max-w-[440px] text-sm leading-7 text-muted-foreground *:font-medium *:text-foreground">
+            <strong>{items.length} loaders</strong> with their CSS built in and{" "}
+            <strong>zero dependencies</strong>. Copy the code, or install with
+            the <strong>shadcn CLI</strong>.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Button
@@ -109,38 +106,33 @@ export function LoaderGallery({ items }: { items: Item[] }) {
             name="classic-ring"
             className="mt-8 w-full max-w-md text-left"
           />
-          <div className="mt-12 flex gap-10 font-mono text-[10px] leading-6 tracking-wide text-muted-foreground">
-            <div>
-              <span className="block text-xl tracking-[-.08em] text-foreground">
-                {items.length}
-              </span>
-              LOADERS
-            </div>
-            <div>
-              <span className="block text-xl tracking-[-.08em] text-foreground">
-                0
-              </span>
-              DEPENDENCIES
-            </div>
-            <div>
-              <span className="block text-xl tracking-[-.08em] text-foreground">
-                1
-              </span>
-              FILE EACH
-            </div>
-          </div>
         </section>
 
-        <section id="collection" className="scroll-mt-6 pt-9 pb-16">
-          <div className="mb-7 flex items-center justify-between font-mono text-[10px] tracking-[.12em] text-muted-foreground uppercase">
-            <span>01 — The collection</span>
-            <span className="hidden sm:block">
-              Built for React. Yours to customize.
-            </span>
-          </div>
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-5">
+        <section id="collection" className="pt-5 pb-16">
+          <div className="sticky top-0 z-10 flex flex-wrap items-center gap-x-4 gap-y-3 border-b bg-background py-3">
+            <div className="relative w-full sm:w-56">
+              <Search className="absolute top-2.5 left-3 size-3.5 text-muted-foreground" />
+              <Input
+                aria-label="Search loaders"
+                placeholder={`Search ${items.length} loaders...`}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="h-9 pl-8 text-xs md:text-xs"
+              />
+              {query && (
+                <Button
+                  variant="ghost"
+                  size="icon-xs"
+                  className="absolute top-1 right-1"
+                  aria-label="Clear search"
+                  onClick={() => setQuery("")}
+                >
+                  <X />
+                </Button>
+              )}
+            </div>
             <div
-              className="flex flex-wrap items-center gap-1"
+              className="flex min-w-0 flex-1 basis-0 [scrollbar-width:none] items-center gap-1 overflow-x-auto"
               role="group"
               aria-label="Filter by loader family"
             >
@@ -179,7 +171,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                   size="sm"
                   aria-pressed={category === filter.id}
                   onClick={() => setCategory(filter.id)}
-                  className="gap-2 px-3 text-xs font-medium tracking-normal normal-case"
+                  className="shrink-0 gap-2 px-3 text-xs font-medium tracking-normal normal-case"
                 >
                   {filter.icon && <filter.icon />}
                   {filter.label}
@@ -189,28 +181,14 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                 </Button>
               ))}
             </div>
-            <div className="flex w-full items-center gap-3 sm:w-auto">
-              <div className="relative flex-1 sm:w-48">
-                <Search className="absolute top-2.5 left-3 size-3.5 text-muted-foreground" />
-                <Input
-                  aria-label="Search loaders"
-                  placeholder="Find your next loader..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="h-9 pl-8 text-xs md:text-xs"
-                />
-                {query && (
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    className="absolute top-1 right-1"
-                    aria-label="Clear search"
-                    onClick={() => setQuery("")}
-                  >
-                    <X />
-                  </Button>
-                )}
-              </div>
+            <div className="flex shrink-0 items-center gap-3">
+              <span
+                aria-live="polite"
+                className="font-mono text-[10px] whitespace-nowrap text-muted-foreground"
+              >
+                {(query || category !== "all") &&
+                  `${filtered.length} ${filtered.length === 1 ? "result" : "results"}`}
+              </span>
               <span className="h-5 border-l" />
               <div
                 className="flex gap-1"
@@ -246,7 +224,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
           </div>
 
           <div
-            className={`loader-gallery grid border-t border-l sm:grid-cols-2 lg:grid-cols-3 ${paused ? "animations-paused" : ""}`}
+            className={`loader-gallery grid border-l sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${paused ? "animations-paused" : ""}`}
             data-color={color}
           >
             {filtered.map((item) => {
@@ -302,9 +280,11 @@ export function LoaderGallery({ items }: { items: Item[] }) {
             })}
           </div>
           {!filtered.length && (
-            <div className="border border-dashed py-20 text-center">
+            <div className="mt-6 border border-dashed py-20 text-center">
               <Search className="mx-auto mb-4 size-6 text-muted-foreground" />
-              <h2 className="text-sm font-medium">No loaders found</h2>
+              <h2 className="font-heading text-base font-medium">
+                No loaders found
+              </h2>
               <p className="mt-2 text-xs text-muted-foreground">
                 Try a different name or explore another family.
               </p>
@@ -321,10 +301,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               </Button>
             </div>
           )}
-          <div className="mt-6 flex justify-between font-mono text-[10px] text-muted-foreground">
-            <span aria-live="polite">
-              Showing {filtered.length} of {items.length} loaders
-            </span>
+          <div className="mt-6 flex justify-end font-mono text-[10px] text-muted-foreground">
             <span>Less waiting. More character.</span>
           </div>
         </section>
@@ -335,7 +312,9 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               <Terminal className="size-4" />
             </span>
             <div>
-              <h2 className="text-sm font-medium">One command. All yours.</h2>
+              <h2 className="font-heading text-base font-medium">
+                One command. All yours.
+              </h2>
               <p className="mt-2 text-xs leading-5 text-muted-foreground">
                 No animation library. No extra dependencies. Just React and CSS.
               </p>
