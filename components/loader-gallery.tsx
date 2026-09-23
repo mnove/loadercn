@@ -1,23 +1,18 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import { useTheme } from "next-themes"
 import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
-  Check,
   Code2,
-  Copy,
   Grid2X2,
-  Moon,
   Orbit,
   LoaderCircle,
   Pause,
   Play,
   Search,
-  Sun,
   Terminal,
   X,
 } from "lucide-react"
@@ -32,6 +27,10 @@ import {
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CodeBlock } from "@/components/code-block"
+import { CopyButton } from "@/components/copy-button"
+import { InstallCommand, useOrigin } from "@/components/install-command"
+import { SiteFooter } from "@/components/site-footer"
+import { SiteHeader } from "@/components/site-header"
 import { loaderComponents } from "@/lib/loaders"
 
 type Item = {
@@ -42,74 +41,15 @@ type Item = {
   source: string
 }
 
-function CopyButton({
-  value,
-  label = "Copy",
-  className,
-}: {
-  value: string
-  label?: string
-  className?: string
-}) {
-  const [status, setStatus] = useState<"idle" | "copied" | "error">("idle")
-  useEffect(() => {
-    if (status === "idle") return
-    const timeout = setTimeout(() => setStatus("idle"), 2200)
-    return () => clearTimeout(timeout)
-  }, [status])
-  return (
-    <Button
-      variant="outline"
-      size="sm"
-      className={className}
-      onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(value)
-          setStatus("copied")
-        } catch {
-          setStatus("error")
-        }
-      }}
-    >
-      {status === "copied" ? <Check /> : <Copy />}
-      <span aria-live="polite">
-        {status === "copied"
-          ? "Copied"
-          : status === "error"
-            ? "Copy failed. Try again"
-            : label}
-      </span>
-    </Button>
-  )
-}
-
-function Mark({ small = false }: { small?: boolean }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`grid grid-cols-3 gap-[3px] ${small ? "size-5" : "size-6"}`}
-    >
-      {Array.from({ length: 9 }, (_, i) => (
-        <span
-          key={i}
-          className={i === 2 || i === 6 ? "bg-primary/30" : "bg-primary"}
-        />
-      ))}
-    </span>
-  )
-}
-
 export function LoaderGallery({ items }: { items: Item[] }) {
   const [category, setCategory] = useState("all")
   const [query, setQuery] = useState("")
   const [paused, setPaused] = useState(false)
   const [color, setColor] = useState("default")
   const [selected, setSelected] = useState<Item | null>(null)
-  const [guideOpen, setGuideOpen] = useState(false)
   const [size, setSize] = useState(48)
   const [speed, setSpeed] = useState(1.6)
-  const [origin, setOrigin] = useState("")
-  const { resolvedTheme, setTheme } = useTheme()
+  const origin = useOrigin()
   const filtered = items.filter(
     (item) =>
       (category === "all" || item.category === category) &&
@@ -127,7 +67,6 @@ export function LoaderGallery({ items }: { items: Item[] }) {
   const command = (name: string) =>
     `npx shadcn@latest add ${origin}/r/${name}.json`
   const openItem = (item: Item) => {
-    setOrigin(window.location.origin)
     setSize(48)
     setSpeed(1.6)
     setSelected(item)
@@ -135,118 +74,65 @@ export function LoaderGallery({ items }: { items: Item[] }) {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b">
-        <div className="mx-auto flex h-20 max-w-[1280px] items-center justify-between px-6 md:px-10">
-          <Link
-            href="/"
-            aria-label="loadercn home"
-            className="flex items-center gap-3"
-          >
-            <Mark />
-            <span className="text-xl font-semibold tracking-[-.06em]">
-              loadercn<span className="text-primary">.</span>
-            </span>
-          </Link>
-          <nav
-            aria-label="Main navigation"
-            className="flex items-center gap-5 md:gap-8"
-          >
-            <a
-              href="#collection"
-              className="hidden text-xs font-medium sm:block"
-            >
-              Components
-            </a>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="px-0 text-xs font-normal tracking-normal normal-case"
-              onClick={() => setGuideOpen(true)}
-            >
-              How to use <ArrowUpRight className="size-3" />
-            </Button>
-            <span className="h-5 border-l" />
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              aria-label="Toggle color theme"
-              onClick={() =>
-                setTheme(resolvedTheme === "dark" ? "light" : "dark")
-              }
-            >
-              <Sun className="hidden dark:block" />
-              <Moon className="dark:hidden" />
-            </Button>
-          </nav>
-        </div>
-      </header>
-
+      <SiteHeader />
       <main className="mx-auto max-w-[1280px] px-6 md:px-10">
-        <section className="relative flex flex-col justify-between gap-10 border-b py-16 md:flex-row md:items-end md:py-24">
-          <div>
-            <div className="mb-7 flex items-center gap-2.5 font-mono text-[10px] tracking-[.16em] text-muted-foreground uppercase">
-              <span className="size-1.5 rounded-full bg-primary" />
-              Small components. Continuous possibilities.
-            </div>
-            <h1 className="text-[clamp(3rem,6.5vw,5.5rem)] leading-[1.02] font-medium tracking-[-.065em]">
-              Worth the wait<span className="text-primary">.</span>
-            </h1>
-            <p className="mt-6 max-w-[450px] text-sm leading-7 text-muted-foreground">
-              A considered collection of loaders for your next interface.
-              <br className="hidden sm:block" /> Copy the code. Make it yours.
-              Keep things moving.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button
-                nativeButton={false}
-                render={<a href="#collection" />}
-                className="gap-3 bg-foreground text-background hover:bg-foreground/85"
-              >
-                Explore loaders <ArrowDown />
-              </Button>
-              <Button
-                variant="outline"
-                className="gap-3"
-                onClick={() => setGuideOpen(true)}
-              >
-                <Terminal /> Get started
-              </Button>
-            </div>
+        <section className="flex flex-col items-center border-b bg-[radial-gradient(ellipse_60%_70%_at_50%_0%,color-mix(in_oklch,var(--primary)_12%,transparent),transparent)] py-16 text-center md:py-24">
+          <h1 className="font-heading text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.05] font-medium tracking-[-.03em]">
+            Worth the wait<span className="text-primary">.</span>
+          </h1>
+          <p className="mt-5 max-w-[440px] text-sm leading-7 text-muted-foreground *:font-medium *:text-foreground">
+            <strong>{items.length} loaders</strong> with their CSS built in and{" "}
+            <strong>zero dependencies</strong>. Copy the code, or install with
+            the <strong>shadcn CLI</strong>.
+          </p>
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <Button
+              nativeButton={false}
+              render={<a href="#collection" />}
+              className="gap-3 bg-foreground text-background hover:bg-foreground/85"
+            >
+              Explore loaders <ArrowDown />
+            </Button>
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/docs" />}
+              className="gap-3"
+            >
+              <Terminal /> Get started
+            </Button>
           </div>
-          <div className="flex gap-8 font-mono text-[10px] leading-6 tracking-wide text-muted-foreground md:pb-1">
-            <div>
-              <span className="block text-2xl tracking-[-.08em] text-foreground">
-                {items.length}
-              </span>
-              LOADERS
-            </div>
-            <div>
-              <span className="block text-2xl tracking-[-.08em] text-foreground">
-                {String(
-                  new Set(items.map((item) => item.category)).size
-                ).padStart(2, "0")}
-              </span>
-              FAMILIES
-            </div>
-            <div>
-              <span className="block text-2xl tracking-[-.08em] text-foreground">
-                ∞
-              </span>
-              POSSIBILITIES
-            </div>
-          </div>
+          <InstallCommand
+            name="classic-ring"
+            className="mt-8 w-full max-w-md text-left"
+          />
         </section>
 
-        <section id="collection" className="scroll-mt-6 pt-9 pb-16">
-          <div className="mb-7 flex items-center justify-between font-mono text-[10px] tracking-[.12em] text-muted-foreground uppercase">
-            <span>01 — The collection</span>
-            <span className="hidden sm:block">
-              Built for React. Yours to customize.
-            </span>
-          </div>
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-5">
+        <section id="collection" className="pt-5 pb-16">
+          <div className="sticky top-0 z-10 flex flex-wrap items-center gap-x-4 gap-y-3 border-b bg-background py-3">
+            <div className="relative w-full sm:w-56">
+              <Search className="absolute top-2.5 left-3 size-3.5 text-muted-foreground" />
+              <Input
+                aria-label="Search loaders"
+                placeholder={`Search ${items.length} loaders...`}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="h-9 pl-8 text-xs md:text-xs"
+              />
+              {query && (
+                <Button
+                  variant="ghost"
+                  size="icon-xs"
+                  className="absolute top-1 right-1"
+                  aria-label="Clear search"
+                  onClick={() => setQuery("")}
+                >
+                  <X />
+                </Button>
+              )}
+            </div>
             <div
-              className="flex flex-wrap items-center gap-1"
+              className="flex min-w-0 flex-1 basis-0 [scrollbar-width:none] items-center gap-1 overflow-x-auto"
               role="group"
               aria-label="Filter by loader family"
             >
@@ -285,7 +171,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                   size="sm"
                   aria-pressed={category === filter.id}
                   onClick={() => setCategory(filter.id)}
-                  className="gap-2 px-3 text-xs font-medium tracking-normal normal-case"
+                  className="shrink-0 gap-2 px-3 text-xs font-medium tracking-normal normal-case"
                 >
                   {filter.icon && <filter.icon />}
                   {filter.label}
@@ -295,28 +181,14 @@ export function LoaderGallery({ items }: { items: Item[] }) {
                 </Button>
               ))}
             </div>
-            <div className="flex w-full items-center gap-3 sm:w-auto">
-              <div className="relative flex-1 sm:w-48">
-                <Search className="absolute top-2.5 left-3 size-3.5 text-muted-foreground" />
-                <Input
-                  aria-label="Search loaders"
-                  placeholder="Find your next loader..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="h-9 pl-8 text-xs md:text-xs"
-                />
-                {query && (
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    className="absolute top-1 right-1"
-                    aria-label="Clear search"
-                    onClick={() => setQuery("")}
-                  >
-                    <X />
-                  </Button>
-                )}
-              </div>
+            <div className="flex shrink-0 items-center gap-3">
+              <span
+                aria-live="polite"
+                className="font-mono text-[10px] whitespace-nowrap text-muted-foreground"
+              >
+                {(query || category !== "all") &&
+                  `${filtered.length} ${filtered.length === 1 ? "result" : "results"}`}
+              </span>
               <span className="h-5 border-l" />
               <div
                 className="flex gap-1"
@@ -352,7 +224,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
           </div>
 
           <div
-            className={`loader-gallery grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ${paused ? "animations-paused" : ""}`}
+            className={`loader-gallery grid border-l sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${paused ? "animations-paused" : ""}`}
             data-color={color}
           >
             {filtered.map((item) => {
@@ -361,7 +233,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               return (
                 <article
                   key={item.name}
-                  className="group border bg-card transition-colors hover:border-foreground/30"
+                  className="group border-r border-b bg-card transition-colors hover:bg-muted/40"
                 >
                   <button
                     type="button"
@@ -408,9 +280,11 @@ export function LoaderGallery({ items }: { items: Item[] }) {
             })}
           </div>
           {!filtered.length && (
-            <div className="border border-dashed py-20 text-center">
+            <div className="mt-6 border border-dashed py-20 text-center">
               <Search className="mx-auto mb-4 size-6 text-muted-foreground" />
-              <h2 className="text-sm font-medium">No loaders found</h2>
+              <h2 className="font-heading text-base font-medium">
+                No loaders found
+              </h2>
               <p className="mt-2 text-xs text-muted-foreground">
                 Try a different name or explore another family.
               </p>
@@ -427,10 +301,7 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               </Button>
             </div>
           )}
-          <div className="mt-6 flex justify-between font-mono text-[10px] text-muted-foreground">
-            <span aria-live="polite">
-              Showing {filtered.length} of {items.length} loaders
-            </span>
+          <div className="mt-6 flex justify-end font-mono text-[10px] text-muted-foreground">
             <span>Less waiting. More character.</span>
           </div>
         </section>
@@ -441,7 +312,9 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               <Terminal className="size-4" />
             </span>
             <div>
-              <h2 className="text-sm font-medium">One command. All yours.</h2>
+              <h2 className="font-heading text-base font-medium">
+                One command. All yours.
+              </h2>
               <p className="mt-2 text-xs leading-5 text-muted-foreground">
                 No animation library. No extra dependencies. Just React and CSS.
               </p>
@@ -449,29 +322,15 @@ export function LoaderGallery({ items }: { items: Item[] }) {
           </div>
           <Button
             variant="ghost"
-            onClick={() => setGuideOpen(true)}
+            nativeButton={false}
+            render={<Link href="/docs" />}
             className="justify-start px-0 sm:px-4"
           >
             Install with shadcn <ArrowRight />
           </Button>
         </section>
       </main>
-      <footer className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-5 px-6 pb-8 text-[10px] text-muted-foreground md:px-10">
-        <div className="flex items-center gap-2.5">
-          <Mark small />
-          <span className="text-xs font-medium text-foreground">loadercn.</span>
-          <span className="ml-2">A little motion goes a long way.</span>
-        </div>
-        <a
-          href="https://ui.shadcn.com/docs/registry"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-1 hover:text-foreground"
-        >
-          shadcn registry compatible <ArrowUpRight className="size-3" />
-        </a>
-      </footer>
-
+      <SiteFooter />
       <Dialog
         open={!!selected}
         onOpenChange={(open) => {
@@ -577,55 +436,6 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               </Tabs>
             </>
           )}
-        </DialogContent>
-      </Dialog>
-      <Dialog open={guideOpen} onOpenChange={setGuideOpen}>
-        <DialogContent className="max-h-[90svh] overflow-y-auto sm:max-w-xl">
-          <DialogHeader>
-            <DialogTitle>A little motion. In minutes.</DialogTitle>
-            <DialogDescription>
-              Pick a loader, bring it into your project, and make it your own.
-            </DialogDescription>
-          </DialogHeader>
-          <ol className="space-y-6 text-sm">
-            <li>
-              <span className="mb-2 block font-medium">01 / Set up shadcn</span>
-              <p className="mb-3 text-xs leading-6 text-muted-foreground">
-                Already using shadcn? You can skip this step.
-              </p>
-              <div className="flex items-center justify-between gap-2 border bg-muted/50 p-3">
-                <code className="text-xs">npx shadcn@latest init</code>
-                <CopyButton value="npx shadcn@latest init" />
-              </div>
-            </li>
-            <li>
-              <span className="mb-2 block font-medium">
-                02 / Find your rhythm
-              </span>
-              <p className="text-xs leading-6 text-muted-foreground">
-                Open any loader in the collection. Copy its install command from
-                the CLI tab and run it in your project.
-              </p>
-            </li>
-            <li>
-              <span className="mb-2 block font-medium">03 / Make it yours</span>
-              <p className="text-xs leading-6 text-muted-foreground">
-                Adjust size, speed, and color. The component lives in your
-                codebase, so every detail is yours to change.
-              </p>
-            </li>
-          </ol>
-          <div className="border-t pt-5 text-xs leading-6 text-muted-foreground">
-            Prefer to copy and paste? Every loader includes its complete React
-            source in the Source tab. No shadcn setup required.
-          </div>
-          <a
-            href="/r/registry.json"
-            target="_blank"
-            className="flex items-center gap-2 text-xs underline underline-offset-4"
-          >
-            View registry JSON <ArrowUpRight className="size-3" />
-          </a>
         </DialogContent>
       </Dialog>
     </div>
