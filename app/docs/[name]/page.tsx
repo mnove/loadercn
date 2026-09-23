@@ -4,7 +4,8 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { LoaderDetail } from "@/components/loader-detail"
-import { getLoaderItem, getLoaderSummaries } from "@/lib/loader-items"
+import { SITE_URL, getLoaderItem, getLoaderSummaries } from "@/lib/loader-items"
+import { loaderNotes } from "@/lib/loader-notes"
 import { CATEGORIES } from "@/lib/loaders"
 
 // Only the loaders in the registry exist; anything else is a 404.
@@ -31,6 +32,7 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `/docs/${item.name}` },
     openGraph: { title, description, url: `/docs/${item.name}` },
+    twitter: { card: "summary_large_image", title, description },
   }
 }
 
@@ -49,9 +51,53 @@ export default async function LoaderPage({
   const index = siblings.findIndex((i) => i.name === item.name)
   const previous = siblings[index - 1]
   const next = siblings[index + 1]
+  const note = loaderNotes[item.name]
+
+  const url = `${SITE_URL}/docs/${item.name}`
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        name: item.title,
+        description: note ? `${item.description} ${note}` : item.description,
+        url,
+        image: `${url}/opengraph-image`,
+        codeSampleType: "full",
+        programmingLanguage: ["TypeScript", "React", "CSS"],
+        runtimePlatform: "React",
+        codeRepository: `${SITE_URL}/r/${item.name}.json`,
+        isPartOf: { "@type": "CreativeWork", name: "loadercn", url: SITE_URL },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "loadercn",
+            item: SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Docs",
+            item: `${SITE_URL}/docs`,
+          },
+          { "@type": "ListItem", position: 3, name: item.title, item: url },
+        ],
+      },
+    ],
+  }
 
   return (
     <main className="mx-auto max-w-4xl px-6 pb-14 md:px-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <section className="border-b py-12 md:py-16">
         <p className="font-mono text-[10px] tracking-[.12em] text-muted-foreground uppercase">
           {categoryLabel(item.category)} loader
@@ -69,6 +115,15 @@ export default async function LoaderPage({
         <h2 className="sr-only">Preview and installation</h2>
         <LoaderDetail item={item} previewClassName="h-64" />
       </section>
+
+      {note && (
+        <section className="border-t py-10">
+          <h2 className="font-heading text-base font-medium">When to use it</h2>
+          <p className="mt-2 max-w-[560px] text-sm leading-7 text-muted-foreground">
+            {note}
+          </p>
+        </section>
+      )}
 
       <section className="border-t py-10">
         <h2 className="font-heading text-base font-medium">Props</h2>

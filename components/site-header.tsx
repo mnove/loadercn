@@ -5,7 +5,9 @@ import { useTheme } from "next-themes"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
+import { GitHubIcon } from "@/components/icons"
 import { Mark } from "@/components/mark"
+import { GITHUB_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 export function SiteHeader({
@@ -53,17 +55,28 @@ export function SiteHeader({
             Docs
           </Link>
           <span className="h-5 border-l" />
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Toggle color theme"
-            onClick={() =>
-              setTheme(resolvedTheme === "dark" ? "light" : "dark")
-            }
-          >
-            <Sun className="hidden dark:block" />
-            <Moon className="dark:hidden" />
-          </Button>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              nativeButton={false}
+              render={<a href={GITHUB_URL} target="_blank" rel="noreferrer" />}
+              aria-label="loadercn on GitHub"
+            >
+              <GitHubIcon />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              aria-label="Toggle color theme"
+              onClick={() =>
+                setTheme(resolvedTheme === "dark" ? "light" : "dark")
+              }
+            >
+              <Sun className="hidden dark:block" />
+              <Moon className="dark:hidden" />
+            </Button>
+          </div>
         </nav>
       </div>
     </header>
