@@ -1,23 +1,18 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import { useTheme } from "next-themes"
 import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
-  Check,
   Code2,
-  Copy,
   Grid2X2,
-  Moon,
   Orbit,
   LoaderCircle,
   Pause,
   Play,
   Search,
-  Sun,
   Terminal,
   X,
 } from "lucide-react"
@@ -32,6 +27,10 @@ import {
 } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CodeBlock } from "@/components/code-block"
+import { CopyButton } from "@/components/copy-button"
+import { InstallCommand, useOrigin } from "@/components/install-command"
+import { SiteFooter } from "@/components/site-footer"
+import { SiteHeader } from "@/components/site-header"
 import { loaderComponents } from "@/lib/loaders"
 
 type Item = {
@@ -42,96 +41,15 @@ type Item = {
   source: string
 }
 
-function CopyButton({
-  value,
-  label = "Copy",
-  className,
-}: {
-  value: string
-  label?: string
-  className?: string
-}) {
-  const [status, setStatus] = useState<"idle" | "copied" | "error">("idle")
-  useEffect(() => {
-    if (status === "idle") return
-    const timeout = setTimeout(() => setStatus("idle"), 2200)
-    return () => clearTimeout(timeout)
-  }, [status])
-  return (
-    <Button
-      variant="outline"
-      size="sm"
-      className={className}
-      onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(value)
-          setStatus("copied")
-        } catch {
-          setStatus("error")
-        }
-      }}
-    >
-      {status === "copied" ? <Check /> : <Copy />}
-      <span aria-live="polite">
-        {status === "copied"
-          ? "Copied"
-          : status === "error"
-            ? "Copy failed. Try again"
-            : label}
-      </span>
-    </Button>
-  )
-}
-
-// A mix of families for the hero strip.
-const SHOWCASE = [
-  "grid-flip",
-  "orbit-comet",
-  "classic-dual-ring",
-  "grid-checker",
-  "orbit-nested",
-  "classic-typing",
-  "classic-ring",
-  "grid-spiral",
-  "orbit-atom",
-  "classic-equalizer",
-  "grid-wave",
-  "orbit-eclipse",
-  "classic-bouncing-dots",
-  "grid-snake",
-  "orbit-trio",
-  "classic-ripple",
-  "grid-ripple",
-  "orbit-satellite",
-] as const satisfies readonly (keyof typeof loaderComponents)[]
-
-function Mark({ small = false }: { small?: boolean }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={`grid grid-cols-3 gap-[3px] ${small ? "size-5" : "size-6"}`}
-    >
-      {Array.from({ length: 9 }, (_, i) => (
-        <span
-          key={i}
-          className={i === 2 || i === 6 ? "bg-primary/30" : "bg-primary"}
-        />
-      ))}
-    </span>
-  )
-}
-
 export function LoaderGallery({ items }: { items: Item[] }) {
   const [category, setCategory] = useState("all")
   const [query, setQuery] = useState("")
   const [paused, setPaused] = useState(false)
   const [color, setColor] = useState("default")
   const [selected, setSelected] = useState<Item | null>(null)
-  const [guideOpen, setGuideOpen] = useState(false)
   const [size, setSize] = useState(48)
   const [speed, setSpeed] = useState(1.6)
-  const [origin, setOrigin] = useState("")
-  const { resolvedTheme, setTheme } = useTheme()
+  const origin = useOrigin()
   const filtered = items.filter(
     (item) =>
       (category === "all" || item.category === category) &&
@@ -149,7 +67,6 @@ export function LoaderGallery({ items }: { items: Item[] }) {
   const command = (name: string) =>
     `npx shadcn@latest add ${origin}/r/${name}.json`
   const openItem = (item: Item) => {
-    setOrigin(window.location.origin)
     setSize(48)
     setSpeed(1.6)
     setSelected(item)
@@ -157,81 +74,20 @@ export function LoaderGallery({ items }: { items: Item[] }) {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b">
-        <div className="mx-auto flex h-20 max-w-[1280px] items-center justify-between px-6 md:px-10">
-          <Link
-            href="/"
-            aria-label="loadercn home"
-            className="flex items-center gap-3"
-          >
-            <Mark />
-            <span className="text-xl font-semibold tracking-[-.06em]">
-              loadercn<span className="text-primary">.</span>
-            </span>
-          </Link>
-          <nav
-            aria-label="Main navigation"
-            className="flex items-center gap-5 md:gap-8"
-          >
-            <a
-              href="#collection"
-              className="hidden text-xs font-medium sm:block"
-            >
-              Components
-            </a>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="px-0 text-xs font-normal tracking-normal normal-case"
-              onClick={() => setGuideOpen(true)}
-            >
-              How to use <ArrowUpRight className="size-3" />
-            </Button>
-            <span className="h-5 border-l" />
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              aria-label="Toggle color theme"
-              onClick={() =>
-                setTheme(resolvedTheme === "dark" ? "light" : "dark")
-              }
-            >
-              <Sun className="hidden dark:block" />
-              <Moon className="dark:hidden" />
-            </Button>
-          </nav>
-        </div>
-      </header>
-
+      <SiteHeader />
       <main className="mx-auto max-w-[1280px] px-6 md:px-10">
-        <section className="flex flex-col items-center border-b py-16 text-center md:py-24">
+        <section className="flex flex-col items-center border-b bg-[radial-gradient(ellipse_60%_70%_at_50%_0%,color-mix(in_oklch,var(--primary)_12%,transparent),transparent)] py-16 text-center md:py-24">
           <div className="mb-6 flex items-center gap-2.5 font-mono text-[10px] tracking-[.16em] text-muted-foreground uppercase">
             <span className="size-1.5 rounded-full bg-primary" />
-            Open source loaders for shadcn/ui
+            Copy-paste loaders for shadcn/ui
           </div>
           <h1 className="text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.05] font-medium tracking-[-.06em]">
             Worth the wait<span className="text-primary">.</span>
           </h1>
           <p className="mt-5 max-w-[420px] text-sm leading-7 text-muted-foreground">
-            A considered collection of loaders for your next interface. Copy the
-            code. Make it yours. Keep things moving.
+            Each loader is a single React file with its CSS inside. No animation
+            library, no dependencies. Paste it in or add it with the shadcn CLI.
           </p>
-          <div
-            aria-hidden="true"
-            className="mt-10 flex w-full max-w-4xl items-center justify-center gap-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]"
-          >
-            {SHOWCASE.map((name) => {
-              const Loader = loaderComponents[name]
-              return (
-                <span
-                  key={name}
-                  className="flex size-10 shrink-0 items-center justify-center"
-                >
-                  <Loader size={name.startsWith("grid") ? 26 : 32} />
-                </span>
-              )
-            })}
-          </div>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Button
               nativeButton={false}
@@ -242,12 +98,17 @@ export function LoaderGallery({ items }: { items: Item[] }) {
             </Button>
             <Button
               variant="outline"
+              nativeButton={false}
+              render={<Link href="/docs" />}
               className="gap-3"
-              onClick={() => setGuideOpen(true)}
             >
               <Terminal /> Get started
             </Button>
           </div>
+          <InstallCommand
+            name="classic-ring"
+            className="mt-8 w-full max-w-md text-left"
+          />
           <div className="mt-12 flex gap-10 font-mono text-[10px] leading-6 tracking-wide text-muted-foreground">
             <div>
               <span className="block text-xl tracking-[-.08em] text-foreground">
@@ -257,17 +118,15 @@ export function LoaderGallery({ items }: { items: Item[] }) {
             </div>
             <div>
               <span className="block text-xl tracking-[-.08em] text-foreground">
-                {String(
-                  new Set(items.map((item) => item.category)).size
-                ).padStart(2, "0")}
+                0
               </span>
-              FAMILIES
+              DEPENDENCIES
             </div>
             <div>
               <span className="block text-xl tracking-[-.08em] text-foreground">
-                ∞
+                1
               </span>
-              POSSIBILITIES
+              FILE EACH
             </div>
           </div>
         </section>
@@ -484,29 +343,15 @@ export function LoaderGallery({ items }: { items: Item[] }) {
           </div>
           <Button
             variant="ghost"
-            onClick={() => setGuideOpen(true)}
+            nativeButton={false}
+            render={<Link href="/docs" />}
             className="justify-start px-0 sm:px-4"
           >
             Install with shadcn <ArrowRight />
           </Button>
         </section>
       </main>
-      <footer className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-5 px-6 pb-8 text-[10px] text-muted-foreground md:px-10">
-        <div className="flex items-center gap-2.5">
-          <Mark small />
-          <span className="text-xs font-medium text-foreground">loadercn.</span>
-          <span className="ml-2">A little motion goes a long way.</span>
-        </div>
-        <a
-          href="https://ui.shadcn.com/docs/registry"
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-1 hover:text-foreground"
-        >
-          shadcn registry compatible <ArrowUpRight className="size-3" />
-        </a>
-      </footer>
-
+      <SiteFooter />
       <Dialog
         open={!!selected}
         onOpenChange={(open) => {
@@ -612,55 +457,6 @@ export function LoaderGallery({ items }: { items: Item[] }) {
               </Tabs>
             </>
           )}
-        </DialogContent>
-      </Dialog>
-      <Dialog open={guideOpen} onOpenChange={setGuideOpen}>
-        <DialogContent className="max-h-[90svh] overflow-y-auto sm:max-w-xl">
-          <DialogHeader>
-            <DialogTitle>A little motion. In minutes.</DialogTitle>
-            <DialogDescription>
-              Pick a loader, bring it into your project, and make it your own.
-            </DialogDescription>
-          </DialogHeader>
-          <ol className="space-y-6 text-sm">
-            <li>
-              <span className="mb-2 block font-medium">01 / Set up shadcn</span>
-              <p className="mb-3 text-xs leading-6 text-muted-foreground">
-                Already using shadcn? You can skip this step.
-              </p>
-              <div className="flex items-center justify-between gap-2 border bg-muted/50 p-3">
-                <code className="text-xs">npx shadcn@latest init</code>
-                <CopyButton value="npx shadcn@latest init" />
-              </div>
-            </li>
-            <li>
-              <span className="mb-2 block font-medium">
-                02 / Find your rhythm
-              </span>
-              <p className="text-xs leading-6 text-muted-foreground">
-                Open any loader in the collection. Copy its install command from
-                the CLI tab and run it in your project.
-              </p>
-            </li>
-            <li>
-              <span className="mb-2 block font-medium">03 / Make it yours</span>
-              <p className="text-xs leading-6 text-muted-foreground">
-                Adjust size, speed, and color. The component lives in your
-                codebase, so every detail is yours to change.
-              </p>
-            </li>
-          </ol>
-          <div className="border-t pt-5 text-xs leading-6 text-muted-foreground">
-            Prefer to copy and paste? Every loader includes its complete React
-            source in the Source tab. No shadcn setup required.
-          </div>
-          <a
-            href="/r/registry.json"
-            target="_blank"
-            className="flex items-center gap-2 text-xs underline underline-offset-4"
-          >
-            View registry JSON <ArrowUpRight className="size-3" />
-          </a>
         </DialogContent>
       </Dialog>
     </div>
