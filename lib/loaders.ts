@@ -52,6 +52,12 @@ import { OrbitEclipse } from "@/registry/loaders/orbit-eclipse"
 import { OrbitResonance } from "@/registry/loaders/orbit-resonance"
 import { OrbitTrio } from "@/registry/loaders/orbit-trio"
 
+export const CATEGORIES = [
+  { id: "grid", label: "Grid" },
+  { id: "orbital", label: "Orbital" },
+  { id: "classic", label: "Classic" },
+] as const
+
 export const loaderComponents = {
   "classic-dot-stream": ClassicDotStream,
   "classic-liquid-stream": ClassicLiquidStream,

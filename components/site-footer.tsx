@@ -1,5 +1,7 @@
 import { ArrowUpRight } from "lucide-react"
+import { GitHubIcon } from "@/components/icons"
 import { Mark } from "@/components/mark"
+import { GITHUB_URL } from "@/lib/site"
 
 export function SiteFooter() {
   return (
@@ -9,14 +11,24 @@ export function SiteFooter() {
         <span className="text-xs font-medium text-foreground">loadercn.</span>
         <span className="ml-2">A little motion goes a long way.</span>
       </div>
-      <a
-        href="https://ui.shadcn.com/docs/registry"
-        target="_blank"
-        rel="noreferrer"
-        className="flex items-center gap-1 hover:text-foreground"
-      >
-        shadcn registry compatible <ArrowUpRight className="size-3" />
-      </a>
+      <div className="flex items-center gap-5">
+        <a
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-1.5 hover:text-foreground"
+        >
+          <GitHubIcon className="size-3" /> GitHub
+        </a>
+        <a
+          href="https://ui.shadcn.com/docs/registry"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-1 hover:text-foreground"
+        >
+          shadcn registry compatible <ArrowUpRight className="size-3" />
+        </a>
+      </div>
     </footer>
   )
 }

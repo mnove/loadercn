@@ -3,6 +3,8 @@ import { Geist_Mono, Inter, Outfit } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import { SITE_URL } from "@/lib/loader-items"
 import { cn } from "@/lib/utils"
 
 const outfitHeading = Outfit({ subsets: ["latin"], variable: "--font-heading" })
@@ -15,6 +17,7 @@ const fontMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "loadercn — Worth the wait.",
   description:
     "A considered collection of animated grid, orbital, and classic loaders. Preview, customize, and copy React components or install with the shadcn CLI.",
@@ -38,7 +41,9 @@ export default function RootLayout({
       )}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
