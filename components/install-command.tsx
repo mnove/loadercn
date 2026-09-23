@@ -41,10 +41,7 @@ export function InstallCommand({
 
   return (
     <Field className={className}>
-      <FieldLabel
-        htmlFor="install-command"
-        className="font-mono text-[10px] tracking-[.12em] text-muted-foreground uppercase"
-      >
+      <FieldLabel htmlFor="install-command" className="sr-only">
         Install with one command
       </FieldLabel>
       <InputGroup>

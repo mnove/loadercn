@@ -19,6 +19,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -28,9 +35,10 @@ import {
 import { GitHubIcon } from "@/components/icons"
 import { InstallCommand } from "@/components/install-command"
 import { LoaderDetail } from "@/components/loader-detail"
+import { PreviewColorPicker } from "@/components/preview-color-picker"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { loaderComponents } from "@/lib/loaders"
+import { CATEGORIES, loaderComponents } from "@/lib/loaders"
 import { GITHUB_URL } from "@/lib/site"
 import type { LoaderItem } from "@/lib/loader-items"
 
@@ -38,8 +46,17 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
   const [category, setCategory] = useState("all")
   const [query, setQuery] = useState("")
   const [paused, setPaused] = useState(false)
-  const [color, setColor] = useState("default")
+  const [color, setColor] = useState<string | null>(null)
   const [selected, setSelected] = useState<LoaderItem | null>(null)
+  const filters = [
+    { id: "all", label: "All loaders", count: items.length, icon: null },
+    ...CATEGORIES.map((c) => ({
+      id: c.id as string,
+      label: c.label as string,
+      count: items.filter((item) => item.category === c.id).length,
+      icon: { grid: Grid2X2, orbital: Orbit, classic: LoaderCircle }[c.id],
+    })),
+  ]
   const filtered = items.filter(
     (item) =>
       (category === "all" || item.category === category) &&
@@ -80,7 +97,7 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
                   <Terminal /> Get started
                 </Button>
               </div>
-              <div className="mt-8 flex w-full max-w-xl flex-col gap-3 text-left sm:flex-row sm:items-end">
+              <div className="mt-8 flex w-full max-w-xl flex-col gap-3 text-left sm:flex-row sm:items-center">
                 <InstallCommand name="classic-ring" className="flex-1" />
                 <Button
                   variant="outline"
@@ -100,8 +117,8 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
 
         <div className="mx-auto max-w-[1280px] px-6 md:px-10">
           <section id="collection" className="pt-5 pb-16">
-            <div className="sticky top-0 z-10 flex flex-wrap items-center gap-x-4 gap-y-3 border-b bg-background py-3">
-              <div className="relative w-full sm:w-56">
+            <div className="sticky top-0 z-10 flex items-center gap-2 border-b bg-background py-3 sm:gap-4">
+              <div className="relative min-w-0 flex-1 xl:w-56 xl:flex-none">
                 <Search className="absolute top-2.5 left-3 size-3.5 text-muted-foreground" />
                 <Input
                   aria-label="Search loaders"
@@ -122,40 +139,13 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
                   </Button>
                 )}
               </div>
+              {/* Buttons where there's room, a select everywhere else. */}
               <div
-                className="flex min-w-0 flex-1 basis-0 [scrollbar-width:none] items-center gap-1 overflow-x-auto"
+                className="hidden min-w-0 flex-1 items-center gap-1 xl:flex"
                 role="group"
                 aria-label="Filter by loader family"
               >
-                {[
-                  {
-                    id: "all",
-                    label: "All loaders",
-                    count: items.length,
-                    icon: null,
-                  },
-                  {
-                    id: "grid",
-                    label: "Grid",
-                    count: items.filter((item) => item.category === "grid")
-                      .length,
-                    icon: Grid2X2,
-                  },
-                  {
-                    id: "orbital",
-                    label: "Orbital",
-                    count: items.filter((item) => item.category === "orbital")
-                      .length,
-                    icon: Orbit,
-                  },
-                  {
-                    id: "classic",
-                    label: "Classic",
-                    count: items.filter((item) => item.category === "classic")
-                      .length,
-                    icon: LoaderCircle,
-                  },
-                ].map((filter) => (
+                {filters.map((filter) => (
                   <Button
                     key={filter.id}
                     variant={category === filter.id ? "secondary" : "ghost"}
@@ -172,36 +162,47 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
                   </Button>
                 ))}
               </div>
-              <div className="flex shrink-0 items-center gap-3">
+              <Select
+                items={filters.map((filter) => ({
+                  value: filter.id,
+                  label: filter.label,
+                }))}
+                value={category}
+                onValueChange={(value) => value && setCategory(value)}
+              >
+                <SelectTrigger
+                  size="sm"
+                  aria-label="Filter by loader family"
+                  className="shrink-0 gap-2 text-xs xl:hidden"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {filters.map((filter) => (
+                    <SelectItem
+                      key={filter.id}
+                      value={filter.id}
+                      className="text-xs"
+                    >
+                      {filter.icon && <filter.icon />}
+                      {filter.label}
+                      <span className="ml-auto font-mono text-[10px] text-muted-foreground">
+                        {filter.count}
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <div className="flex shrink-0 items-center gap-1 sm:gap-3">
                 <span
                   aria-live="polite"
-                  className="font-mono text-[10px] whitespace-nowrap text-muted-foreground"
+                  className="hidden font-mono text-[10px] whitespace-nowrap text-muted-foreground sm:inline"
                 >
                   {(query || category !== "all") &&
                     `${filtered.length} ${filtered.length === 1 ? "result" : "results"}`}
                 </span>
-                <span className="h-5 border-l" />
-                <div
-                  className="flex gap-1"
-                  role="group"
-                  aria-label="Preview color"
-                >
-                  {["default", "orange", "blue"].map((c) => (
-                    <Button
-                      key={c}
-                      variant="ghost"
-                      size="icon-xs"
-                      aria-label={`${c} preview color`}
-                      aria-pressed={color === c}
-                      onClick={() => setColor(c)}
-                      className={`size-6 rounded-full ${color === c ? "ring-1 ring-foreground/30" : ""}`}
-                    >
-                      <span
-                        className={`size-3 rounded-full ${c === "default" ? "bg-foreground" : c === "orange" ? "bg-primary" : "bg-blue-500"}`}
-                      />
-                    </Button>
-                  ))}
-                </div>
+                <span className="hidden h-5 border-l sm:block" />
+                <PreviewColorPicker value={color} onChange={setColor} />
                 <Button
                   variant="ghost"
                   size="icon-sm"
@@ -216,7 +217,11 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
 
             <div
               className={`loader-gallery grid border-l sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ${paused ? "animations-paused" : ""}`}
-              data-color={color}
+              style={
+                color
+                  ? ({ "--preview-color": color } as React.CSSProperties)
+                  : undefined
+              }
             >
               {filtered.map((item) => {
                 const Loader =
@@ -341,7 +346,11 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
                 <DialogTitle>{selected.title}</DialogTitle>
                 <DialogDescription>{selected.description}</DialogDescription>
               </DialogHeader>
-              <LoaderDetail key={selected.name} item={selected} color={color} />
+              <LoaderDetail
+                key={selected.name}
+                item={selected}
+                color={color ?? undefined}
+              />
               <Button
                 variant="outline"
                 size="sm"

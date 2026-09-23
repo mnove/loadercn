@@ -19,10 +19,11 @@ export function toComponentName(name: string) {
 /** Live preview with size and cycle controls, plus CLI and source tabs. */
 export function LoaderDetail({
   item,
-  color = "default",
+  color,
   previewClassName,
 }: {
   item: LoaderItem
+  /** Any CSS color. Defaults to the inherited text color. */
   color?: string
   previewClassName?: string
 }) {
@@ -44,13 +45,7 @@ export function LoaderDetail({
         <Loader
           size={size}
           speed={speed}
-          className={
-            color === "orange"
-              ? "text-primary"
-              : color === "blue"
-                ? "text-blue-500"
-                : ""
-          }
+          style={color ? { color } : undefined}
         />
       </div>
       <div className="flex flex-wrap gap-x-8 gap-y-4 text-xs">
