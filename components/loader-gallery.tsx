@@ -10,6 +10,7 @@ import {
   Pause,
   Play,
   Search,
+  Star,
   Terminal,
   X,
 } from "lucide-react"
@@ -31,14 +32,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { GitHubIcon } from "@/components/icons"
 import { InstallCommand } from "@/components/install-command"
 import { LoaderDetail } from "@/components/loader-detail"
 import { PreviewColorPicker } from "@/components/preview-color-picker"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { CATEGORIES, CATEGORY_ICONS, loaderComponents } from "@/lib/loaders"
 import { GITHUB_URL } from "@/lib/site"
+import { CATEGORIES, CATEGORY_ICONS, loaderComponents } from "@/lib/loaders"
 import type { LoaderItem } from "@/lib/loader-items"
 
 export function LoaderGallery({ items }: { items: LoaderItem[] }) {
@@ -90,26 +90,19 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
                 <Button
                   variant="outline"
                   nativeButton={false}
-                  render={<Link href="/docs" />}
-                  className="gap-3"
-                >
-                  <Terminal /> Get started
-                </Button>
-              </div>
-              <div className="mt-8 flex w-full max-w-xl flex-col gap-3 text-left sm:flex-row sm:items-center">
-                <InstallCommand name="classic-ring" className="flex-1" />
-                <Button
-                  variant="outline"
-                  size="lg"
-                  nativeButton={false}
                   render={
                     <a href={GITHUB_URL} target="_blank" rel="noreferrer" />
                   }
-                  className="gap-2.5"
+                  className="gap-3"
                 >
-                  <GitHubIcon /> GitHub
+                  <Star className="fill-yellow-400 text-yellow-400" /> Star on
+                  GitHub
                 </Button>
               </div>
+              <InstallCommand
+                name="classic-ring"
+                className="mt-8 w-full max-w-xl text-left"
+              />
             </section>
           </div>
         </div>
