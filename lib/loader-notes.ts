@@ -8,6 +8,22 @@ export const loaderNotes: Record<string, string> = {
     "Fits stat cards, table rows, and live metrics. Suggests a value that is streaming in rather than a single fetch.",
   "chart-donut":
     "Fits breakdowns, usage summaries, and composition charts. A segmented alternative to a ring spinner.",
+  "chart-dot-area":
+    "Fits analytics dashboards and usage graphs. The dot matrix gives a soft, textured feel that pairs with the particle globes.",
+  "chart-dot-series":
+    "Fits comparisons, forecasts, and multi-metric views. The layered series suggest several values updating together.",
+  "chart-dot-scatter":
+    "Fits analysis, clustering, and model training. The cloud settling on a trend reads as data finding its pattern.",
+  "chart-dot-sparkline":
+    "Fits stat cards, live metrics, and monitoring views. The pulsing lead dot marks the latest value while its trail fades into the background.",
+  "chart-heartbeat":
+    "Fits monitoring, health checks, and uptime views. The trace reads as a system that is alive and being watched.",
+  "chart-dot-gauge":
+    "Fits KPIs, scores, and capacity readouts while a value is being measured.",
+  "chart-dot-radar":
+    "Fits profiles, comparisons, and multi-attribute scores. The shifting outline suggests many dimensions being evaluated.",
+  "chart-dot-bubbles":
+    "Fits market maps, portfolio views, and exploratory analysis where each point carries a third value.",
   "classic-processing":
     "Fits batch jobs, imports, and background processing. Parallel streams suggest several pieces of work moving at once.",
   "classic-liquid-processing":

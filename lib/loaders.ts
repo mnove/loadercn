@@ -2,6 +2,14 @@ import { ChartBars } from "@/registry/loaders/chart-bars"
 import { ChartLine } from "@/registry/loaders/chart-line"
 import { ChartSparkline } from "@/registry/loaders/chart-sparkline"
 import { ChartDonut } from "@/registry/loaders/chart-donut"
+import { ChartDotArea } from "@/registry/loaders/chart-dot-area"
+import { ChartDotSeries } from "@/registry/loaders/chart-dot-series"
+import { ChartDotScatter } from "@/registry/loaders/chart-dot-scatter"
+import { ChartDotSparkline } from "@/registry/loaders/chart-dot-sparkline"
+import { ChartHeartbeat } from "@/registry/loaders/chart-heartbeat"
+import { ChartDotGauge } from "@/registry/loaders/chart-dot-gauge"
+import { ChartDotRadar } from "@/registry/loaders/chart-dot-radar"
+import { ChartDotBubbles } from "@/registry/loaders/chart-dot-bubbles"
 import { ClassicProcessing } from "@/registry/loaders/classic-processing"
 import { ClassicLiquidProcessing } from "@/registry/loaders/classic-liquid-processing"
 import { ClassicTextShimmer } from "@/registry/loaders/classic-text-shimmer"
@@ -110,6 +118,14 @@ export const loaderComponents = {
   "chart-line": ChartLine,
   "chart-sparkline": ChartSparkline,
   "chart-donut": ChartDonut,
+  "chart-dot-area": ChartDotArea,
+  "chart-dot-series": ChartDotSeries,
+  "chart-dot-scatter": ChartDotScatter,
+  "chart-dot-sparkline": ChartDotSparkline,
+  "chart-heartbeat": ChartHeartbeat,
+  "chart-dot-gauge": ChartDotGauge,
+  "chart-dot-radar": ChartDotRadar,
+  "chart-dot-bubbles": ChartDotBubbles,
 
   "classic-processing": ClassicProcessing,
   "classic-liquid-processing": ClassicLiquidProcessing,

@@ -11,6 +11,14 @@ const defaultSpeeds: Record<string, number> = {
   "chart-line": 3.2,
   "chart-sparkline": 3.2,
   "chart-donut": 3.2,
+  "chart-dot-area": 3.2,
+  "chart-dot-series": 3.2,
+  "chart-dot-scatter": 3.2,
+  "chart-dot-sparkline": 3.2,
+  "chart-heartbeat": 3.2,
+  "chart-dot-gauge": 3.2,
+  "chart-dot-radar": 3.2,
+  "chart-dot-bubbles": 3.2,
 }
 
 export function getLoaderDefaultSpeed(name: string): number {

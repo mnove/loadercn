@@ -64,6 +64,126 @@
       ]
     },
     {
+      "name": "chart-dot-area",
+      "type": "registry:ui",
+      "title": "Dot area chart",
+      "description": "A smooth wave rolls across a dot matrix, lighting the area beneath its crest.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-dot-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-dot-series",
+      "type": "registry:ui",
+      "title": "Dot series",
+      "description": "Three dotted lines flow in layers, fading with depth like a multi-series chart.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-dot-series.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-dot-scatter",
+      "type": "registry:ui",
+      "title": "Dot scatter",
+      "description": "A scatter of dots drifts in to hug a trend line, then loosens again.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-dot-scatter.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-dot-sparkline",
+      "type": "registry:ui",
+      "title": "Dot sparkline",
+      "description": "A lead dot draws a smooth sparkline that trails behind it and fades away.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-dot-sparkline.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-heartbeat",
+      "type": "registry:ui",
+      "title": "Heartbeat",
+      "description": "A dot traces a heartbeat line, leaving a trail that fades behind it.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-heartbeat.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-dot-gauge",
+      "type": "registry:ui",
+      "title": "Dot gauge",
+      "description": "A needle sweeps a dotted dial, lighting the dots up to the current reading.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-dot-gauge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-dot-radar",
+      "type": "registry:ui",
+      "title": "Dot radar",
+      "description": "A radar outline shifts as dotted spokes extend and retract to new values.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-dot-radar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-dot-bubbles",
+      "type": "registry:ui",
+      "title": "Bubble chart",
+      "description": "Translucent bubbles drift through smooth loops while their sizes breathe.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-dot-bubbles.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "grid-wave",
       "type": "registry:ui",
       "title": "Grid wave",
