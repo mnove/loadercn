@@ -9,7 +9,7 @@ export function SiteFooter() {
       <div className="flex items-center gap-2.5">
         <Mark small />
         <span className="text-xs font-medium text-foreground">loadercn.</span>
-        <span className="ml-2">A little motion goes a long way.</span>
+        <span className="ml-2">Worth the wait.</span>
       </div>
       <div className="flex items-center gap-5">
         <a

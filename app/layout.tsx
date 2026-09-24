@@ -18,7 +18,7 @@ const fontMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "loadercn — Worth the wait.",
+  title: "loadercn — Animated React loaders for shadcn/ui",
   description:
     "A considered collection of animated grid, orbital, and classic loaders. Preview, customize, and copy React components or install with the shadcn CLI.",
   twitter: { card: "summary_large_image" },
