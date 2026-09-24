@@ -74,7 +74,8 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
           <div className="mx-auto max-w-[1280px] px-6 md:px-10">
             <section className="flex flex-col items-center border-b py-16 text-center md:py-24">
               <h1 className="font-heading text-[clamp(2.25rem,4.5vw,3.75rem)] leading-[1.05] font-medium tracking-[-.03em]">
-                Worth the wait<span className="text-primary">.</span>
+                Animated loaders for shadcn/ui
+                <span className="text-primary">.</span>
               </h1>
               <p className="mt-5 max-w-[440px] text-sm leading-7 text-muted-foreground *:font-medium *:text-foreground">
                 <strong>{items.length} loaders</strong> with their CSS built in
