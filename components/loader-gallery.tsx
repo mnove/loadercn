@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import {
   ArrowDown,
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   Code2,
@@ -343,14 +344,44 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
           if (!open) setSelected(null)
         }}
       >
-        <DialogContent className="flex max-h-[90svh] flex-col gap-0 p-0 sm:max-w-2xl">
+        {/* Full screen with a back button on mobile, a centered dialog from sm up. */}
+        <DialogContent
+          showCloseButton={false}
+          className="top-0 left-0 flex h-dvh w-full max-w-none translate-x-0 translate-y-0 flex-col gap-0 p-0 ring-0 sm:top-1/2 sm:left-1/2 sm:h-auto sm:max-h-[90svh] sm:max-w-2xl sm:-translate-x-1/2 sm:-translate-y-1/2 sm:ring-1 data-open:zoom-in-100 sm:data-open:zoom-in-95 data-closed:zoom-out-100 sm:data-closed:zoom-out-95"
+        >
           {selected && (
             <>
-              <DialogHeader className="border-b p-6 pr-16">
-                <DialogTitle>{selected.title}</DialogTitle>
-                <DialogDescription>{selected.description}</DialogDescription>
-              </DialogHeader>
-              <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-6">
+              <div className="flex items-start gap-2 border-b p-4 sm:p-6 sm:pr-16">
+                <DialogClose
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="-ml-2 sm:hidden"
+                    />
+                  }
+                >
+                  <ArrowLeft />
+                  <span className="sr-only">Back to loaders</span>
+                </DialogClose>
+                <DialogHeader className="min-w-0 pt-2 sm:pt-0">
+                  <DialogTitle>{selected.title}</DialogTitle>
+                  <DialogDescription>{selected.description}</DialogDescription>
+                </DialogHeader>
+                <DialogClose
+                  render={
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="absolute top-5 right-5 hidden bg-secondary sm:inline-flex"
+                    />
+                  }
+                >
+                  <X />
+                  <span className="sr-only">Close</span>
+                </DialogClose>
+              </div>
+              <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-4 sm:p-6">
                 <LoaderDetail
                   key={selected.name}
                   item={selected}
@@ -358,8 +389,12 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
                   onColorChange={setColor}
                 />
               </div>
-              <DialogFooter className="border-t px-6 py-4">
-                <DialogClose render={<Button variant="ghost" />}>
+              <DialogFooter className="border-t p-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-4">
+                <DialogClose
+                  render={
+                    <Button variant="ghost" className="hidden sm:inline-flex" />
+                  }
+                >
                   Close
                 </DialogClose>
                 <Button
