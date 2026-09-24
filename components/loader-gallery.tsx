@@ -27,8 +27,10 @@ import {
 } from "@/components/ui/select"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
@@ -339,27 +341,33 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
           if (!open) setSelected(null)
         }}
       >
-        <DialogContent className="max-h-[90svh] overflow-y-auto sm:max-w-2xl">
+        <DialogContent className="flex max-h-[90svh] flex-col gap-0 p-0 sm:max-w-2xl">
           {selected && (
             <>
-              <DialogHeader>
+              <DialogHeader className="border-b p-6 pr-16">
                 <DialogTitle>{selected.title}</DialogTitle>
                 <DialogDescription>{selected.description}</DialogDescription>
               </DialogHeader>
-              <LoaderDetail
-                key={selected.name}
-                item={selected}
-                color={color ?? undefined}
-              />
-              <Button
-                variant="outline"
-                size="sm"
-                nativeButton={false}
-                render={<Link href={`/docs/${selected.name}`} />}
-                className="gap-2 justify-self-start"
-              >
-                Open component page <ArrowRight />
-              </Button>
+              <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-6">
+                <LoaderDetail
+                  key={selected.name}
+                  item={selected}
+                  color={color}
+                  onColorChange={setColor}
+                />
+              </div>
+              <DialogFooter className="border-t px-6 py-4">
+                <DialogClose render={<Button variant="ghost" />}>
+                  Close
+                </DialogClose>
+                <Button
+                  nativeButton={false}
+                  render={<Link href={`/docs/${selected.name}`} />}
+                  className="gap-2"
+                >
+                  Open component page <ArrowRight />
+                </Button>
+              </DialogFooter>
             </>
           )}
         </DialogContent>

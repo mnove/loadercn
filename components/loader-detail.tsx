@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useId, useState } from "react"
+import { Slider } from "@/components/ui/slider"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
 import { useOrigin } from "@/components/install-command"
+import { PreviewColorPicker } from "@/components/preview-color-picker"
 import { loaderComponents } from "@/lib/loaders"
 import { installCommand } from "@/lib/site"
 import type { LoaderItem } from "@/lib/loader-items"
@@ -17,19 +19,30 @@ export function toComponentName(name: string) {
     .join("")
 }
 
-/** Live preview with size and cycle controls, plus CLI and source tabs. */
+function firstValue(value: number | readonly number[]) {
+  return typeof value === "number" ? value : value[0]
+}
+
+/** Live preview with size, cycle, and color controls, plus CLI and source tabs. */
 export function LoaderDetail({
   item,
-  color,
+  color: colorProp = null,
+  onColorChange,
   previewClassName,
 }: {
   item: LoaderItem
-  /** Any CSS color. Defaults to the inherited text color. */
-  color?: string
+  /** Any CSS color. `null` inherits the text color. */
+  color?: string | null
+  /** Makes the color controlled, e.g. to share it with the gallery. */
+  onColorChange?: (color: string | null) => void
   previewClassName?: string
 }) {
+  const id = useId()
   const [size, setSize] = useState(48)
   const [speed, setSpeed] = useState(1.6)
+  const [localColor, setLocalColor] = useState(colorProp)
+  const color = onColorChange ? colorProp : localColor
+  const setColor = onColorChange ?? setLocalColor
   const origin = useOrigin()
   const Loader = loaderComponents[item.name as keyof typeof loaderComponents]
   const componentName = toComponentName(item.name)
@@ -50,34 +63,35 @@ export function LoaderDetail({
           style={color ? { color } : undefined}
         />
       </div>
-      <div className="flex flex-wrap gap-x-8 gap-y-4 text-xs">
-        <label className="flex items-center gap-3">
-          Size{" "}
-          <input
-            aria-label="Loader size"
-            type="range"
-            min="20"
-            max="80"
-            value={size}
-            onChange={(e) => setSize(Number(e.target.value))}
-            className="w-24 accent-primary"
+      <div className="flex flex-wrap items-center gap-x-8 gap-y-4 text-xs">
+        <div className="flex items-center gap-3">
+          <span id={`${id}-size`}>Size</span>
+          <Slider
+            aria-labelledby={`${id}-size`}
+            min={20}
+            max={80}
+            value={[size]}
+            onValueChange={(value) => setSize(firstValue(value))}
+            className="data-horizontal:w-24"
           />
           <span className="w-9 font-mono text-muted-foreground">{size}px</span>
-        </label>
-        <label className="flex items-center gap-3">
-          Cycle{" "}
-          <input
-            aria-label="Animation cycle duration"
-            type="range"
-            min="0.6"
-            max="3"
-            step="0.2"
-            value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
-            className="w-24 accent-primary"
+        </div>
+        <div className="flex items-center gap-3">
+          <span id={`${id}-cycle`}>Cycle</span>
+          <Slider
+            aria-labelledby={`${id}-cycle`}
+            min={0.6}
+            max={3}
+            step={0.2}
+            value={[speed]}
+            onValueChange={(value) => setSpeed(firstValue(value))}
+            className="data-horizontal:w-24"
           />
           <span className="font-mono text-muted-foreground">{speed}s</span>
-        </label>
+        </div>
+        <div className="flex items-center gap-1.5">
+          Color <PreviewColorPicker value={color} onChange={setColor} />
+        </div>
       </div>
       <Tabs defaultValue="install" className="min-w-0">
         <TabsList variant="line">
