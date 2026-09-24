@@ -4,7 +4,7 @@ import { Geist_Mono, Inter, Outfit } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { SITE_URL } from "@/lib/loader-items"
+import { SITE_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 const outfitHeading = Outfit({ subsets: ["latin"], variable: "--font-heading" })

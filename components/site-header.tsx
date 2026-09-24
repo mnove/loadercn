@@ -7,12 +7,17 @@ import { Button } from "@/components/ui/button"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { GitHubIcon } from "@/components/icons"
 import { Mark } from "@/components/mark"
+import { SiteSearch } from "@/components/site-search"
+import type { LoaderSummary } from "@/lib/loader-items"
 import { GITHUB_URL } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 export function SiteHeader({
+  items,
   sidebarTrigger = false,
 }: {
+  /** The loaders listed in the search palette. */
+  items: LoaderSummary[]
   /** Full-width, sticky layout with a mobile sidebar toggle, for docs pages. */
   sidebarTrigger?: boolean
 }) {
@@ -26,7 +31,7 @@ export function SiteHeader({
     >
       <div
         className={cn(
-          "mx-auto flex h-14 items-center justify-between gap-3 px-6",
+          "mx-auto flex h-14 items-center justify-between gap-3 px-4 sm:px-6",
           sidebarTrigger ? "md:px-6" : "max-w-[1280px] md:px-10"
         )}
       >
@@ -43,7 +48,7 @@ export function SiteHeader({
         </Link>
         <nav
           aria-label="Main navigation"
-          className="flex items-center gap-5 md:gap-8"
+          className="flex items-center gap-2 sm:gap-5 md:gap-8"
         >
           <Link
             href="/#collection"
@@ -54,8 +59,9 @@ export function SiteHeader({
           <Link href="/docs" className="text-xs font-medium">
             Docs
           </Link>
-          <span className="h-5 border-l" />
-          <div className="flex items-center gap-1">
+          <span className="hidden h-5 border-l sm:block" />
+          <div className="flex items-center sm:gap-1 md:gap-2">
+            <SiteSearch items={items} />
             <Button
               variant="ghost"
               size="icon-sm"

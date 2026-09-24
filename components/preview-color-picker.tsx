@@ -44,7 +44,46 @@ function Swatch({
   )
 }
 
-/** A compact trigger that opens preset swatches and a custom color picker. */
+function PresetSwatches({
+  value,
+  onChange,
+  className,
+}: {
+  value: string | null
+  onChange: (value: string | null) => void
+  className?: string
+}) {
+  return (
+    <div
+      className={cn("flex items-center", className)}
+      role="group"
+      aria-label="Preset colors"
+    >
+      {PRESETS.map((preset) => (
+        <Button
+          key={preset.label}
+          variant="ghost"
+          size="icon-xs"
+          title={preset.label}
+          aria-label={`${preset.label} preview color`}
+          aria-pressed={value === preset.value}
+          onClick={() => onChange(preset.value)}
+          className={cn(
+            "size-7 rounded-full",
+            value === preset.value && "ring-1 ring-foreground/30"
+          )}
+        >
+          <Swatch color={preset.value} className="size-3.5" />
+        </Button>
+      ))}
+    </div>
+  )
+}
+
+/**
+ * Preset swatches where there's room, then a last swatch that opens a custom
+ * color picker. On narrow screens the presets move into the popover.
+ */
 export function PreviewColorPicker({
   value,
   onChange,
@@ -53,6 +92,7 @@ export function PreviewColorPicker({
   onChange: (value: string | null) => void
 }) {
   const [custom, setCustom] = useState("#3b82f6")
+  const isCustom = !PRESETS.some((preset) => preset.value === value)
   const handlePickerChange = useCallback(
     (rgba: Parameters<typeof Color.rgb>[0]) => {
       const hex = Color.rgb(rgba).hex()
@@ -65,56 +105,61 @@ export function PreviewColorPicker({
   )
 
   return (
-    <Popover>
-      <PopoverTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="sm"
-            aria-label="Preview color"
-            className="gap-1.5 px-2"
-          />
-        }
-      >
-        <Swatch color={value} className="size-3.5 ring-1 ring-foreground/15" />
-        <ChevronDown className="size-3 text-muted-foreground" />
-      </PopoverTrigger>
-      <PopoverContent align="end" className="w-64 gap-3 p-3">
-        <div
-          className="flex justify-between"
-          role="group"
-          aria-label="Preset colors"
-        >
-          {PRESETS.map((preset) => (
+    <div className="flex items-center">
+      <PresetSwatches
+        value={value}
+        onChange={onChange}
+        className="hidden md:flex"
+      />
+      <Popover>
+        <PopoverTrigger
+          render={
             <Button
-              key={preset.label}
               variant="ghost"
-              size="icon-xs"
-              title={preset.label}
-              aria-label={`${preset.label} preview color`}
-              aria-pressed={value === preset.value}
-              onClick={() => onChange(preset.value)}
+              size="sm"
+              title="Custom color"
+              aria-label="Custom preview color"
               className={cn(
-                "size-7 rounded-full",
-                value === preset.value && "ring-1 ring-foreground/30"
+                "gap-1.5 px-2 md:size-7 md:rounded-full md:p-0",
+                isCustom && "md:ring-1 md:ring-foreground/30"
               )}
-            >
-              <Swatch color={preset.value} className="size-4" />
-            </Button>
-          ))}
-        </div>
-        <Separator />
-        <ColorPicker defaultValue={custom} onChange={handlePickerChange}>
-          <ColorPickerSelection className="h-32" />
-          <div className="mt-3 space-y-2">
-            <ColorPickerHue />
-            <div className="flex items-center gap-2">
-              <ColorPickerOutput />
-              <ColorPickerFormat />
+            />
+          }
+        >
+          {/* Mobile shows the current color; wider screens show a custom swatch. */}
+          <Swatch
+            color={value}
+            className="size-3.5 ring-1 ring-foreground/15 md:hidden"
+          />
+          <ChevronDown className="size-3 text-muted-foreground md:hidden" />
+          <span
+            className="hidden size-3.5 rounded-full md:block"
+            style={{
+              background: isCustom
+                ? value!
+                : "conic-gradient(red, yellow, lime, aqua, blue, magenta, red)",
+            }}
+          />
+        </PopoverTrigger>
+        <PopoverContent align="end" className="w-64 gap-3 p-3">
+          <PresetSwatches
+            value={value}
+            onChange={onChange}
+            className="justify-between md:hidden"
+          />
+          <Separator className="md:hidden" />
+          <ColorPicker defaultValue={custom} onChange={handlePickerChange}>
+            <ColorPickerSelection className="h-32" />
+            <div className="mt-3 space-y-2">
+              <ColorPickerHue />
+              <div className="flex items-center gap-2">
+                <ColorPickerOutput />
+                <ColorPickerFormat />
+              </div>
             </div>
-          </div>
-        </ColorPicker>
-      </PopoverContent>
-    </Popover>
+          </ColorPicker>
+        </PopoverContent>
+      </Popover>
+    </div>
   )
 }

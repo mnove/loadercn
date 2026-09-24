@@ -20,6 +20,7 @@
   "dependencies": {
     "@base-ui/react": "^1.8.0",
     "class-variance-authority": "^0.7.1",
+    "cmdk": "^1.1.1",
     "cn": "^0.3.0",
     "color": "^5.0.3",
     "lucide-react": "^1.47.0",

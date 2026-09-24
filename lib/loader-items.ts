@@ -5,8 +5,6 @@ import registry from "@/registry.json"
 // Statically scoped so the build only traces this folder, not the whole project.
 const LOADERS_DIR = path.join(process.cwd(), "registry", "loaders")
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || registry.homepage
-
 export type LoaderItem = {
   name: string
   title: string
