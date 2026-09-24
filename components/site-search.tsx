@@ -27,7 +27,8 @@ import {
 } from "@/components/ui/command"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { GitHubIcon } from "@/components/icons"
-import { useOrigin } from "@/components/install-command"
+import { useCopy } from "@/hooks/use-copy"
+import { useOrigin } from "@/hooks/use-origin"
 import type { LoaderSummary } from "@/lib/loader-items"
 import { CATEGORIES, loaderComponents } from "@/lib/loaders"
 import { GITHUB_URL, registryAddCommand, urlInstallCommand } from "@/lib/site"
@@ -56,6 +57,7 @@ export function SiteSearch({ items }: { items: LoaderSummary[] }) {
   const pathname = usePathname()
   const origin = useOrigin()
   const isMac = useIsMac()
+  const { copy: copyToClipboard } = useCopy()
   const { resolvedTheme, setTheme } = useTheme()
   const current = items.find((item) => pathname === `/docs/${item.name}`)
 
@@ -79,16 +81,12 @@ export function SiteSearch({ items }: { items: LoaderSummary[] }) {
   }
 
   const copy = async (id: string, value: string) => {
-    try {
-      await navigator.clipboard.writeText(value)
-      setCopied(id)
-      setTimeout(() => {
-        setOpen(false)
-        setCopied(null)
-      }, 700)
-    } catch {
+    if (!(await copyToClipboard(value))) return setOpen(false)
+    setCopied(id)
+    setTimeout(() => {
       setOpen(false)
-    }
+      setCopied(null)
+    }, 700)
   }
 
   return (

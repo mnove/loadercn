@@ -4,6 +4,7 @@ import { useId, useState } from "react"
 import { Slider } from "@/components/ui/slider"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CodeBlock } from "@/components/code-block"
+import { CommandSnippet } from "@/components/command-snippet"
 import { CopyButton } from "@/components/copy-button"
 import { PreviewColorPicker } from "@/components/preview-color-picker"
 import { loaderComponents } from "@/lib/loaders"
@@ -100,21 +101,11 @@ export function LoaderDetail({
           <p className="text-xs leading-6 text-muted-foreground">
             Run this command in any project set up with shadcn.
           </p>
-          <div className="flex items-center gap-3 border bg-muted/50 p-3">
-            <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
-              {urlCommand}
-            </code>
-            <CopyButton value={urlCommand} />
-          </div>
+          <CommandSnippet command={urlCommand} />
           <p className="text-xs text-muted-foreground">
             Added the @loadercn registry? Use the short form:
           </p>
-          <div className="flex items-center gap-3 border bg-muted/50 p-3">
-            <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
-              {command}
-            </code>
-            <CopyButton value={command} />
-          </div>
+          <CommandSnippet command={command} />
           <p className="text-xs text-muted-foreground">
             Then add it to your interface:
           </p>

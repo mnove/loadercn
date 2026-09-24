@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { Check, Copy } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useCopy } from "@/hooks/use-copy"
 
 export function CopyButton({
   value,
@@ -13,25 +13,13 @@ export function CopyButton({
   label?: string
   className?: string
 }) {
-  const [status, setStatus] = useState<"idle" | "copied" | "error">("idle")
-  useEffect(() => {
-    if (status === "idle") return
-    const timeout = setTimeout(() => setStatus("idle"), 2200)
-    return () => clearTimeout(timeout)
-  }, [status])
+  const { status, copy } = useCopy()
   return (
     <Button
       variant="outline"
       size="sm"
       className={className}
-      onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(value)
-          setStatus("copied")
-        } catch {
-          setStatus("error")
-        }
-      }}
+      onClick={() => copy(value)}
     >
       {status === "copied" ? <Check /> : <Copy />}
       <span aria-live="polite">

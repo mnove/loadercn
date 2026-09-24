@@ -7,6 +7,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Code2,
+  Info,
   Pause,
   Play,
   Search,
@@ -32,12 +33,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { InstallCommand } from "@/components/install-command"
+import { CommandSnippet } from "@/components/command-snippet"
 import { LoaderDetail } from "@/components/loader-detail"
 import { PreviewColorPicker } from "@/components/preview-color-picker"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { GITHUB_URL } from "@/lib/site"
+import { GITHUB_URL, urlInstallCommand } from "@/lib/site"
 import { CATEGORIES, CATEGORY_ICONS, loaderComponents } from "@/lib/loaders"
 import type { LoaderItem } from "@/lib/loader-items"
 
@@ -99,10 +100,21 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
                   GitHub
                 </Button>
               </div>
-              <InstallCommand
-                name="classic-ring"
+              <CommandSnippet
+                command={urlInstallCommand("classic-ring")}
                 className="mt-8 w-full max-w-xl text-left"
-              />
+              >
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  nativeButton={false}
+                  render={<Link href="/docs" />}
+                  aria-label="Setup guide"
+                  title="Works in any shadcn project. Add the @loadercn registry for the shorter form. See the setup guide."
+                >
+                  <Info />
+                </Button>
+              </CommandSnippet>
             </section>
           </div>
         </div>

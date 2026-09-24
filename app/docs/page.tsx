@@ -4,8 +4,12 @@ import { headers } from "next/headers"
 import { ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CodeBlock } from "@/components/code-block"
-import { CopyButton } from "@/components/copy-button"
-import { installCommand, registryAddCommand } from "@/lib/site"
+import { CommandSnippet } from "@/components/command-snippet"
+import {
+  installCommand,
+  registryAddCommand,
+  urlInstallCommand,
+} from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Get started — loadercn",
@@ -31,17 +35,6 @@ const PROPS = [
   ],
   ["style", "CSSProperties", "—", "Merged onto the root element."],
 ]
-
-function Command({ value }: { value: string }) {
-  return (
-    <div className="flex items-center gap-3 border bg-muted/50 p-3">
-      <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
-        {value}
-      </code>
-      <CopyButton value={value} />
-    </div>
-  )
-}
 
 function Step({
   index,
@@ -87,7 +80,7 @@ export default async function DocsPage() {
         <p className="text-xs leading-6 text-muted-foreground">
           Already using shadcn? You can skip this step.
         </p>
-        <Command value="npx shadcn@latest init" />
+        <CommandSnippet command="npx shadcn@latest init" />
       </Step>
 
       <Step index="02" title="Add the registry">
@@ -96,7 +89,7 @@ export default async function DocsPage() {
           your <code className="font-mono">components.json</code>. You only need
           to do this once per project.
         </p>
-        <Command value={registryAddCommand(origin)} />
+        <CommandSnippet command={registryAddCommand(origin)} />
         <CodeBlock
           code={`{\n  "registries": {\n    "@loadercn": "${origin}/r/{name}.json"\n  }\n}`}
           className="border bg-muted/50 p-4 text-[11px] leading-6"
@@ -108,13 +101,11 @@ export default async function DocsPage() {
           Every loader has its own install command. Pick one from the sidebar to
           copy it, or swap the name below.
         </p>
-        <Command value={installCommand("classic-ring")} />
+        <CommandSnippet command={installCommand("classic-ring")} />
         <p className="text-xs leading-6 text-muted-foreground">
           Skipping the namespace? Install directly from the URL instead.
         </p>
-        <Command
-          value={`npx shadcn@latest add ${origin}/r/classic-ring.json`}
-        />
+        <CommandSnippet command={urlInstallCommand("classic-ring")} />
       </Step>
 
       <Step index="04" title="Use it">
