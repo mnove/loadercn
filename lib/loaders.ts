@@ -1,4 +1,5 @@
 import { ClassicProcessing } from "@/registry/loaders/classic-processing"
+import { ClassicLiquidProcessing } from "@/registry/loaders/classic-liquid-processing"
 import { ClassicTextShimmer } from "@/registry/loaders/classic-text-shimmer"
 import { OrbitSearching } from "@/registry/loaders/orbit-searching"
 import { OrbitScanningSphere } from "@/registry/loaders/orbit-scanning-sphere"
@@ -99,6 +100,7 @@ export const CATEGORY_ICONS: Record<
 
 export const loaderComponents = {
   "classic-processing": ClassicProcessing,
+  "classic-liquid-processing": ClassicLiquidProcessing,
   "classic-text-shimmer": ClassicTextShimmer,
 
   "orbit-searching": OrbitSearching,

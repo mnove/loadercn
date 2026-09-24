@@ -2,6 +2,8 @@
 export const loaderNotes: Record<string, string> = {
   "classic-processing":
     "Fits batch jobs, imports, and background processing. Parallel streams suggest several pieces of work moving at once.",
+  "classic-liquid-processing":
+    "Fits generative or AI pipelines working through several inputs at once. Softer than Processing, with streams that feel fluid rather than mechanical.",
   "classic-text-shimmer":
     "Fits fetching text, articles, or summaries. This compact status illustration suggests incoming content; use a layout-sized skeleton when reserving actual content space.",
 

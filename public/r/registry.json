@@ -1122,6 +1122,21 @@
       ]
     },
     {
+      "name": "classic-liquid-processing",
+      "type": "registry:ui",
+      "title": "Liquid processing",
+      "description": "Four parallel streams of liquid dots swell, merge, and separate as they flow.",
+      "categories": [
+        "classic"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/classic-liquid-processing.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "classic-processing",
       "type": "registry:ui",
       "title": "Classic processing",
