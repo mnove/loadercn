@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   title: "loadercn — Worth the wait.",
   description:
     "A considered collection of animated grid, orbital, and classic loaders. Preview, customize, and copy React components or install with the shadcn CLI.",
+  twitter: { card: "summary_large_image" },
 }
 
 export default function RootLayout({
