@@ -52,7 +52,7 @@ Before finishing any change, run `pnpm typecheck`, `pnpm lint`, and `pnpm regist
 When a loader truly doesn't fit any existing category, add a new one yourself:
 
 - Add `{ id, label }` to `CATEGORIES` in `lib/loaders.ts`. The gallery filters and docs sidebar pick it up from there.
-- Give it a lucide icon in `CATEGORY_ICONS` in `components/docs-sidebar.tsx`.
+- Give it a lucide icon in `CATEGORY_ICONS` in `lib/loaders.ts`. The gallery filters, docs sidebar, and search palette share it.
 - Choose a short file-name prefix for its loaders and use it consistently.
 - Add a glyph for it in `FamilyGlyph` in `app/docs/[name]/opengraph-image.tsx`. Otherwise it falls back to the classic ring.
 - Update any copy that lists the categories, such as the site description in `app/layout.tsx`, `app/opengraph-image.tsx`, and `README.md`.

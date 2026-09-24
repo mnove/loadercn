@@ -1,3 +1,4 @@
+import { Grid2X2, LoaderCircle, Orbit, type LucideIcon } from "lucide-react"
 import { ClassicDotStream } from "@/registry/loaders/classic-dot-stream"
 import { ClassicLiquidStream } from "@/registry/loaders/classic-liquid-stream"
 import { ClassicPulsingSpokes } from "@/registry/loaders/classic-pulsing-spokes"
@@ -57,6 +58,15 @@ export const CATEGORIES = [
   { id: "orbital", label: "Orbital" },
   { id: "classic", label: "Classic" },
 ] as const
+
+export const CATEGORY_ICONS: Record<
+  (typeof CATEGORIES)[number]["id"],
+  LucideIcon
+> = {
+  grid: Grid2X2,
+  orbital: Orbit,
+  classic: LoaderCircle,
+}
 
 export const loaderComponents = {
   "classic-dot-stream": ClassicDotStream,

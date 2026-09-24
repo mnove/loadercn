@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Grid2X2, LoaderCircle, Orbit, Terminal } from "lucide-react"
+import { Terminal } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -15,13 +15,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import type { LoaderSummary } from "@/lib/loader-items"
-import { CATEGORIES } from "@/lib/loaders"
-
-const CATEGORY_ICONS = {
-  grid: Grid2X2,
-  orbital: Orbit,
-  classic: LoaderCircle,
-}
+import { CATEGORIES, CATEGORY_ICONS } from "@/lib/loaders"
 
 export function DocsSidebar({
   items,

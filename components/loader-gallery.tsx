@@ -7,9 +7,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   Code2,
-  Grid2X2,
-  Orbit,
-  LoaderCircle,
   Pause,
   Play,
   Search,
@@ -40,7 +37,7 @@ import { LoaderDetail } from "@/components/loader-detail"
 import { PreviewColorPicker } from "@/components/preview-color-picker"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import { CATEGORIES, loaderComponents } from "@/lib/loaders"
+import { CATEGORIES, CATEGORY_ICONS, loaderComponents } from "@/lib/loaders"
 import { GITHUB_URL } from "@/lib/site"
 import type { LoaderItem } from "@/lib/loader-items"
 
@@ -56,7 +53,7 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
       id: c.id as string,
       label: c.label as string,
       count: items.filter((item) => item.category === c.id).length,
-      icon: { grid: Grid2X2, orbital: Orbit, classic: LoaderCircle }[c.id],
+      icon: CATEGORY_ICONS[c.id],
     })),
   ]
   const filtered = items.filter(
@@ -68,7 +65,7 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
   )
   return (
     <div className="min-h-screen">
-      <SiteHeader />
+      <SiteHeader items={items} />
       <main>
         {/* Full-bleed so the glow isn't clipped by the content width. */}
         <div className="bg-[radial-gradient(ellipse_60%_70%_at_50%_0%,color-mix(in_oklch,var(--primary)_12%,transparent),transparent)]">
