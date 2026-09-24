@@ -1139,10 +1139,10 @@
       ]
     },
     {
-      "name": "classic-placeholder",
+      "name": "classic-text-shimmer",
       "type": "registry:ui",
-      "title": "Classic placeholder",
-      "description": "A gentle shimmer travels across four dotted text lines.",
+      "title": "Classic text shimmer",
+      "description": "A shimmer sweeps across four dotted text lines, revealing each dot as it passes.",
       "categories": [
         "classic"
       ],
@@ -1150,7 +1150,7 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "registry/loaders/classic-placeholder.tsx",
+          "path": "registry/loaders/classic-text-shimmer.tsx",
           "type": "registry:ui"
         }
       ]

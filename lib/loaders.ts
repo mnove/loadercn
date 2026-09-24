@@ -1,5 +1,5 @@
 import { ClassicProcessing } from "@/registry/loaders/classic-processing"
-import { ClassicPlaceholder } from "@/registry/loaders/classic-placeholder"
+import { ClassicTextShimmer } from "@/registry/loaders/classic-text-shimmer"
 import { OrbitSearching } from "@/registry/loaders/orbit-searching"
 import { OrbitScanningSphere } from "@/registry/loaders/orbit-scanning-sphere"
 import { OrbitThoughtOrb } from "@/registry/loaders/orbit-thought-orb"
@@ -99,7 +99,7 @@ export const CATEGORY_ICONS: Record<
 
 export const loaderComponents = {
   "classic-processing": ClassicProcessing,
-  "classic-placeholder": ClassicPlaceholder,
+  "classic-text-shimmer": ClassicTextShimmer,
 
   "orbit-searching": OrbitSearching,
   "orbit-scanning-sphere": OrbitScanningSphere,

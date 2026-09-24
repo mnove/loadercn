@@ -41,7 +41,6 @@ export function ClassicProcessing({
       >
         {[28, 43, 58, 73].map((y, row) => (
           <g key={y} transform={`translate(10 ${y})`}>
-            <path d="M0 0H80" className="classic-processing-loader-track" />
             {Array.from({ length: 5 }, (_, packet) => (
               <circle
                 key={packet}
@@ -60,7 +59,6 @@ export function ClassicProcessing({
       </svg>
       <style>{`
         .classic-processing-loader { display: inline-flex; flex-shrink: 0; }
-        .classic-processing-loader-track { fill: none; stroke: currentColor; stroke-width: 1; opacity: .14; }
         .classic-processing-loader-packet { fill: currentColor; opacity: .6; transform: translateX(var(--classic-processing-rest-x)); animation: classic-processing-loader-flow var(--loader-duration) linear infinite; }
         @keyframes classic-processing-loader-flow { 0% { transform: translateX(0) scale(.4); opacity: 0; } 25% { transform: translateX(20px) scale(.8); opacity: .5; } 50% { transform: translateX(40px) scale(1.2); opacity: 1; } 75% { transform: translateX(60px) scale(.8); opacity: .5; } 100% { transform: translateX(80px) scale(.4); opacity: 0; } }
         @media (prefers-reduced-motion: reduce) { .classic-processing-loader-packet { animation: none; } }

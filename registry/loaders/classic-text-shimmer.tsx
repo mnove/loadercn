@@ -1,26 +1,26 @@
 import type { CSSProperties, ComponentProps } from "react"
 
-export type ClassicPlaceholderProps = ComponentProps<"span"> & {
+export type ClassicTextShimmerProps = ComponentProps<"span"> & {
   size?: number
   /** Duration of one complete cycle, in seconds. */
   speed?: number
   label?: string
 }
 
-export function ClassicPlaceholder({
+export function ClassicTextShimmer({
   size = 40,
   speed = 1.6,
   label = "Loading",
   className,
   style,
   ...props
-}: ClassicPlaceholderProps) {
+}: ClassicTextShimmerProps) {
   return (
     <span
       role="status"
       aria-label={label}
       {...props}
-      className={["classic-placeholder-loader", className]
+      className={["classic-text-shimmer-loader", className]
         .filter(Boolean)
         .join(" ")}
       style={
@@ -51,7 +51,7 @@ export function ClassicPlaceholder({
                   cx={x}
                   cy={27 + row * 15}
                   r="1.8"
-                  className="classic-placeholder-loader-dot"
+                  className="classic-text-shimmer-loader-dot"
                   style={{
                     animationDelay: `${-(1 - phase) * Math.max(0.1, speed)}s`,
                   }}
@@ -62,10 +62,10 @@ export function ClassicPlaceholder({
         ))}
       </svg>
       <style>{`
-        .classic-placeholder-loader { display: inline-flex; flex-shrink: 0; }
-        .classic-placeholder-loader-dot { fill: currentColor; opacity: .5; transform-box: fill-box; transform-origin: center; animation: classic-placeholder-loader-shimmer var(--loader-duration) ease-in-out infinite; }
-        @keyframes classic-placeholder-loader-shimmer { 0%, 100% { opacity: .95; transform: scale(1.15); } 18%, 82% { opacity: .2; transform: scale(.8); } }
-        @media (prefers-reduced-motion: reduce) { .classic-placeholder-loader-dot { animation: none; } }
+        .classic-text-shimmer-loader { display: inline-flex; flex-shrink: 0; }
+        .classic-text-shimmer-loader-dot { fill: currentColor; opacity: .5; transform-box: fill-box; transform-origin: center; animation: classic-text-shimmer-loader-shimmer var(--loader-duration) ease-in-out infinite; }
+        @keyframes classic-text-shimmer-loader-shimmer { 0%, 100% { opacity: .95; transform: scale(1.15); } 22%, 78% { opacity: 0; transform: scale(.6); } }
+        @media (prefers-reduced-motion: reduce) { .classic-text-shimmer-loader-dot { animation: none; } }
       `}</style>
     </span>
   )
