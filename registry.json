@@ -4,6 +4,66 @@
   "homepage": "https://loadercn.vercel.app",
   "items": [
     {
+      "name": "chart-bars",
+      "type": "registry:ui",
+      "title": "Bar chart",
+      "description": "Bars grow from a baseline in sequence, settle to new values, then clear.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-bars.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-line",
+      "type": "registry:ui",
+      "title": "Line chart",
+      "description": "A line draws across a small chart with a dot on its leading edge.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-line.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-sparkline",
+      "type": "registry:ui",
+      "title": "Sparkline",
+      "description": "A live sparkline scrolls past while a dot tracks the latest value.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-sparkline.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart-donut",
+      "type": "registry:ui",
+      "title": "Donut chart",
+      "description": "Three segments sweep around a turning ring one after another, then unwind in the same direction.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-donut.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "grid-wave",
       "type": "registry:ui",
       "title": "Grid wave",

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-line",
+  "title": "Line chart",
+  "description": "A line draws across a small chart with a dot on its leading edge.",
+  "files": [
+    {
+      "path": "registry/loaders/chart-line.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ChartLineProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nconst points = [\n  [16, 70],\n  [30, 56],\n  [44, 62],\n  [58, 38],\n  [72, 46],\n  [86, 24],\n]\n\n// The line draws during the first 60% of the cycle. Spacing the dot's\n// keyframes by segment length keeps it on the leading end of the stroke.\nconst lengths = points\n  .slice(1)\n  .map(([x, y], i) => Math.hypot(x - points[i][0], y - points[i][1]))\nconst total = lengths.reduce((sum, length) => sum + length, 0)\nconst dotFrames = points\n  .map(([x, y], i) => {\n    const traveled = lengths.slice(0, i).reduce((sum, l) => sum + l, 0)\n    const percent = ((traveled / total) * 60).toFixed(2)\n    return `${percent}% { transform: translate(${x}px, ${y}px); opacity: 1; }`\n  })\n  .join(\" \")\n\nexport function ChartLine({\n  size = 40,\n  speed = 3.2,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ChartLineProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"chart-line-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n      >\n        <path d=\"M12 14V84H88\" className=\"chart-line-loader-axis\" />\n        <polyline\n          points={points.map((point) => point.join(\",\")).join(\" \")}\n          pathLength=\"100\"\n          className=\"chart-line-loader-line\"\n        />\n        <circle r=\"5\" className=\"chart-line-loader-dot\" />\n      </svg>\n      <style>{`\n        .chart-line-loader { display: inline-flex; flex-shrink: 0; }\n        .chart-line-loader-axis { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: .3; }\n        .chart-line-loader-line { fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 100 100; animation: chart-line-loader-draw var(--loader-duration) linear infinite; }\n        .chart-line-loader-dot { fill: currentColor; transform: translate(86px, 24px); animation: chart-line-loader-dot var(--loader-duration) linear infinite; }\n        @keyframes chart-line-loader-draw { 0% { stroke-dashoffset: 100; opacity: 1; } 60%, 82% { stroke-dashoffset: 0; opacity: 1; } 96%, 100% { stroke-dashoffset: 0; opacity: 0; } }\n        @keyframes chart-line-loader-dot { ${dotFrames} 82% { transform: translate(86px, 24px); opacity: 1; } 96%, 100% { transform: translate(86px, 24px); opacity: 0; } }\n        @media (prefers-reduced-motion: reduce) { .chart-line-loader-line, .chart-line-loader-dot { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "chart"
+  ],
+  "type": "registry:ui"
+}

@@ -7,6 +7,10 @@ const defaultSpeeds: Record<string, number> = {
   "orbit-thought-orb": 4.8,
   "orbit-morphing-sphere": 3.2,
   "orbit-searching": 4.8,
+  "chart-bars": 3.2,
+  "chart-line": 3.2,
+  "chart-sparkline": 3.2,
+  "chart-donut": 3.2,
 }
 
 export function getLoaderDefaultSpeed(name: string): number {

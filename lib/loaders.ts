@@ -1,3 +1,7 @@
+import { ChartBars } from "@/registry/loaders/chart-bars"
+import { ChartLine } from "@/registry/loaders/chart-line"
+import { ChartSparkline } from "@/registry/loaders/chart-sparkline"
+import { ChartDonut } from "@/registry/loaders/chart-donut"
 import { ClassicProcessing } from "@/registry/loaders/classic-processing"
 import { ClassicLiquidProcessing } from "@/registry/loaders/classic-liquid-processing"
 import { ClassicTextShimmer } from "@/registry/loaders/classic-text-shimmer"
@@ -21,6 +25,7 @@ import { ClassicHourglass } from "@/registry/loaders/classic-hourglass"
 import { OrbitRadar } from "@/registry/loaders/orbit-radar"
 import { GridConveyor } from "@/registry/loaders/grid-conveyor"
 import {
+  ChartColumn,
   Grid2X2,
   LoaderCircle,
   Network,
@@ -86,6 +91,7 @@ export const CATEGORIES = [
   { id: "orbital", label: "Orbital" },
   { id: "classic", label: "Classic" },
   { id: "network", label: "Network" },
+  { id: "chart", label: "Chart" },
 ] as const
 
 export const CATEGORY_ICONS: Record<
@@ -96,9 +102,15 @@ export const CATEGORY_ICONS: Record<
   orbital: Orbit,
   classic: LoaderCircle,
   network: Network,
+  chart: ChartColumn,
 }
 
 export const loaderComponents = {
+  "chart-bars": ChartBars,
+  "chart-line": ChartLine,
+  "chart-sparkline": ChartSparkline,
+  "chart-donut": ChartDonut,
+
   "classic-processing": ClassicProcessing,
   "classic-liquid-processing": ClassicLiquidProcessing,
   "classic-text-shimmer": ClassicTextShimmer,

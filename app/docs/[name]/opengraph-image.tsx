@@ -40,6 +40,31 @@ function FamilyGlyph({ category }: { category: string }) {
       </svg>
     )
   }
+  if (category === "chart") {
+    return (
+      <svg width="220" height="220" viewBox="0 0 100 100">
+        <path
+          d="M12 86H88"
+          fill="none"
+          stroke={INK}
+          strokeWidth="2"
+          strokeOpacity="0.3"
+        />
+        {[40, 62, 50, 78, 66].map((height, i) => (
+          <rect
+            key={i}
+            x={16 + i * 14}
+            y={82 - height}
+            width="10"
+            height={height}
+            rx="2"
+            fill={INK}
+            opacity={0.4 + i * 0.15}
+          />
+        ))}
+      </svg>
+    )
+  }
   if (category === "network") {
     return (
       <svg width="220" height="220" viewBox="0 0 100 100">

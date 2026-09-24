@@ -1,5 +1,13 @@
 /** A short "when to use it" note for each loader, shown on its docs page. */
 export const loaderNotes: Record<string, string> = {
+  "chart-bars":
+    "Fits dashboards, reports, and analytics panels while their data loads. The baseline and staggered growth read as a chart rather than an audio level.",
+  "chart-line":
+    "Fits trend views, metrics, and time-series charts that are still fetching. Clear even at small sizes.",
+  "chart-sparkline":
+    "Fits stat cards, table rows, and live metrics. Suggests a value that is streaming in rather than a single fetch.",
+  "chart-donut":
+    "Fits breakdowns, usage summaries, and composition charts. A segmented alternative to a ring spinner.",
   "classic-processing":
     "Fits batch jobs, imports, and background processing. Parallel streams suggest several pieces of work moving at once.",
   "classic-liquid-processing":

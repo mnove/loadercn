@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-bars",
+  "title": "Bar chart",
+  "description": "Bars grow from a baseline in sequence, settle to new values, then clear.",
+  "files": [
+    {
+      "path": "registry/loaders/chart-bars.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ChartBarsProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nconst bars = [\n  [0.45, 0.75],\n  [0.7, 0.5],\n  [0.55, 0.85],\n  [0.9, 0.6],\n  [0.65, 0.95],\n]\n\nexport function ChartBars({\n  size = 40,\n  speed = 3.2,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ChartBarsProps) {\n  const duration = Math.max(0.1, speed)\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"chart-bars-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${duration}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n      >\n        <path d=\"M12 84H88\" className=\"chart-bars-loader-axis\" />\n        {bars.map(([first, second], i) => (\n          <rect\n            key={i}\n            x={16 + i * 14}\n            y=\"20\"\n            width=\"10\"\n            height=\"60\"\n            rx=\"2\"\n            className=\"chart-bars-loader-bar\"\n            style={\n              {\n                \"--chart-bars-first\": first,\n                \"--chart-bars-second\": second,\n                animationDelay: `${(i * 0.05 - 1) * duration}s`,\n              } as CSSProperties\n            }\n          />\n        ))}\n      </svg>\n      <style>{`\n        .chart-bars-loader { display: inline-flex; flex-shrink: 0; }\n        .chart-bars-loader-axis { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; opacity: .3; }\n        .chart-bars-loader-bar { fill: currentColor; transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(var(--chart-bars-first)); animation: chart-bars-loader-grow var(--loader-duration) cubic-bezier(.45, 0, .2, 1) infinite; }\n        @keyframes chart-bars-loader-grow { 0% { transform: scaleY(.04); } 22%, 42% { transform: scaleY(var(--chart-bars-first)); } 62%, 80% { transform: scaleY(var(--chart-bars-second)); } 96%, 100% { transform: scaleY(.04); } }\n        @media (prefers-reduced-motion: reduce) { .chart-bars-loader-bar { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "chart"
+  ],
+  "type": "registry:ui"
+}
