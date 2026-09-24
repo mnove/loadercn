@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
+import { installCommand, registryAddCommand } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Get started — loadercn",
@@ -89,17 +90,34 @@ export default async function DocsPage() {
         <Command value="npx shadcn@latest init" />
       </Step>
 
-      <Step index="02" title="Add a loader">
+      <Step index="02" title="Add the registry">
+        <p className="text-xs leading-6 text-muted-foreground">
+          Register the <code className="font-mono">@loadercn</code> namespace in
+          your <code className="font-mono">components.json</code>. You only need
+          to do this once per project.
+        </p>
+        <Command value={registryAddCommand(origin)} />
+        <CodeBlock
+          code={`{\n  "registries": {\n    "@loadercn": "${origin}/r/{name}.json"\n  }\n}`}
+          className="border bg-muted/50 p-4 text-[11px] leading-6"
+        />
+      </Step>
+
+      <Step index="03" title="Add a loader">
         <p className="text-xs leading-6 text-muted-foreground">
           Every loader has its own install command. Pick one from the sidebar to
-          copy it, or swap the name in the URL below.
+          copy it, or swap the name below.
+        </p>
+        <Command value={installCommand("classic-ring")} />
+        <p className="text-xs leading-6 text-muted-foreground">
+          Skipping the namespace? Install directly from the URL instead.
         </p>
         <Command
           value={`npx shadcn@latest add ${origin}/r/classic-ring.json`}
         />
       </Step>
 
-      <Step index="03" title="Use it">
+      <Step index="04" title="Use it">
         <p className="text-xs leading-6 text-muted-foreground">
           The component lives in your codebase, so every detail is yours to
           change.
@@ -110,7 +128,7 @@ export default async function DocsPage() {
         />
       </Step>
 
-      <Step index="04" title="Props">
+      <Step index="05" title="Props">
         <p className="text-xs leading-6 text-muted-foreground">
           Every loader shares the same API and respects reduced-motion
           preferences.
@@ -145,7 +163,7 @@ export default async function DocsPage() {
         </div>
       </Step>
 
-      <Step index="05" title="Copy and paste">
+      <Step index="06" title="Copy and paste">
         <p className="text-xs leading-6 text-muted-foreground">
           Prefer to skip the CLI? Every loader includes its complete React
           source in the Source tab. Styles are included, no shadcn setup

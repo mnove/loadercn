@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og"
-import { SITE_URL } from "@/lib/loader-items"
+import { installCommand } from "@/lib/site"
 import { OG_COLORS, OG_SIZE, OgBrand } from "@/lib/og"
 
 export const alt =
@@ -72,7 +72,7 @@ export default function Image() {
         }}
       >
         <span style={{ color: OG_COLORS.primary }}>$</span>
-        {`npx shadcn@latest add ${SITE_URL}/r/classic-ring.json`}
+        {installCommand("classic-ring")}
       </div>
     </div>,
     size

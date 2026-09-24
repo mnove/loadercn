@@ -21,13 +21,30 @@ Open http://localhost:3000. Development and production builds regenerate the reg
 
 ## Install a loader
 
-In a project initialized with shadcn, run:
+Loaders are published under the `@loadercn` namespace. In a project initialized with shadcn, register the namespace once, then add loaders by name:
 
 ```sh
-npx shadcn@latest add http://localhost:3000/r/grid-wave.json
+npx shadcn@latest registry add @loadercn=https://your-registry.example/r/{name}.json
+npx shadcn@latest add @loadercn/grid-wave
 ```
 
-Replace the origin with your deployed registry URL for public use. Each preview's CLI command uses the current site's origin.
+`registry add` writes this to the consuming project's `components.json`:
+
+```json
+{
+  "registries": {
+    "@loadercn": "https://your-registry.example/r/{name}.json"
+  }
+}
+```
+
+`npx shadcn@latest search @loadercn` lists every loader. You can also skip the namespace and install from a URL:
+
+```sh
+npx shadcn@latest add https://your-registry.example/r/grid-wave.json
+```
+
+Replace the example host with your deployed origin (`http://localhost:3000` in development). The site's install commands use the current origin.
 
 ```tsx
 import { GridWave } from "@/components/ui/grid-wave"
@@ -44,28 +61,28 @@ import { GridWave } from "@/components/ui/grid-wave"
 - `public/r/*.json`: generated items with full source content, built by `shadcn build`.
 - `/r/registry.json` and `/registry.json`: discoverable public catalogs.
 
-For optional namespace installation, add this to the consuming project's `components.json`, replacing the example host:
-
-```json
-{
-  "registries": {
-    "@loadercn": "https://your-registry.example/r/{name}.json"
-  }
-}
-```
-
-Then run `npx shadcn@latest add @loadercn/grid-wave`.
-
 ## Publish
 
 Set `NEXT_PUBLIC_SITE_URL` to your real HTTPS origin, then deploy this Next.js app using `pnpm build` and `pnpm start`. The build writes the configured homepage into both public catalogs. No domain is assumed or provisioned by this starter.
+
+To make `npx shadcn@latest add @loadercn/<name>` work without the `registry add` step, list the registry in the [shadcn registry directory](https://ui.shadcn.com/docs/registry/registry-index). The repository must be public. Add this entry to `apps/v4/registry/directory.json` in `shadcn-ui/ui`, run `pnpm validate:registries`, and open a pull request:
+
+```json
+{
+  "name": "@loadercn",
+  "homepage": "https://your-registry.example",
+  "url": "https://your-registry.example/r/{name}.json",
+  "description": "Animated React loaders for shadcn/ui: grid, orbital, and classic spinners with zero dependencies.",
+  "logo": "<svg ...>"
+}
+```
 
 ## Add a component
 
 1. Add a self-contained component under `registry/loaders` with uniquely scoped animation names and reduced-motion styles.
 2. Register its title, description, category, and source path in `registry.json`.
 3. Add its preview to `lib/loaders.ts`.
-4. Run `pnpm registry:build` and verify its generated JSON.
+4. Run `pnpm registry:build` and `pnpm registry:validate`, then verify its generated JSON.
 
 ## Checks
 
