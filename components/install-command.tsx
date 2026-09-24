@@ -11,7 +11,7 @@ import {
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group"
-import { installCommand } from "@/lib/site"
+import { urlInstallCommand } from "@/lib/site"
 
 const subscribe = () => () => {}
 
@@ -31,7 +31,7 @@ export function InstallCommand({
   name: string
   className?: string
 }) {
-  const command = installCommand(name)
+  const command = urlInstallCommand(name)
   const [copied, setCopied] = useState(false)
   useEffect(() => {
     if (!copied) return
@@ -61,7 +61,7 @@ export function InstallCommand({
             nativeButton={false}
             render={<Link href="/docs" />}
             aria-label="Setup guide"
-            title="Requires the @loadercn registry in your shadcn project. See the setup guide."
+            title="Works in any shadcn project. Add the @loadercn registry for the shorter form. See the setup guide."
           >
             <InfoIcon />
           </InputGroupButton>

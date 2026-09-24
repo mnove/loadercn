@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next"
-import { SITE_URL, getLoaderSummaries } from "@/lib/loader-items"
+import { getLoaderSummaries } from "@/lib/loader-items"
+import { SITE_URL } from "@/lib/site"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

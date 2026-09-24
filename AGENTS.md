@@ -34,8 +34,8 @@ Before finishing any change, run `pnpm typecheck`, `pnpm lint`, and `pnpm regist
 - `scripts/registry-catalog.mjs`: copies `registry.json` into the public catalogs and sets `homepage` from `NEXT_PUBLIC_SITE_URL`.
 - `lib/loaders.ts`: maps each loader name to its component for the previews, and defines the categories.
 - `lib/loader-notes.ts`: a "when to use it" note for each loader's docs page.
-- `lib/loader-items.ts`: reads registry items and source for the site. `SITE_URL` comes from here.
-- `lib/site.ts`: `GITHUB_URL`, `REGISTRY_NAMESPACE`, and the helpers that build install commands.
+- `lib/loader-items.ts`: reads registry items and source for the site.
+- `lib/site.ts`: `SITE_URL`, `GITHUB_URL`, `REGISTRY_NAMESPACE`, and the helpers that build install commands.
 - `app/`: the site (App Router only, no `pages/`). `/docs` is the setup guide and `/docs/[name]` is each loader's page.
 - `components/ui/`: shadcn components for the site. They are not part of the registry.
 
@@ -73,7 +73,7 @@ Every loader is installed into someone else's project, so it has to work anywher
 
 - Follow the shadcn registry spec: https://ui.shadcn.com/docs/registry/registry-json
 - The registry stays flat (`/r/registry.json` and `/r/<name>.json`) so it qualifies for the shadcn registry directory.
-- Install commands shown on the site use `installCommand()` and `registryAddCommand()` from `lib/site.ts`. Never hardcode `@loadercn` or registry URLs in components.
+- Install commands shown on the site use `urlInstallCommand()`, `installCommand()`, and `registryAddCommand()` from `lib/site.ts`. Lead with `urlInstallCommand()`, since it works without registry setup. Never hardcode `@loadercn` or registry URLs in components.
 - Production lives at https://loadercn.vercel.app, which is the `homepage` in `registry.json` and the fallback for `SITE_URL`. `NEXT_PUBLIC_SITE_URL` overrides it, e.g. for preview deployments or a future custom domain.
 
 ## Site UI rules

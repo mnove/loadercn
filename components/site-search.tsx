@@ -30,7 +30,7 @@ import { GitHubIcon } from "@/components/icons"
 import { useOrigin } from "@/components/install-command"
 import type { LoaderSummary } from "@/lib/loader-items"
 import { CATEGORIES, loaderComponents } from "@/lib/loaders"
-import { GITHUB_URL, installCommand, registryAddCommand } from "@/lib/site"
+import { GITHUB_URL, registryAddCommand, urlInstallCommand } from "@/lib/site"
 
 function useIsMac() {
   return useSyncExternalStore(
@@ -182,7 +182,9 @@ export function SiteSearch({ items }: { items: LoaderSummary[] }) {
                 <CommandItem
                   value={`Copy install command for ${current.title}`}
                   keywords={["cli", "npx", "shadcn"]}
-                  onSelect={() => copy("install", installCommand(current.name))}
+                  onSelect={() =>
+                    copy("install", urlInstallCommand(current.name))
+                  }
                 >
                   {copied === "install" ? <Check /> : <Copy />}
                   Copy install command for {current.title}

@@ -5,10 +5,9 @@ import { Slider } from "@/components/ui/slider"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
-import { useOrigin } from "@/components/install-command"
 import { PreviewColorPicker } from "@/components/preview-color-picker"
 import { loaderComponents } from "@/lib/loaders"
-import { installCommand } from "@/lib/site"
+import { installCommand, urlInstallCommand } from "@/lib/site"
 import type { LoaderItem } from "@/lib/loader-items"
 import { cn } from "@/lib/utils"
 
@@ -43,11 +42,10 @@ export function LoaderDetail({
   const [localColor, setLocalColor] = useState(colorProp)
   const color = onColorChange ? colorProp : localColor
   const setColor = onColorChange ?? setLocalColor
-  const origin = useOrigin()
   const Loader = loaderComponents[item.name as keyof typeof loaderComponents]
   const componentName = toComponentName(item.name)
   const command = installCommand(item.name)
-  const urlCommand = `npx shadcn@latest add ${origin}/r/${item.name}.json`
+  const urlCommand = urlInstallCommand(item.name)
 
   return (
     <>
@@ -100,22 +98,22 @@ export function LoaderDetail({
         </TabsList>
         <TabsContent value="install" className="min-w-0 space-y-5 pt-4">
           <p className="text-xs leading-6 text-muted-foreground">
-            Run this command in a project with the @loadercn registry added.
-          </p>
-          <div className="flex items-center gap-3 border bg-muted/50 p-3">
-            <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
-              {command}
-            </code>
-            <CopyButton value={command} />
-          </div>
-          <p className="text-xs text-muted-foreground">
-            Or install directly from its URL:
+            Run this command in any project set up with shadcn.
           </p>
           <div className="flex items-center gap-3 border bg-muted/50 p-3">
             <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
               {urlCommand}
             </code>
             <CopyButton value={urlCommand} />
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Added the @loadercn registry? Use the short form:
+          </p>
+          <div className="flex items-center gap-3 border bg-muted/50 p-3">
+            <code className="min-w-0 flex-1 overflow-x-auto text-[11px] whitespace-nowrap">
+              {command}
+            </code>
+            <CopyButton value={command} />
           </div>
           <p className="text-xs text-muted-foreground">
             Then add it to your interface:
