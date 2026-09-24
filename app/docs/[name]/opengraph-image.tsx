@@ -1,16 +1,12 @@
 import { ImageResponse } from "next/og"
 import { getLoaderSummaries } from "@/lib/loader-items"
 import { CATEGORIES } from "@/lib/loaders"
+import { OG_COLORS, OG_SIZE, OgBrand } from "@/lib/og"
 
-// Theme tokens from globals.css, in hex because Satori doesn't parse oklch.
-const PAPER = "#fbfaf8"
-const INK = "#0c0a09"
-const MUTED = "#79716b"
-const BORDER = "#e7e5e4"
-const PRIMARY = "#d84a00"
+const { paper: PAPER, ink: INK, muted: MUTED, border: BORDER } = OG_COLORS
 
 export const alt = "loadercn loader preview"
-export const size = { width: 1200, height: 630 }
+export const size = OG_SIZE
 export const contentType = "image/png"
 
 export function generateStaticParams() {
@@ -117,24 +113,7 @@ export default async function Image({ params }: PageProps<"/docs/[name]">) {
           justifyContent: "space-between",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ display: "flex", flexWrap: "wrap", width: 36, gap: 4 }}>
-            {Array.from({ length: 9 }, (_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: 9,
-                  height: 9,
-                  background: PRIMARY,
-                  opacity: i === 2 || i === 6 ? 0.3 : 1,
-                }}
-              />
-            ))}
-          </div>
-          <div style={{ display: "flex", fontSize: 34, letterSpacing: -1.5 }}>
-            loadercn<span style={{ color: PRIMARY }}>.</span>
-          </div>
-        </div>
+        <OgBrand />
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
             style={{
