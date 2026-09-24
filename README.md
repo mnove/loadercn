@@ -1,93 +1,55 @@
 # loadercn
 
-A shadcn-compatible registry of 53 React loaders: twenty-three grid animations, thirteen orbital animations, and seventeen classic animations. The homepage includes live previews, family filters, search, color controls, pause/play, light/dark themes, and a source/installation dialog for every component.
+Animated React loaders for shadcn/ui, in three families: grid, orbital, and classic spinners. Each loader is a single file that depends only on React, inherits text color, and respects `prefers-reduced-motion`.
 
-Patterns include perimeter chase, sliding puzzle, tile flip, figure eight, comet, and nested satellite. The latest batch adds spiral, breathing lattice, assemble/scatter, precession, orbital exchange, and slingshot.
+Browse, preview, and copy them at https://loadercn.vercel.app.
 
-The matrix scan family uses fixed 4×4 cells with animated brightness: Matrix scan (dots), Matrix scan squares, Column scan, Diagonal scan, Diagonal flow, and Matrix bounce. Diagonal flow uses a broad, eased brightness wave with synchronized diagonals. Grid ripple uses square cells. Directional flow variants run top to bottom, bottom to top, left to right, and right to left. Matrix bounce also has a horizontal variant.
+## Install
 
-The Classic family includes Ring spinner, Fading spokes, Dotted spinner, Dual ring, Chasing dots, Chasing dots trio, Bouncing dots, Typing indicator, Equalizer bars, Indeterminate bar, Expanding rings, Rotating squares, and Folding cube.
-
-Adapted patterns include Dot stream, Liquid dot stream, Pulsing spokes, Circular tail, and Tilted atom. Liquid dot stream uses a unique SVG filter per instance; all patterns inherit text color and support reduced motion.
-
-## Development
+Add any loader with the shadcn CLI:
 
 ```sh
-pnpm install
-pnpm dev
+npx shadcn@latest add https://loadercn.vercel.app/r/grid-wave.json
 ```
 
-Open http://localhost:3000. Development and production builds regenerate the registry automatically.
-
-## Install a loader
-
-Loaders are published under the `@loadercn` namespace. In a project initialized with shadcn, register the namespace once, then add loaders by name:
+Or register the `@loadercn` namespace once and add loaders by name:
 
 ```sh
 npx shadcn@latest registry add @loadercn=https://loadercn.vercel.app/r/{name}.json
 npx shadcn@latest add @loadercn/grid-wave
 ```
 
-`registry add` writes this to the consuming project's `components.json`:
+`npx shadcn@latest search @loadercn` lists every loader. No shadcn? Copy the source from the site. Each file needs only React.
 
-```json
-{
-  "registries": {
-    "@loadercn": "https://loadercn.vercel.app/r/{name}.json"
-  }
-}
-```
-
-`npx shadcn@latest search @loadercn` lists every loader. You can also skip the namespace and install from a URL:
-
-```sh
-npx shadcn@latest add https://loadercn.vercel.app/r/grid-wave.json
-```
-
-In development, swap in `http://localhost:3000`. The site's install commands always use the origin they're served from.
+## Usage
 
 ```tsx
 import { GridWave } from "@/components/ui/grid-wave"
 
-<GridWave size={40} speed={1.6} className="text-orange-600" label="Loading results" />
+;<GridWave
+  size={40}
+  speed={1.6}
+  className="text-orange-600"
+  label="Loading results"
+/>
 ```
 
-`size` is in pixels; `speed` is the cycle duration in seconds (lower is faster). Loaders inherit text color, accept span props, include an accessible loading status, and respect `prefers-reduced-motion`. Each file includes scoped CSS and requires only React, so the Source tab also supports direct copying without shadcn or Tailwind setup.
+- `size`: pixels (default `40`)
+- `speed`: cycle duration in seconds, lower is faster (default `1.6`)
+- `label`: accessible status text (default `"Loading"`)
 
-## Registry structure
+Loaders also accept any `<span>` props.
 
-- `registry.json`: source catalog following the [shadcn registry specification](https://ui.shadcn.com/docs/registry/registry-json).
-- `registry/loaders/*.tsx`: independently installable `registry:ui` components.
-- `public/r/*.json`: generated items with full source content, built by `shadcn build`.
-- `/r/registry.json` and `/registry.json`: discoverable public catalogs.
+## Contributing
 
-## Publish
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup and how to add a loader.
 
-The site is deployed at https://loadercn.vercel.app, which is the `homepage` in `registry.json`. The build writes that homepage into both public catalogs. To serve from a different origin (a preview deployment or a custom domain), set `NEXT_PUBLIC_SITE_URL` to it.
+## Authors
 
-To make `npx shadcn@latest add @loadercn/<name>` work without the `registry add` step, list the registry in the [shadcn registry directory](https://ui.shadcn.com/docs/registry/registry-index). The repository must be public. Add this entry to `apps/v4/registry/directory.json` in `shadcn-ui/ui`, run `pnpm validate:registries`, and open a pull request:
+<a href="https://github.com/mnove/loadercn/graphs/contributors">
+  <img alt="loadercn contributors" src="https://contrib.rocks/image?repo=mnove/loadercn" />
+</a>
 
-```json
-{
-  "name": "@loadercn",
-  "homepage": "https://loadercn.vercel.app",
-  "url": "https://loadercn.vercel.app/r/{name}.json",
-  "description": "Animated React loaders for shadcn/ui: grid, orbital, and classic spinners with zero dependencies.",
-  "logo": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#d84a00'><rect x='0' y='0' width='6' height='6'/><rect x='9' y='0' width='6' height='6'/><rect x='18' y='0' width='6' height='6' fill-opacity='.3'/><rect x='0' y='9' width='6' height='6'/><rect x='9' y='9' width='6' height='6'/><rect x='18' y='9' width='6' height='6'/><rect x='0' y='18' width='6' height='6' fill-opacity='.3'/><rect x='9' y='18' width='6' height='6'/><rect x='18' y='18' width='6' height='6'/></svg>"
-}
-```
+## License
 
-## Add a component
-
-1. Add a self-contained component under `registry/loaders` with uniquely scoped animation names and reduced-motion styles.
-2. Register its title, description, category, and source path in `registry.json`.
-3. Add its preview to `lib/loaders.ts`.
-4. Run `pnpm registry:build` and `pnpm registry:validate`, then verify its generated JSON.
-
-## Checks
-
-```sh
-pnpm typecheck
-pnpm lint
-pnpm build
-```
+[MIT](LICENSE) © 2026 Marcello Novelli
