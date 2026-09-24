@@ -74,7 +74,7 @@ Every loader is installed into someone else's project, so it has to work anywher
 - Follow the shadcn registry spec: https://ui.shadcn.com/docs/registry/registry-json
 - The registry stays flat (`/r/registry.json` and `/r/<name>.json`) so it qualifies for the shadcn registry directory.
 - Install commands shown on the site use `installCommand()` and `registryAddCommand()` from `lib/site.ts`. Never hardcode `@loadercn` or registry URLs in components.
-- Set `NEXT_PUBLIC_SITE_URL` to the production origin when deploying. Otherwise `homepage` stays `http://localhost:3000`.
+- Production lives at https://loadercn.vercel.app, which is the `homepage` in `registry.json` and the fallback for `SITE_URL`. `NEXT_PUBLIC_SITE_URL` overrides it, e.g. for preview deployments or a future custom domain.
 
 ## Site UI rules
 

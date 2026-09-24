@@ -24,7 +24,7 @@ Open http://localhost:3000. Development and production builds regenerate the reg
 Loaders are published under the `@loadercn` namespace. In a project initialized with shadcn, register the namespace once, then add loaders by name:
 
 ```sh
-npx shadcn@latest registry add @loadercn=https://your-registry.example/r/{name}.json
+npx shadcn@latest registry add @loadercn=https://loadercn.vercel.app/r/{name}.json
 npx shadcn@latest add @loadercn/grid-wave
 ```
 
@@ -33,7 +33,7 @@ npx shadcn@latest add @loadercn/grid-wave
 ```json
 {
   "registries": {
-    "@loadercn": "https://your-registry.example/r/{name}.json"
+    "@loadercn": "https://loadercn.vercel.app/r/{name}.json"
   }
 }
 ```
@@ -41,10 +41,10 @@ npx shadcn@latest add @loadercn/grid-wave
 `npx shadcn@latest search @loadercn` lists every loader. You can also skip the namespace and install from a URL:
 
 ```sh
-npx shadcn@latest add https://your-registry.example/r/grid-wave.json
+npx shadcn@latest add https://loadercn.vercel.app/r/grid-wave.json
 ```
 
-Replace the example host with your deployed origin (`http://localhost:3000` in development). The site's install commands use the current origin.
+In development, swap in `http://localhost:3000`. The site's install commands always use the origin they're served from.
 
 ```tsx
 import { GridWave } from "@/components/ui/grid-wave"
@@ -63,17 +63,17 @@ import { GridWave } from "@/components/ui/grid-wave"
 
 ## Publish
 
-Set `NEXT_PUBLIC_SITE_URL` to your real HTTPS origin, then deploy this Next.js app using `pnpm build` and `pnpm start`. The build writes the configured homepage into both public catalogs. No domain is assumed or provisioned by this starter.
+The site is deployed at https://loadercn.vercel.app, which is the `homepage` in `registry.json`. The build writes that homepage into both public catalogs. To serve from a different origin (a preview deployment or a custom domain), set `NEXT_PUBLIC_SITE_URL` to it.
 
 To make `npx shadcn@latest add @loadercn/<name>` work without the `registry add` step, list the registry in the [shadcn registry directory](https://ui.shadcn.com/docs/registry/registry-index). The repository must be public. Add this entry to `apps/v4/registry/directory.json` in `shadcn-ui/ui`, run `pnpm validate:registries`, and open a pull request:
 
 ```json
 {
   "name": "@loadercn",
-  "homepage": "https://your-registry.example",
-  "url": "https://your-registry.example/r/{name}.json",
+  "homepage": "https://loadercn.vercel.app",
+  "url": "https://loadercn.vercel.app/r/{name}.json",
   "description": "Animated React loaders for shadcn/ui: grid, orbital, and classic spinners with zero dependencies.",
-  "logo": "<svg ...>"
+  "logo": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#d84a00'><rect x='0' y='0' width='6' height='6'/><rect x='9' y='0' width='6' height='6'/><rect x='18' y='0' width='6' height='6' fill-opacity='.3'/><rect x='0' y='9' width='6' height='6'/><rect x='9' y='9' width='6' height='6'/><rect x='18' y='9' width='6' height='6'/><rect x='0' y='18' width='6' height='6' fill-opacity='.3'/><rect x='9' y='18' width='6' height='6'/><rect x='18' y='18' width='6' height='6'/></svg>"
 }
 ```
 
