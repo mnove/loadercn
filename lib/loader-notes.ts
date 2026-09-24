@@ -1,5 +1,53 @@
 /** A short "when to use it" note for each loader, shown on its docs page. */
 export const loaderNotes: Record<string, string> = {
+  "classic-processing":
+    "Fits batch jobs, imports, and background processing. Parallel streams suggest several pieces of work moving at once.",
+  "classic-placeholder":
+    "Fits fetching text, articles, or summaries. This compact status illustration suggests incoming content; use a layout-sized skeleton when reserving actual content space.",
+
+  "orbit-searching":
+    "Fits search, retrieval, and discovery. A bright longitude sweep overtakes the rotating particle surface; use 64px or larger to show the depth clearly.",
+  "orbit-scanning-sphere":
+    "Fits discovery, indexing, and searching. A travelling highlight reveals the sphere one band at a time; use 64px or larger for its depth detail.",
+  "orbit-thought-orb":
+    "Fits reasoning, retrieval, and multi-step processing. The internal routes add activity while the outer sphere stays quiet.",
+  "orbit-morphing-sphere":
+    "Fits transformation, generation, and preparing structured results. Use it at card size to make the change in volume clear.",
+
+  "orbit-particle-globe":
+    "A dimensional loader for computation and discovery. Use 64px or larger to bring out the particle depth; its silhouette also works in compact previews.",
+  "orbit-breathing-orb":
+    "Fits waiting, listening, and longer generation tasks. The slow surface breathing is best in cards and panels.",
+  "orbit-latitude-globe":
+    "Fits global search, connectivity, and data processing. The ordered bands and bright signals are clearest at 64px or larger.",
+
+  "network-deduce":
+    "Fits evaluation, search, and decision-making tasks. Signals move from a single premise into several possible outcomes.",
+  "network-synthesize":
+    "Use it for combining sources, summarizing, and assembling a result from several inputs.",
+  "orbit-focus":
+    "A calm loader for refining a search or bringing a result into focus. The alignment reads best in cards and panels.",
+  "network-associate":
+    "Fits linking records, finding relationships, or retrieving related information. Its connections follow a deliberate repeating sequence.",
+
+  "orbit-helix":
+    "Fits scientific tools, generation, and multi-stage processing. The linked strands are clearest in cards and panels.",
+  "classic-dot-morph":
+    "A geometric loader for creation and transformation tasks. Use it at card size so the changing outline has room to read.",
+  "classic-circuit":
+    "Fits connections, routing, and background processing in developer tools. The fixed tracks keep the motion easy to follow.",
+  "grid-render":
+    "Use it for rendering, assembling previews, or processing images. The repeated passes indicate activity rather than measured progress.",
+
+  "classic-morph":
+    "A compact geometric loader for buttons, cards, and view transitions. The changing silhouette adds personality while keeping the motion simple.",
+  "classic-hourglass":
+    "Use it for longer waits such as exports or queued jobs. The repeated flip indicates ongoing work without suggesting a measured completion percentage.",
+  "orbit-radar":
+    "Fits discovery and connection states, such as finding nearby devices or searching for a service. The dial is clearest in cards and panels.",
+  "grid-conveyor":
+    "A steady loader for batch processing, imports, and moving records. Alternating rows give the grid motion without implying a completion percentage.",
+
   // Grid
   "grid-wave":
     "A calm, general-purpose loader. Its diagonal motion reads well at small sizes, so it fits buttons, table cells, and inline status next to text.",

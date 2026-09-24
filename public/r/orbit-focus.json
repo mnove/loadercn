@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "orbit-focus",
+  "title": "Orbit focus",
+  "description": "Scattered ellipses settle into concentric rings before drifting apart.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/orbit-focus.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type OrbitFocusProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function OrbitFocus({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: OrbitFocusProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"orbit-focus-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n      >\n        {[\n          { x: -10, y: -12, angle: -35 },\n          { x: 12, y: -6, angle: 25 },\n          { x: -8, y: 10, angle: -20 },\n          { x: 8, y: 8, angle: 35 },\n        ].map((ring, index) => (\n          <circle\n            key={index}\n            cx=\"50\"\n            cy=\"50\"\n            r={10 + index * 9}\n            className=\"orbit-focus-loader-ring\"\n            style={\n              {\n                \"--orbit-focus-scatter\": `translate(${ring.x}px, ${ring.y}px) rotate(${ring.angle}deg) scaleY(.45)`,\n                \"--orbit-focus-opacity\": 0.95 - index * 0.17,\n              } as CSSProperties\n            }\n          />\n        ))}\n        <circle cx=\"50\" cy=\"50\" r=\"3\" className=\"orbit-focus-loader-center\" />\n      </svg>\n      <style>{`\n        .orbit-focus-loader { display: inline-flex; flex-shrink: 0; }\n        .orbit-focus-loader-ring { stroke-width: 2; transform-origin: 50px 50px; opacity: var(--orbit-focus-opacity); animation: orbit-focus-loader-align var(--loader-duration) ease-in-out infinite; }\n        .orbit-focus-loader-center { fill: currentColor; stroke: none; }\n        @keyframes orbit-focus-loader-align { 0%, 12%, 100% { transform: var(--orbit-focus-scatter); opacity: .35; } 45%, 60% { transform: translate(0, 0) rotate(0deg) scaleY(1); opacity: var(--orbit-focus-opacity); } }\n        @media (prefers-reduced-motion: reduce) { .orbit-focus-loader-ring { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "orbital"
+  ],
+  "type": "registry:ui"
+}

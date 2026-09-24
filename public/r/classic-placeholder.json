@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-placeholder",
+  "title": "Classic placeholder",
+  "description": "A gentle shimmer travels across four dotted text lines.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/classic-placeholder.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicPlaceholderProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicPlaceholder({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicPlaceholderProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-placeholder-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n      >\n        {[15, 11, 13, 8].map((count, row) => (\n          <g key={row}>\n            {Array.from({ length: count }, (_, column) => {\n              const x = 50 + (column - (count - 1) / 2) * 5\n              // Phase the stationary dots by position to carry light across the lines.\n              const phase = ((x - 15) / 70) * 0.55 + row * 0.045\n              return (\n                <circle\n                  key={column}\n                  cx={x}\n                  cy={27 + row * 15}\n                  r=\"1.8\"\n                  className=\"classic-placeholder-loader-dot\"\n                  style={{\n                    animationDelay: `${-(1 - phase) * Math.max(0.1, speed)}s`,\n                  }}\n                />\n              )\n            })}\n          </g>\n        ))}\n      </svg>\n      <style>{`\n        .classic-placeholder-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-placeholder-loader-dot { fill: currentColor; opacity: .5; transform-box: fill-box; transform-origin: center; animation: classic-placeholder-loader-shimmer var(--loader-duration) ease-in-out infinite; }\n        @keyframes classic-placeholder-loader-shimmer { 0%, 100% { opacity: .95; transform: scale(1.15); } 18%, 82% { opacity: .2; transform: scale(.8); } }\n        @media (prefers-reduced-motion: reduce) { .classic-placeholder-loader-dot { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

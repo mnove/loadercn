@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "network-associate",
+  "title": "Network associate",
+  "description": "Small groups of nodes reveal a changing sequence of connections.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/network-associate.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type NetworkAssociateProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function NetworkAssociate({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: NetworkAssociateProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"network-associate-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n        strokeLinecap=\"round\"\n        strokeLinejoin=\"round\"\n      >\n        {[\n          \"M24 22L50 48L78 28Z\",\n          \"M78 28L76 78L50 48Z\",\n          \"M76 78L20 74L24 22L50 48Z\",\n        ].map((path, index) => (\n          <path\n            key={path}\n            d={path}\n            pathLength=\"100\"\n            className=\"network-associate-loader-links\"\n            style={{\n              animationDelay: `${(-index / 3) * Math.max(0.1, speed)}s`,\n            }}\n          />\n        ))}\n        {[\n          [24, 22],\n          [78, 28],\n          [50, 48],\n          [20, 74],\n          [76, 78],\n        ].map(([x, y], index) => (\n          <circle\n            key={index}\n            cx={x}\n            cy={y}\n            r={index === 2 ? 4.5 : 4}\n            className=\"network-associate-loader-node\"\n            style={{\n              animationDelay: `${(-index / 5) * Math.max(0.1, speed)}s`,\n            }}\n          />\n        ))}\n      </svg>\n      <style>{`\n        .network-associate-loader { display: inline-flex; flex-shrink: 0; }\n        .network-associate-loader-links { stroke-width: 2; stroke-dasharray: 100; opacity: .15; animation: network-associate-loader-connect var(--loader-duration) ease-in-out infinite; }\n        .network-associate-loader-node { fill: currentColor; stroke: none; opacity: .7; animation: network-associate-loader-notice var(--loader-duration) ease-in-out infinite; }\n        @keyframes network-associate-loader-connect { 0%, 100% { stroke-dashoffset: 100; opacity: 0; } 18%, 35% { stroke-dashoffset: 0; opacity: .7; } 60%, 99% { stroke-dashoffset: 0; opacity: 0; } }\n        @keyframes network-associate-loader-notice { 0%, 100% { opacity: .5; } 25%, 40% { opacity: 1; } }\n        @media (prefers-reduced-motion: reduce) { .network-associate-loader-links, .network-associate-loader-node { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "network"
+  ],
+  "type": "registry:ui"
+}

@@ -1,6 +1,6 @@
 # loadercn
 
-Animated React loaders for shadcn/ui, in three families: grid, orbital, and classic spinners. Each loader is a single file that depends only on React, inherits text color, and respects `prefers-reduced-motion`.
+Animated React loaders for shadcn/ui, in four families: grid, orbital, classic, and network. Each loader is a single file that depends only on React, inherits text color, and respects `prefers-reduced-motion`.
 
 Browse, preview, and copy them at https://loadercn.vercel.app.
 
@@ -35,7 +35,7 @@ import { GridWave } from "@/components/ui/grid-wave"
 ```
 
 - `size`: pixels (default `40`)
-- `speed`: cycle duration in seconds, lower is faster (default `1.6`)
+- `speed`: cycle duration in seconds, lower is faster (default `1.6`; spherical loaders use `3.2` or `4.8`)
 - `label`: accessible status text (default `"Loading"`)
 
 Loaders also accept any `<span>` props.

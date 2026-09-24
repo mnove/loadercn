@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-dot-morph",
+  "title": "Classic dot morph",
+  "description": "A dotted outline shifts from circle to triangle to square.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/classic-dot-morph.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicDotMorphProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicDotMorph({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicDotMorphProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-dot-morph-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n      >\n        {Array.from({ length: 24 }, (_, index) => {\n          const angle = (index / 24) * Math.PI * 2 - Math.PI / 2\n          const x = Math.cos(angle)\n          const y = Math.sin(angle)\n          const vertices = [\n            [50, 12],\n            [84, 76],\n            [16, 76],\n          ]\n          const edge = Math.floor(index / 8)\n          const amount = (index % 8) / 8\n          const from = vertices[edge]\n          const to = vertices[(edge + 1) % 3]\n          const squareScale = Math.max(Math.abs(x), Math.abs(y))\n          return (\n            <circle\n              key={index}\n              r=\"2.7\"\n              className=\"classic-dot-morph-loader-dot\"\n              style={\n                {\n                  \"--classic-dot-morph-circle\": `${50 + x * 35}px, ${50 + y * 35}px`,\n                  \"--classic-dot-morph-triangle\": `${from[0] + (to[0] - from[0]) * amount}px, ${from[1] + (to[1] - from[1]) * amount}px`,\n                  \"--classic-dot-morph-square\": `${50 + (x / squareScale) * 30}px, ${50 + (y / squareScale) * 30}px`,\n                } as CSSProperties\n              }\n            />\n          )\n        })}\n      </svg>\n      <style>{`\n        .classic-dot-morph-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-dot-morph-loader-dot { fill: currentColor; transform: translate(var(--classic-dot-morph-circle)); animation: classic-dot-morph-loader-shape var(--loader-duration) ease-in-out infinite; }\n        @keyframes classic-dot-morph-loader-shape { 0%, 12%, 100% { transform: translate(var(--classic-dot-morph-circle)); } 33%, 45% { transform: translate(var(--classic-dot-morph-triangle)); } 66%, 78% { transform: translate(var(--classic-dot-morph-square)); } }\n        @media (prefers-reduced-motion: reduce) { .classic-dot-morph-loader-dot { animation: none; } }\n `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

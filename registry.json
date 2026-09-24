@@ -797,6 +797,363 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "classic-morph",
+      "type": "registry:ui",
+      "title": "Classic morph",
+      "description": "A square softens into a circle and turns back into shape.",
+      "categories": [
+        "classic"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/classic-morph.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-hourglass",
+      "type": "registry:ui",
+      "title": "Classic hourglass",
+      "description": "Sand slips between two chambers before the hourglass turns over.",
+      "categories": [
+        "classic"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/classic-hourglass.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-radar",
+      "type": "registry:ui",
+      "title": "Orbit radar",
+      "description": "A rotating sweep reveals fleeting signals on a quiet circular dial.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-radar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-conveyor",
+      "type": "registry:ui",
+      "title": "Grid conveyor",
+      "description": "Rows of tiles slide in opposite directions on an endless conveyor.",
+      "categories": [
+        "grid"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/grid-conveyor.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-helix",
+      "type": "registry:ui",
+      "title": "Orbit helix",
+      "description": "Two linked strands turn through a gentle helix.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-helix.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-dot-morph",
+      "type": "registry:ui",
+      "title": "Classic dot morph",
+      "description": "A dotted outline shifts from circle to triangle to square.",
+      "categories": [
+        "classic"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/classic-dot-morph.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-circuit",
+      "type": "registry:ui",
+      "title": "Classic circuit",
+      "description": "Bright signals travel along three quiet circuit tracks.",
+      "categories": [
+        "classic"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/classic-circuit.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-render",
+      "type": "registry:ui",
+      "title": "Grid render",
+      "description": "Tiles fill in reading order, hold, and fade for the next pass.",
+      "categories": [
+        "grid"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/grid-render.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "network-deduce",
+      "type": "registry:ui",
+      "title": "Network deduce",
+      "description": "A signal branches through successive layers of a small decision tree.",
+      "categories": [
+        "network"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/network-deduce.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "network-synthesize",
+      "type": "registry:ui",
+      "title": "Network synthesize",
+      "description": "Three streams pass through intermediate nodes and meet at one output.",
+      "categories": [
+        "network"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/network-synthesize.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-focus",
+      "type": "registry:ui",
+      "title": "Orbit focus",
+      "description": "Scattered ellipses settle into concentric rings before drifting apart.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-focus.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "network-associate",
+      "type": "registry:ui",
+      "title": "Network associate",
+      "description": "Small groups of nodes reveal a changing sequence of connections.",
+      "categories": [
+        "network"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/network-associate.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-particle-globe",
+      "type": "registry:ui",
+      "title": "Orbit particle globe",
+      "description": "A dotted sphere turns with soft shading from back to front.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-particle-globe.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-breathing-orb",
+      "type": "registry:ui",
+      "title": "Orbit breathing orb",
+      "description": "Waves of gentle expansion pass across a quiet particle sphere.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-breathing-orb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-latitude-globe",
+      "type": "registry:ui",
+      "title": "Orbit latitude globe",
+      "description": "Dotted latitude bands turn around a tilted globe with travelling signals.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-latitude-globe.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-scanning-sphere",
+      "type": "registry:ui",
+      "title": "Orbit scanning sphere",
+      "description": "A luminous band scans across a softly shaded particle sphere.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-scanning-sphere.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-thought-orb",
+      "type": "registry:ui",
+      "title": "Orbit thought orb",
+      "description": "Signals cross a sparse rotating sphere around a pulsing core.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-thought-orb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-morphing-sphere",
+      "type": "registry:ui",
+      "title": "Orbit morphing sphere",
+      "description": "A dotted sphere expands into a rounded cube and returns.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-morphing-sphere.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "orbit-searching",
+      "type": "registry:ui",
+      "title": "Orbit searching",
+      "description": "A bright longitude sweep travels around a turning particle sphere.",
+      "categories": [
+        "orbital"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/orbit-searching.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-processing",
+      "type": "registry:ui",
+      "title": "Classic processing",
+      "description": "Packets flow through four parallel tracks, brightening at the center.",
+      "categories": [
+        "classic"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/classic-processing.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "classic-placeholder",
+      "type": "registry:ui",
+      "title": "Classic placeholder",
+      "description": "A gentle shimmer travels across four dotted text lines.",
+      "categories": [
+        "classic"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "registry/loaders/classic-placeholder.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

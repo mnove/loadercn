@@ -8,6 +8,7 @@ import { CommandSnippet } from "@/components/command-snippet"
 import { CopyButton } from "@/components/copy-button"
 import { PreviewColorPicker } from "@/components/preview-color-picker"
 import { loaderComponents } from "@/lib/loaders"
+import { getLoaderDefaultSpeed } from "@/lib/loader-defaults"
 import { installCommand, urlInstallCommand } from "@/lib/site"
 import type { LoaderItem } from "@/lib/loader-items"
 import { cn } from "@/lib/utils"
@@ -39,7 +40,7 @@ export function LoaderDetail({
 }) {
   const id = useId()
   const [size, setSize] = useState(48)
-  const [speed, setSpeed] = useState(1.6)
+  const [speed, setSpeed] = useState(() => getLoaderDefaultSpeed(item.name))
   const [localColor, setLocalColor] = useState(colorProp)
   const color = onColorChange ? colorProp : localColor
   const setColor = onColorChange ?? setLocalColor
@@ -80,7 +81,7 @@ export function LoaderDetail({
           <Slider
             aria-labelledby={`${id}-cycle`}
             min={0.6}
-            max={3}
+            max={6}
             step={0.2}
             value={[speed]}
             onValueChange={(value) => setSpeed(firstValue(value))}

@@ -114,7 +114,7 @@ export default async function LoaderPage({
 
       <section className="flex flex-col gap-6 py-10">
         <h2 className="sr-only">Preview and installation</h2>
-        <LoaderDetail item={item} previewClassName="h-64" />
+        <LoaderDetail key={item.name} item={item} previewClassName="h-64" />
       </section>
 
       {note && (

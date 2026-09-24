@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-morph",
+  "title": "Classic morph",
+  "description": "A square softens into a circle and turns back into shape.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/classic-morph.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicMorphProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicMorph({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicMorphProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-morph-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"classic-morph-loader-shape\" />\n      <style>{`\n        .classic-morph-loader { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }\n        .classic-morph-loader-shape { width: 62%; height: 62%; background: currentColor; border-radius: 12%; animation: classic-morph-loader-motion var(--loader-duration) ease-in-out infinite; }\n        @keyframes classic-morph-loader-motion { 0% { border-radius: 12%; transform: rotate(0deg) scale(1); } 45%, 55% { border-radius: 50%; transform: rotate(90deg) scale(.85); } 100% { border-radius: 12%; transform: rotate(180deg) scale(1); } }\n        @media (prefers-reduced-motion: reduce) { .classic-morph-loader-shape { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}

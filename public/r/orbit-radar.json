@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "orbit-radar",
+  "title": "Orbit radar",
+  "description": "A rotating sweep reveals fleeting signals on a quiet circular dial.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/orbit-radar.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type OrbitRadarProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function OrbitRadar({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: OrbitRadarProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"orbit-radar-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"orbit-radar-loader-dial\">\n        <span className=\"orbit-radar-loader-ring\" />\n        <span className=\"orbit-radar-loader-sweep\">\n          <span />\n        </span>\n        {[\n          { left: \"70%\", top: \"30%\", phase: 0.125 },\n          { left: \"50%\", top: \"79%\", phase: 0.5 },\n          { left: \"22%\", top: \"50%\", phase: 0.75 },\n        ].map((blip, i) => (\n          <span\n            key={i}\n            className=\"orbit-radar-loader-blip\"\n            style={{\n              left: blip.left,\n              top: blip.top,\n              animationDelay: `${(blip.phase - 1) * Math.max(0.1, speed)}s`,\n            }}\n          />\n        ))}\n      </span>\n      <style>{`\n        .orbit-radar-loader { display: inline-flex; flex-shrink: 0; }\n        .orbit-radar-loader-dial { position: relative; width: 100%; height: 100%; box-sizing: border-box; border: 1px solid color-mix(in srgb, currentColor 25%, transparent); border-radius: 50%; }\n        .orbit-radar-loader-ring { position: absolute; inset: 24%; border: 1px solid currentColor; opacity: .15; border-radius: 50%; }\n        .orbit-radar-loader-sweep { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from -70deg, transparent 0deg, color-mix(in srgb, currentColor 22%, transparent) 70deg, transparent 70deg); animation: orbit-radar-loader-turn var(--loader-duration) linear infinite; }\n        .orbit-radar-loader-sweep > span { position: absolute; bottom: 50%; left: 50%; width: 1px; height: 50%; background: currentColor; opacity: .7; }\n        .orbit-radar-loader-blip { position: absolute; width: 9%; height: 9%; border-radius: 50%; background: currentColor; transform: translate(-50%, -50%); animation: orbit-radar-loader-signal var(--loader-duration) linear infinite; }\n        @keyframes orbit-radar-loader-turn { to { transform: rotate(360deg); } }\n        @keyframes orbit-radar-loader-signal { 0%, 3% { opacity: 1; } 45%, 100% { opacity: .08; } }\n        @media (prefers-reduced-motion: reduce) { .orbit-radar-loader-sweep, .orbit-radar-loader-blip { animation: none; } .orbit-radar-loader-blip { opacity: .65; } .orbit-radar-loader-sweep { transform: rotate(45deg); } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "orbital"
+  ],
+  "type": "registry:ui"
+}

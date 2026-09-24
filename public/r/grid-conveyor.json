@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-conveyor",
+  "title": "Grid conveyor",
+  "description": "Rows of tiles slide in opposite directions on an endless conveyor.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/grid-conveyor.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type GridConveyorProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function GridConveyor({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: GridConveyorProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"grid-conveyor-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"grid-conveyor-loader-grid\">\n        {[0, 1, 2].map((row) => (\n          <span key={row} className=\"grid-conveyor-loader-row\">\n            <span\n              className=\"grid-conveyor-loader-track\"\n              style={{ animationDirection: row === 1 ? \"reverse\" : \"normal\" }}\n            >\n              {Array.from({ length: 6 }, (_, col) => (\n                <span key={col} />\n              ))}\n            </span>\n          </span>\n        ))}\n      </span>\n      <style>{`\n        .grid-conveyor-loader { display: inline-flex; flex-shrink: 0; }\n        .grid-conveyor-loader-grid { display: grid; width: 100%; height: 100%; grid-template-rows: repeat(3, 1fr); gap: 14%; }\n        .grid-conveyor-loader-row { position: relative; overflow: hidden; }\n        .grid-conveyor-loader-track { display: flex; gap: 7%; width: 200%; height: 100%; animation: grid-conveyor-loader-slide var(--loader-duration) linear infinite; }\n        .grid-conveyor-loader-track > span { flex: 0 0 12%; height: 100%; border-radius: 12%; background: currentColor; }\n        .grid-conveyor-loader-track > span:nth-child(3n + 2) { opacity: .6; }\n        .grid-conveyor-loader-track > span:nth-child(3n) { opacity: .3; }\n        @keyframes grid-conveyor-loader-slide { to { transform: translateX(-57%); } }\n        @media (prefers-reduced-motion: reduce) { .grid-conveyor-loader-track { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "grid"
+  ],
+  "type": "registry:ui"
+}

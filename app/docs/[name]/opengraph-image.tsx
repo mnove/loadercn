@@ -40,6 +40,37 @@ function FamilyGlyph({ category }: { category: string }) {
       </svg>
     )
   }
+  if (category === "network") {
+    return (
+      <svg width="220" height="220" viewBox="0 0 100 100">
+        <path
+          d="M50 16L24 48L16 82M24 48L40 82M50 16L76 48L60 82M76 48L84 82"
+          fill="none"
+          stroke={INK}
+          strokeWidth="2"
+          strokeOpacity="0.3"
+        />
+        {[
+          [50, 16],
+          [24, 48],
+          [76, 48],
+          [16, 82],
+          [40, 82],
+          [60, 82],
+          [84, 82],
+        ].map(([x, y], i) => (
+          <circle
+            key={i}
+            cx={x}
+            cy={y}
+            r="4"
+            fill={INK}
+            opacity={i < 3 ? 1 : 0.5}
+          />
+        ))}
+      </svg>
+    )
+  }
   if (category === "orbital") {
     return (
       <svg width="240" height="240" viewBox="-54 -54 108 108">

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "classic-hourglass",
+  "title": "Classic hourglass",
+  "description": "Sand slips between two chambers before the hourglass turns over.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/classic-hourglass.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ClassicHourglassProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function ClassicHourglass({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ClassicHourglassProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"classic-hourglass-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 40 40\"\n        className=\"classic-hourglass-loader-glass\"\n      >\n        <path\n          d=\"M10 4H30M10 36H30M12 4C12 13 15 16 20 20C25 24 28 27 28 36M28 4C28 13 25 16 20 20C15 24 12 27 12 36\"\n          fill=\"none\"\n          stroke=\"currentColor\"\n          strokeWidth=\"2\"\n          strokeLinecap=\"round\"\n        />\n        <path\n          className=\"classic-hourglass-loader-top\"\n          d=\"M15 9H25L20 17Z\"\n          fill=\"currentColor\"\n        />\n        <path\n          className=\"classic-hourglass-loader-bottom\"\n          d=\"M15 31H25L20 23Z\"\n          fill=\"currentColor\"\n        />\n        <path\n          className=\"classic-hourglass-loader-stream\"\n          d=\"M20 18V29\"\n          stroke=\"currentColor\"\n          strokeWidth=\"1.2\"\n          strokeDasharray=\"1.5 2\"\n        />\n      </svg>\n      <style>{`\n        .classic-hourglass-loader { display: inline-flex; flex-shrink: 0; }\n        .classic-hourglass-loader-glass { width: 100%; height: 100%; animation: classic-hourglass-loader-flip var(--loader-duration) ease-in-out infinite; }\n        .classic-hourglass-loader-top { clip-path: inset(0 0 0 0) fill-box; animation: classic-hourglass-loader-drain var(--loader-duration) linear infinite; }\n        .classic-hourglass-loader-bottom { clip-path: inset(100% 0 0 0) fill-box; animation: classic-hourglass-loader-fill var(--loader-duration) linear infinite; }\n        .classic-hourglass-loader-stream { animation: classic-hourglass-loader-fall var(--loader-duration) linear infinite; }\n        @keyframes classic-hourglass-loader-flip { 0%, 78% { transform: rotate(0deg); } 100% { transform: rotate(180deg); } }\n        @keyframes classic-hourglass-loader-drain { 0%, 8% { clip-path: inset(0 0 0 0) fill-box; } 72%, 100% { clip-path: inset(100% 0 0 0) fill-box; } }\n        @keyframes classic-hourglass-loader-fill { 0%, 8% { clip-path: inset(100% 0 0 0) fill-box; } 72%, 100% { clip-path: inset(0 0 0 0) fill-box; } }\n        @keyframes classic-hourglass-loader-fall { 0%, 5% { opacity: 0; stroke-dashoffset: 0; } 10%, 65% { opacity: .65; } 72%, 100% { opacity: 0; stroke-dashoffset: -21; } }\n        @media (prefers-reduced-motion: reduce) { .classic-hourglass-loader-glass, .classic-hourglass-loader-glass * { animation: none; } .classic-hourglass-loader-top { clip-path: inset(35% 0 0 0) fill-box; } .classic-hourglass-loader-bottom { clip-path: inset(50% 0 0 0) fill-box; } .classic-hourglass-loader-stream { opacity: 0; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "classic"
+  ],
+  "type": "registry:ui"
+}
