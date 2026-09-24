@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "loadercn",
-  "homepage": "http://localhost:3000",
+  "homepage": "https://loadercn.vercel.app",
   "items": [
     {
       "name": "grid-wave",

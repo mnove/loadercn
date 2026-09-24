@@ -21,13 +21,30 @@ Open http://localhost:3000. Development and production builds regenerate the reg
 
 ## Install a loader
 
-In a project initialized with shadcn, run:
+Loaders are published under the `@loadercn` namespace. In a project initialized with shadcn, register the namespace once, then add loaders by name:
 
 ```sh
-npx shadcn@latest add http://localhost:3000/r/grid-wave.json
+npx shadcn@latest registry add @loadercn=https://loadercn.vercel.app/r/{name}.json
+npx shadcn@latest add @loadercn/grid-wave
 ```
 
-Replace the origin with your deployed registry URL for public use. Each preview's CLI command uses the current site's origin.
+`registry add` writes this to the consuming project's `components.json`:
+
+```json
+{
+  "registries": {
+    "@loadercn": "https://loadercn.vercel.app/r/{name}.json"
+  }
+}
+```
+
+`npx shadcn@latest search @loadercn` lists every loader. You can also skip the namespace and install from a URL:
+
+```sh
+npx shadcn@latest add https://loadercn.vercel.app/r/grid-wave.json
+```
+
+In development, swap in `http://localhost:3000`. The site's install commands always use the origin they're served from.
 
 ```tsx
 import { GridWave } from "@/components/ui/grid-wave"
@@ -44,28 +61,28 @@ import { GridWave } from "@/components/ui/grid-wave"
 - `public/r/*.json`: generated items with full source content, built by `shadcn build`.
 - `/r/registry.json` and `/registry.json`: discoverable public catalogs.
 
-For optional namespace installation, add this to the consuming project's `components.json`, replacing the example host:
+## Publish
+
+The site is deployed at https://loadercn.vercel.app, which is the `homepage` in `registry.json`. The build writes that homepage into both public catalogs. To serve from a different origin (a preview deployment or a custom domain), set `NEXT_PUBLIC_SITE_URL` to it.
+
+To make `npx shadcn@latest add @loadercn/<name>` work without the `registry add` step, list the registry in the [shadcn registry directory](https://ui.shadcn.com/docs/registry/registry-index). The repository must be public. Add this entry to `apps/v4/registry/directory.json` in `shadcn-ui/ui`, run `pnpm validate:registries`, and open a pull request:
 
 ```json
 {
-  "registries": {
-    "@loadercn": "https://your-registry.example/r/{name}.json"
-  }
+  "name": "@loadercn",
+  "homepage": "https://loadercn.vercel.app",
+  "url": "https://loadercn.vercel.app/r/{name}.json",
+  "description": "Animated React loaders for shadcn/ui: grid, orbital, and classic spinners with zero dependencies.",
+  "logo": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='#d84a00'><rect x='0' y='0' width='6' height='6'/><rect x='9' y='0' width='6' height='6'/><rect x='18' y='0' width='6' height='6' fill-opacity='.3'/><rect x='0' y='9' width='6' height='6'/><rect x='9' y='9' width='6' height='6'/><rect x='18' y='9' width='6' height='6'/><rect x='0' y='18' width='6' height='6' fill-opacity='.3'/><rect x='9' y='18' width='6' height='6'/><rect x='18' y='18' width='6' height='6'/></svg>"
 }
 ```
-
-Then run `npx shadcn@latest add @loadercn/grid-wave`.
-
-## Publish
-
-Set `NEXT_PUBLIC_SITE_URL` to your real HTTPS origin, then deploy this Next.js app using `pnpm build` and `pnpm start`. The build writes the configured homepage into both public catalogs. No domain is assumed or provisioned by this starter.
 
 ## Add a component
 
 1. Add a self-contained component under `registry/loaders` with uniquely scoped animation names and reduced-motion styles.
 2. Register its title, description, category, and source path in `registry.json`.
 3. Add its preview to `lib/loaders.ts`.
-4. Run `pnpm registry:build` and verify its generated JSON.
+4. Run `pnpm registry:build` and `pnpm registry:validate`, then verify its generated JSON.
 
 ## Checks
 
