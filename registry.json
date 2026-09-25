@@ -184,6 +184,21 @@
       ]
     },
     {
+      "name": "chart-streaming",
+      "type": "registry:ui",
+      "title": "Streaming",
+      "description": "Streams of trailing dots flow through wavy lanes that spread and gather like a ribbon.",
+      "categories": [
+        "chart"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/chart-streaming.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "grid-wave",
       "type": "registry:ui",
       "title": "Grid wave",
@@ -434,6 +449,21 @@
       "files": [
         {
           "path": "registry/loaders/grid-diagonal-flow.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "grid-dot-sweep",
+      "type": "registry:ui",
+      "title": "Grid dot sweep",
+      "description": "A soft diagonal band sweeps across a faint dot matrix, swelling each dot as it passes.",
+      "categories": [
+        "grid"
+      ],
+      "files": [
+        {
+          "path": "registry/loaders/grid-dot-sweep.tsx",
           "type": "registry:ui"
         }
       ]

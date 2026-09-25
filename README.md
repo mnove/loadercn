@@ -35,7 +35,7 @@ import { GridWave } from "@/components/ui/grid-wave"
 ```
 
 - `size`: pixels (default `40`)
-- `speed`: cycle duration in seconds, lower is faster (default `1.6`; spherical and chart loaders use `3.2` or `4.8`)
+- `speed`: cycle duration in seconds, lower is faster (default `1.6`; spherical, chart, and dot-sweep loaders use `3.2` or `4.8`)
 - `label`: accessible status text (default `"Loading"`)
 
 Loaders also accept any `<span>` props.

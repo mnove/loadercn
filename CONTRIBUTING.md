@@ -26,7 +26,7 @@ If no category fits, see [AGENTS.md](AGENTS.md#adding-a-category) for adding one
 Loaders are installed into other people's projects, so each one has to work anywhere:
 
 - Depend on React only: no npm packages, no Tailwind, and no imports from this repo.
-- Use the shared props: `ComponentProps<"span"> & { size?: number; speed?: number; label?: string }`, with defaults `size = 40`, `speed = 1.6`, and `label = "Loading"`. The spherical and chart loaders use slower `speed` defaults of 3.2 or 4.8 seconds; keep `lib/loader-defaults.ts` in sync with their standalone files.
+- Use the shared props: `ComponentProps<"span"> & { size?: number; speed?: number; label?: string }`, with defaults `size = 40`, `speed = 1.6`, and `label = "Loading"`. The spherical, chart, and dot-sweep loaders use slower `speed` defaults of 3.2 or 4.8 seconds; keep `lib/loader-defaults.ts` in sync with their standalone files.
 - Render a root `<span role="status" aria-label={label}>` that spreads the remaining props and merges `className` and `style`. Mark decorative children `aria-hidden="true"`.
 - Put styles in an inline `<style>` tag, and prefix every class and `@keyframes` name with the loader name.
 - Draw with `currentColor`.

@@ -10,6 +10,8 @@ import { ChartHeartbeat } from "@/registry/loaders/chart-heartbeat"
 import { ChartDotGauge } from "@/registry/loaders/chart-dot-gauge"
 import { ChartDotRadar } from "@/registry/loaders/chart-dot-radar"
 import { ChartDotBubbles } from "@/registry/loaders/chart-dot-bubbles"
+import { ChartStreaming } from "@/registry/loaders/chart-streaming"
+import { GridDotSweep } from "@/registry/loaders/grid-dot-sweep"
 import { ClassicProcessing } from "@/registry/loaders/classic-processing"
 import { ClassicLiquidProcessing } from "@/registry/loaders/classic-liquid-processing"
 import { ClassicTextShimmer } from "@/registry/loaders/classic-text-shimmer"
@@ -126,6 +128,9 @@ export const loaderComponents = {
   "chart-dot-gauge": ChartDotGauge,
   "chart-dot-radar": ChartDotRadar,
   "chart-dot-bubbles": ChartDotBubbles,
+  "chart-streaming": ChartStreaming,
+
+  "grid-dot-sweep": GridDotSweep,
 
   "classic-processing": ClassicProcessing,
   "classic-liquid-processing": ClassicLiquidProcessing,

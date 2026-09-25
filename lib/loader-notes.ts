@@ -24,6 +24,10 @@ export const loaderNotes: Record<string, string> = {
     "Fits profiles, comparisons, and multi-attribute scores. The shifting outline suggests many dimensions being evaluated.",
   "chart-dot-bubbles":
     "Fits market maps, portfolio views, and exploratory analysis where each point carries a third value.",
+  "chart-streaming":
+    "Fits streaming responses, live feeds, and data ingestion. The steady flow suggests a continuous stream rather than a single request.",
+  "grid-dot-sweep":
+    "A quieter, finer-grained diagonal scan. Suits dashboards and dense interfaces where a square-cell matrix would feel heavy.",
   "classic-processing":
     "Fits batch jobs, imports, and background processing. Parallel streams suggest several pieces of work moving at once.",
   "classic-liquid-processing":

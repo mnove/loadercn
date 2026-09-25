@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-dot-sweep",
+  "title": "Grid dot sweep",
+  "description": "A soft diagonal band sweeps across a faint dot matrix, swelling each dot as it passes.",
+  "files": [
+    {
+      "path": "registry/loaders/grid-dot-sweep.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type GridDotSweepProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nconst columns = 8\nconst rows = 7\nconst gap = 10.3\n// Diagonals counted from the bottom-right corner, where the sweep begins.\nconst diagonals = columns + rows - 2\n// Share of the cycle the band takes to cross; the rest is a short pause.\nconst sweep = 0.7\n\nexport function GridDotSweep({\n  size = 40,\n  speed = 3.2,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: GridDotSweepProps) {\n  const duration = Math.max(0.1, speed)\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"grid-dot-sweep-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${duration}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n      >\n        {Array.from({ length: rows }, (_, row) =>\n          Array.from({ length: columns }, (_, column) => {\n            const diagonal = columns - 1 - column + (rows - 1 - row)\n            // Without motion, freeze the band midway across the grid.\n            const glow = Math.exp(-(((diagonal - diagonals / 2) / 1.6) ** 2))\n            return (\n              <circle\n                key={`${row}-${column}`}\n                cx={50 + (column - (columns - 1) / 2) * gap}\n                cy={50 + (row - (rows - 1) / 2) * gap}\n                r=\"2.8\"\n                className=\"grid-dot-sweep-loader-dot\"\n                style={\n                  {\n                    \"--grid-dot-sweep-glow\": glow.toFixed(3),\n                    animationDelay: `${((diagonal / diagonals) * sweep - 1) * duration}s`,\n                  } as CSSProperties\n                }\n              />\n            )\n          })\n        )}\n      </svg>\n      <style>{`\n        .grid-dot-sweep-loader { display: inline-flex; flex-shrink: 0; }\n        .grid-dot-sweep-loader-dot { fill: currentColor; transform-box: fill-box; transform-origin: center; opacity: calc(.12 + var(--grid-dot-sweep-glow) * .88); transform: scale(calc(.3 + var(--grid-dot-sweep-glow) * .7)); animation: grid-dot-sweep-loader-pass var(--loader-duration) cubic-bezier(.45, 0, .55, 1) infinite; }\n        @keyframes grid-dot-sweep-loader-pass { 0%, 22%, 100% { opacity: .12; transform: scale(.3); } 10% { opacity: 1; transform: scale(1); } }\n        @media (prefers-reduced-motion: reduce) { .grid-dot-sweep-loader-dot { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "grid"
+  ],
+  "type": "registry:ui"
+}
