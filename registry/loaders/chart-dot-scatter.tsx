@@ -35,14 +35,27 @@ const dots = Array.from({ length: count }, (_, i) => {
   }
 })
 
-// Spread eases between scattered (1) and clustered near the line (0.2).
-const appearance = (amount: string) =>
-  `transform: translate(calc(var(--chart-dot-scatter-dx) * ${amount}), calc(var(--chart-dot-scatter-dy) * ${amount})) scale(calc(1.15 - ${amount} * .45)); opacity: calc(1 - ${amount} * (.25 + var(--chart-dot-scatter-far) * .45));`
+// Each dot's box spans its full scatter offset (mirrored for negative
+// offsets), so a percentage translate eases it in and out. The keyframes then
+// hold no custom properties, which lets the browser run them on the
+// compositor. Stray dots fade using five shared levels.
+const farLevels = [0, 1, 2, 3, 4]
 
-const driftFrames = Array.from({ length: 25 }, (_, step) => {
-  const amount = 0.2 + 0.8 * (0.5 + 0.5 * Math.cos((step / 24) * Math.PI * 2))
-  return `${((step / 24) * 100).toFixed(2)}% { ${appearance(amount.toFixed(3))} }`
-}).join("\n")
+// Spread eases between scattered (1) and clustered near the line (0.2).
+const appearance = (amount: number, far: number) =>
+  `transform: translate(${(amount * 100).toFixed(1)}%, ${(amount * 100).toFixed(1)}%) scale(${(1.15 - amount * 0.45).toFixed(4)}); opacity: ${(1 - amount * (0.25 + far * 0.45)).toFixed(4)};`
+
+const driftFrames = farLevels
+  .map((level) => {
+    const frames = Array.from({ length: 25 }, (_, step) => {
+      const amount =
+        0.2 + 0.8 * (0.5 + 0.5 * Math.cos((step / 24) * Math.PI * 2))
+      return `${((step / 24) * 100).toFixed(2)}% { ${appearance(Number(amount.toFixed(3)), level / 4)} }`
+    }).join("\n")
+    return `@keyframes chart-dot-scatter-loader-drift-${level} { ${frames} }
+      .chart-dot-scatter-loader-far-${level} { animation-name: chart-dot-scatter-loader-drift-${level}; }`
+  })
+  .join("\n")
 
 export function ChartDotScatter({
   size = 40,
@@ -70,35 +83,39 @@ export function ChartDotScatter({
         } as CSSProperties
       }
     >
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        viewBox="0 0 100 100"
-        width="100%"
-        height="100%"
-      >
-        {dots.map(({ x, y, dx, dy, far, phase }, i) => (
-          <circle
+      {dots.map(({ x, y, dx, dy, far, phase }, i) => {
+        const offsetX = Number(dx.toFixed(2))
+        const offsetY = Number(dy.toFixed(2))
+        return (
+          <span
             key={i}
-            cx={x}
-            cy={y}
-            r="2.2"
-            className="chart-dot-scatter-loader-dot"
-            style={
-              {
-                "--chart-dot-scatter-dx": `${dx.toFixed(2)}px`,
-                "--chart-dot-scatter-dy": `${dy.toFixed(2)}px`,
-                "--chart-dot-scatter-far": far.toFixed(3),
+            aria-hidden="true"
+            className="chart-dot-scatter-loader-box"
+            style={{
+              left: `${x.toFixed(3)}%`,
+              top: `${y.toFixed(3)}%`,
+              width: `${Math.abs(offsetX)}%`,
+              height: `${Math.abs(offsetY)}%`,
+              transform: `scale(${Math.sign(offsetX) || 1}, ${Math.sign(offsetY) || 1})`,
+            }}
+          >
+            <span
+              className={`chart-dot-scatter-loader-dot chart-dot-scatter-loader-far-${Math.round(far * 4)}`}
+              style={{
+                transform: "translate(45%, 45%) scale(.9475)",
+                opacity: (1 - 0.45 * (0.25 + far * 0.45)).toFixed(4),
                 animationDelay: `${-phase * duration}s`,
-              } as CSSProperties
-            }
-          />
-        ))}
-      </svg>
+              }}
+            />
+          </span>
+        )
+      })}
       <style>{`
-        .chart-dot-scatter-loader { display: inline-flex; flex-shrink: 0; }
-        .chart-dot-scatter-loader-dot { fill: currentColor; transform-box: fill-box; transform-origin: center; ${appearance(".45")} animation: chart-dot-scatter-loader-drift var(--loader-duration) linear infinite; }
-        @keyframes chart-dot-scatter-loader-drift { ${driftFrames} }
+        .chart-dot-scatter-loader { position: relative; display: inline-flex; flex-shrink: 0; container-type: size; }
+        .chart-dot-scatter-loader-box { position: absolute; transform-origin: 0 0; }
+        .chart-dot-scatter-loader-dot { position: absolute; inset: 0; transform-origin: 0 0; animation: chart-dot-scatter-loader-drift-0 var(--loader-duration) linear infinite; }
+        .chart-dot-scatter-loader-dot::before { content: ""; position: absolute; top: -2.2cqw; left: -2.2cqw; width: 4.4cqw; height: 4.4cqw; border-radius: 50%; background: currentColor; }
+        ${driftFrames}
         @media (prefers-reduced-motion: reduce) { .chart-dot-scatter-loader-dot { animation: none; } }
       `}</style>
     </span>

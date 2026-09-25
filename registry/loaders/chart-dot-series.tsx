@@ -21,15 +21,31 @@ const series = [
 const wave = (t: number) =>
   0.7 * Math.sin(2 * Math.PI * t) + 0.3 * Math.sin(4 * Math.PI * t + 0.8)
 
-// Dots rise with the value and swell slightly at the crest.
-const appearance = (value: string) =>
-  `transform: translateY(calc(var(--chart-dot-series-amplitude) * ${value} * -1)) scale(calc(var(--chart-dot-series-scale) * (1 + ${value} * .2))); opacity: calc(var(--chart-dot-series-opacity) * (.8 + ${value} * .2));`
+// Dots rise with the value and swell slightly at the crest. A dot is 4.4
+// units tall, so the rise is expressed as a percentage of its own height.
+const appearance = (
+  value: number,
+  { amplitude, scale, opacity }: (typeof series)[number]
+) => {
+  const v = Number(value.toFixed(3))
+  return {
+    transform: `translateY(${((-amplitude * v * 100) / 4.4).toFixed(3)}%) scale(${(scale * (1 + v * 0.2)).toFixed(4)})`,
+    opacity: (opacity * (0.8 + v * 0.2)).toFixed(4),
+  }
+}
 
-const flowFrames = Array.from(
-  { length: 25 },
-  (_, step) =>
-    `${((step / 24) * 100).toFixed(2)}% { ${appearance(wave(step / 24).toFixed(3))} }`
-).join("\n")
+// Each series gets its own keyframes, so they hold no custom properties and
+// the browser can run them on the compositor.
+const flowFrames = series
+  .map((line, index) => {
+    const frames = Array.from({ length: 25 }, (_, step) => {
+      const { transform, opacity } = appearance(wave(step / 24), line)
+      return `${((step / 24) * 100).toFixed(2)}% { transform: ${transform}; opacity: ${opacity}; }`
+    }).join("\n")
+    return `@keyframes chart-dot-series-loader-flow-${index} { ${frames} }
+      .chart-dot-series-loader-series-${index} { animation-name: chart-dot-series-loader-flow-${index}; }`
+  })
+  .join("\n")
 
 export function ChartDotSeries({
   size = 40,
@@ -57,45 +73,32 @@ export function ChartDotSeries({
         } as CSSProperties
       }
     >
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        viewBox="0 0 100 100"
-        width="100%"
-        height="100%"
-      >
-        {/* Draw the back series first so the front one overlaps it. */}
-        {series
-          .slice()
-          .reverse()
-          .map(({ y, amplitude, scale, opacity, phase }) =>
-            Array.from({ length: points }, (_, point) => {
-              const progress = (phase + 1 - point * shift) % 1
-              return (
-                <circle
-                  key={`${y}-${point}`}
-                  cx={14 + point * (72 / (points - 1))}
-                  cy={y}
-                  r="2.2"
-                  className="chart-dot-series-loader-dot"
-                  style={
-                    {
-                      "--chart-dot-series-amplitude": `${amplitude}px`,
-                      "--chart-dot-series-scale": scale,
-                      "--chart-dot-series-opacity": opacity,
-                      "--chart-dot-series-rest": wave(progress).toFixed(3),
-                      animationDelay: `${-progress * duration}s`,
-                    } as CSSProperties
-                  }
-                />
-              )
-            })
-          )}
-      </svg>
+      {/* Draw the back series first so the front one overlaps it. */}
+      {series
+        .map((line, index) => ({ line, index }))
+        .reverse()
+        .map(({ line, index }) =>
+          Array.from({ length: points }, (_, point) => {
+            const progress = (line.phase + 1 - point * shift) % 1
+            return (
+              <span
+                key={`${line.y}-${point}`}
+                aria-hidden="true"
+                className={`chart-dot-series-loader-dot chart-dot-series-loader-series-${index}`}
+                style={{
+                  left: `${(14 + point * (72 / (points - 1)) - 2.2).toFixed(3)}%`,
+                  top: `${line.y - 2.2}%`,
+                  ...appearance(wave(progress), line),
+                  animationDelay: `${-progress * duration}s`,
+                }}
+              />
+            )
+          })
+        )}
       <style>{`
-        .chart-dot-series-loader { display: inline-flex; flex-shrink: 0; }
-        .chart-dot-series-loader-dot { fill: currentColor; transform-box: fill-box; transform-origin: center; ${appearance("var(--chart-dot-series-rest)")} animation: chart-dot-series-loader-flow var(--loader-duration) linear infinite; }
-        @keyframes chart-dot-series-loader-flow { ${flowFrames} }
+        .chart-dot-series-loader { position: relative; display: inline-flex; flex-shrink: 0; }
+        .chart-dot-series-loader-dot { position: absolute; width: 4.4%; height: 4.4%; border-radius: 50%; background: currentColor; animation: chart-dot-series-loader-flow-0 var(--loader-duration) linear infinite; }
+        ${flowFrames}
         @media (prefers-reduced-motion: reduce) { .chart-dot-series-loader-dot { animation: none; } }
       `}</style>
     </span>
