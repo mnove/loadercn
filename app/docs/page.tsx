@@ -20,7 +20,12 @@ export const metadata: Metadata = {
 
 const PROPS = [
   ["size", "number", "40", "Width and height in pixels."],
-  ["speed", "number", "1.6", "Duration of one complete cycle, in seconds."],
+  [
+    "speed",
+    "number",
+    "Varies",
+    "Duration of one complete cycle, in seconds. Defaults to 1.6; spherical loaders use 3.2 or 4.8. The preview shows each loader’s default.",
+  ],
   [
     "label",
     "string",

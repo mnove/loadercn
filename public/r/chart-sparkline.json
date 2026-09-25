@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chart-sparkline",
+  "title": "Sparkline",
+  "description": "A live sparkline scrolls past while a dot tracks the latest value.",
+  "files": [
+    {
+      "path": "registry/loaders/chart-sparkline.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type ChartSparklineProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\n// One period of values. The path repeats it twice so it can scroll one\n// period to the left and loop without a seam.\nconst values = [58, 44, 50, 30, 46, 38, 62, 48]\nconst step = 9\nconst period = values.length * step\nconst line = Array.from(\n  { length: values.length * 2 + 1 },\n  (_, i) => `${i * step},${values[i % values.length]}`\n).join(\" \")\n\n// The dot sits on the right edge and follows the value scrolling past it.\nconst dotFrames = values\n  .concat(values[0])\n  .map(\n    (value, i) =>\n      `${((i / values.length) * 100).toFixed(2)}% { transform: translateY(${value}px); }`\n  )\n  .join(\" \")\n\nexport function ChartSparkline({\n  size = 40,\n  speed = 3.2,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: ChartSparklineProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"chart-sparkline-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n      >\n        <path d=\"M12 76H88\" className=\"chart-sparkline-loader-axis\" />\n        {/* A nested svg clips the scrolling line to the plot window. */}\n        <svg\n          x=\"14\"\n          y=\"0\"\n          width={period}\n          height=\"100\"\n          viewBox={`0 0 ${period} 100`}\n        >\n          <polyline points={line} className=\"chart-sparkline-loader-line\" />\n        </svg>\n        <circle cx={14 + period} r=\"5\" className=\"chart-sparkline-loader-dot\" />\n      </svg>\n      <style>{`\n        .chart-sparkline-loader { display: inline-flex; flex-shrink: 0; }\n        .chart-sparkline-loader-axis { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1 7; opacity: .35; }\n        .chart-sparkline-loader-line { fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; animation: chart-sparkline-loader-scroll var(--loader-duration) linear infinite; }\n        .chart-sparkline-loader-dot { fill: currentColor; transform: translateY(${values[0]}px); animation: chart-sparkline-loader-dot var(--loader-duration) linear infinite; }\n        @keyframes chart-sparkline-loader-scroll { from { transform: translateX(0); } to { transform: translateX(-${period}px); } }\n        @keyframes chart-sparkline-loader-dot { ${dotFrames} }\n        @media (prefers-reduced-motion: reduce) { .chart-sparkline-loader-line, .chart-sparkline-loader-dot { animation: none; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "chart"
+  ],
+  "type": "registry:ui"
+}

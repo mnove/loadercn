@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "network-synthesize",
+  "title": "Network synthesize",
+  "description": "Three streams pass through intermediate nodes and meet at one output.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/network-synthesize.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type NetworkSynthesizeProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function NetworkSynthesize({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: NetworkSynthesizeProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"network-synthesize-loader\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <svg\n        aria-hidden=\"true\"\n        focusable=\"false\"\n        viewBox=\"0 0 100 100\"\n        width=\"100%\"\n        height=\"100%\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n        strokeLinecap=\"round\"\n        strokeLinejoin=\"round\"\n      >\n        {[22, 50, 78].map((y, index) => (\n          <g key={y}>\n            <path\n              d={`M12 ${y}H42Q56 ${y} 68 50H88`}\n              className=\"network-synthesize-loader-track\"\n            />\n            <path\n              d={`M12 ${y}H42Q56 ${y} 68 50H88`}\n              pathLength=\"100\"\n              className=\"network-synthesize-loader-signal\"\n              style={{\n                animationDelay: `${(-index / 3) * Math.max(0.1, speed)}s`,\n              }}\n            />\n            <circle\n              cx=\"12\"\n              cy={y}\n              r=\"3.5\"\n              className=\"network-synthesize-loader-node\"\n            />\n            <circle\n              cx=\"42\"\n              cy={y}\n              r=\"3.5\"\n              className=\"network-synthesize-loader-node\"\n            />\n          </g>\n        ))}\n        <circle\n          cx=\"88\"\n          cy=\"50\"\n          r=\"5\"\n          className=\"network-synthesize-loader-output\"\n        />\n      </svg>\n      <style>{`\n        .network-synthesize-loader { display: inline-flex; flex-shrink: 0; }\n        .network-synthesize-loader-track { stroke-width: 2; opacity: .2; }\n        .network-synthesize-loader-signal { stroke-width: 3; stroke-dasharray: 12 100; animation: network-synthesize-loader-flow var(--loader-duration) linear infinite; }\n        .network-synthesize-loader-node { fill: currentColor; stroke: none; opacity: .65; }\n        .network-synthesize-loader-output { fill: currentColor; stroke: none; animation: network-synthesize-loader-receive var(--loader-duration) ease-in-out infinite; }\n        @keyframes network-synthesize-loader-flow { 0% { stroke-dashoffset: 12; opacity: 0; } 10%, 85% { opacity: 1; } 100% { stroke-dashoffset: -100; opacity: 0; } }\n        @keyframes network-synthesize-loader-receive { 0%, 33%, 66%, 100% { opacity: 1; } 16%, 49%, 82% { opacity: .45; } }\n        @media (prefers-reduced-motion: reduce) { .network-synthesize-loader-signal, .network-synthesize-loader-output { animation: none; } .network-synthesize-loader-signal { opacity: 0; } }\n      `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "network"
+  ],
+  "type": "registry:ui"
+}

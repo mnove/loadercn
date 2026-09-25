@@ -1,4 +1,47 @@
-import { Grid2X2, LoaderCircle, Orbit, type LucideIcon } from "lucide-react"
+import { ChartBars } from "@/registry/loaders/chart-bars"
+import { ChartLine } from "@/registry/loaders/chart-line"
+import { ChartSparkline } from "@/registry/loaders/chart-sparkline"
+import { ChartDonut } from "@/registry/loaders/chart-donut"
+import { ChartDotArea } from "@/registry/loaders/chart-dot-area"
+import { ChartDotSeries } from "@/registry/loaders/chart-dot-series"
+import { ChartDotScatter } from "@/registry/loaders/chart-dot-scatter"
+import { ChartDotSparkline } from "@/registry/loaders/chart-dot-sparkline"
+import { ChartHeartbeat } from "@/registry/loaders/chart-heartbeat"
+import { ChartDotGauge } from "@/registry/loaders/chart-dot-gauge"
+import { ChartDotRadar } from "@/registry/loaders/chart-dot-radar"
+import { ChartDotBubbles } from "@/registry/loaders/chart-dot-bubbles"
+import { ChartStreaming } from "@/registry/loaders/chart-streaming"
+import { GridDotSweep } from "@/registry/loaders/grid-dot-sweep"
+import { ClassicProcessing } from "@/registry/loaders/classic-processing"
+import { ClassicLiquidProcessing } from "@/registry/loaders/classic-liquid-processing"
+import { ClassicTextShimmer } from "@/registry/loaders/classic-text-shimmer"
+import { OrbitSearching } from "@/registry/loaders/orbit-searching"
+import { OrbitScanningSphere } from "@/registry/loaders/orbit-scanning-sphere"
+import { OrbitThoughtOrb } from "@/registry/loaders/orbit-thought-orb"
+import { OrbitMorphingSphere } from "@/registry/loaders/orbit-morphing-sphere"
+import { OrbitParticleGlobe } from "@/registry/loaders/orbit-particle-globe"
+import { OrbitBreathingOrb } from "@/registry/loaders/orbit-breathing-orb"
+import { OrbitLatitudeGlobe } from "@/registry/loaders/orbit-latitude-globe"
+import { NetworkDeduce } from "@/registry/loaders/network-deduce"
+import { NetworkSynthesize } from "@/registry/loaders/network-synthesize"
+import { OrbitFocus } from "@/registry/loaders/orbit-focus"
+import { NetworkAssociate } from "@/registry/loaders/network-associate"
+import { OrbitHelix } from "@/registry/loaders/orbit-helix"
+import { ClassicDotMorph } from "@/registry/loaders/classic-dot-morph"
+import { ClassicCircuit } from "@/registry/loaders/classic-circuit"
+import { GridRender } from "@/registry/loaders/grid-render"
+import { ClassicMorph } from "@/registry/loaders/classic-morph"
+import { ClassicHourglass } from "@/registry/loaders/classic-hourglass"
+import { OrbitRadar } from "@/registry/loaders/orbit-radar"
+import { GridConveyor } from "@/registry/loaders/grid-conveyor"
+import {
+  ChartColumn,
+  Grid2X2,
+  LoaderCircle,
+  Network,
+  Orbit,
+  type LucideIcon,
+} from "lucide-react"
 import { ClassicDotStream } from "@/registry/loaders/classic-dot-stream"
 import { ClassicLiquidStream } from "@/registry/loaders/classic-liquid-stream"
 import { ClassicPulsingSpokes } from "@/registry/loaders/classic-pulsing-spokes"
@@ -57,6 +100,8 @@ export const CATEGORIES = [
   { id: "grid", label: "Grid" },
   { id: "orbital", label: "Orbital" },
   { id: "classic", label: "Classic" },
+  { id: "network", label: "Network" },
+  { id: "chart", label: "Chart" },
 ] as const
 
 export const CATEGORY_ICONS: Record<
@@ -66,9 +111,55 @@ export const CATEGORY_ICONS: Record<
   grid: Grid2X2,
   orbital: Orbit,
   classic: LoaderCircle,
+  network: Network,
+  chart: ChartColumn,
 }
 
 export const loaderComponents = {
+  "chart-bars": ChartBars,
+  "chart-line": ChartLine,
+  "chart-sparkline": ChartSparkline,
+  "chart-donut": ChartDonut,
+  "chart-dot-area": ChartDotArea,
+  "chart-dot-series": ChartDotSeries,
+  "chart-dot-scatter": ChartDotScatter,
+  "chart-dot-sparkline": ChartDotSparkline,
+  "chart-heartbeat": ChartHeartbeat,
+  "chart-dot-gauge": ChartDotGauge,
+  "chart-dot-radar": ChartDotRadar,
+  "chart-dot-bubbles": ChartDotBubbles,
+  "chart-streaming": ChartStreaming,
+
+  "grid-dot-sweep": GridDotSweep,
+
+  "classic-processing": ClassicProcessing,
+  "classic-liquid-processing": ClassicLiquidProcessing,
+  "classic-text-shimmer": ClassicTextShimmer,
+
+  "orbit-searching": OrbitSearching,
+  "orbit-scanning-sphere": OrbitScanningSphere,
+  "orbit-thought-orb": OrbitThoughtOrb,
+  "orbit-morphing-sphere": OrbitMorphingSphere,
+
+  "orbit-particle-globe": OrbitParticleGlobe,
+  "orbit-breathing-orb": OrbitBreathingOrb,
+  "orbit-latitude-globe": OrbitLatitudeGlobe,
+
+  "network-deduce": NetworkDeduce,
+  "network-synthesize": NetworkSynthesize,
+  "orbit-focus": OrbitFocus,
+  "network-associate": NetworkAssociate,
+
+  "orbit-helix": OrbitHelix,
+  "classic-dot-morph": ClassicDotMorph,
+  "classic-circuit": ClassicCircuit,
+  "grid-render": GridRender,
+
+  "classic-morph": ClassicMorph,
+  "classic-hourglass": ClassicHourglass,
+  "orbit-radar": OrbitRadar,
+  "grid-conveyor": GridConveyor,
+
   "classic-dot-stream": ClassicDotStream,
   "classic-liquid-stream": ClassicLiquidStream,
   "classic-pulsing-spokes": ClassicPulsingSpokes,

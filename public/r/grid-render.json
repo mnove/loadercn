@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "grid-render",
+  "title": "Grid render",
+  "description": "Tiles fill in reading order, hold, and fade for the next pass.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "registry/loaders/grid-render.tsx",
+      "content": "import type { CSSProperties, ComponentProps } from \"react\"\n\nexport type GridRenderProps = ComponentProps<\"span\"> & {\n  size?: number\n  /** Duration of one complete cycle, in seconds. */\n  speed?: number\n  label?: string\n}\n\nexport function GridRender({\n  size = 40,\n  speed = 1.6,\n  label = \"Loading\",\n  className,\n  style,\n  ...props\n}: GridRenderProps) {\n  return (\n    <span\n      role=\"status\"\n      aria-label={label}\n      {...props}\n      className={[\"grid-render-loader\", className].filter(Boolean).join(\" \")}\n      style={\n        {\n          width: size,\n          height: size,\n          \"--loader-duration\": `${Math.max(0.1, speed)}s`,\n          ...style,\n        } as CSSProperties\n      }\n    >\n      <span aria-hidden=\"true\" className=\"grid-render-loader-grid\">\n        {Array.from({ length: 16 }, (_, index) => (\n          <span\n            key={index}\n            className=\"grid-render-loader-cell\"\n            style={{ animationName: `grid-render-loader-cell-${index}` }}\n          />\n        ))}\n      </span>\n      <style>{`\n        .grid-render-loader { display: inline-flex; flex-shrink: 0; }\n        .grid-render-loader-grid { display: grid; width: 100%; height: 100%; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(4, 1fr); gap: 8%; }\n        .grid-render-loader-cell { background: currentColor; border-radius: 12%; opacity: .55; animation-duration: var(--loader-duration); animation-timing-function: linear; animation-iteration-count: infinite; }\n        ${Array.from({ length: 16 }, (_, index) => `@keyframes grid-render-loader-cell-${index} { 0%, ${5 + index * 3.5}% { opacity: .12; } ${8 + index * 3.5}% { opacity: 1; } ${17 + index * 3.5}%, 78% { opacity: .65; } 94%, 100% { opacity: .12; } }`).join(\"\\n\")}\n        @media (prefers-reduced-motion: reduce) { .grid-render-loader-cell { animation: none; } }\n `}</style>\n    </span>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "grid"
+  ],
+  "type": "registry:ui"
+}

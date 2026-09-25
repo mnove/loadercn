@@ -62,7 +62,7 @@ When a loader truly doesn't fit any existing category, add a new one yourself:
 Every loader is installed into someone else's project, so it has to work anywhere:
 
 - Depend on React only: no npm packages, no Tailwind, no `cn`, and no imports from this repo. Keep `dependencies` and `registryDependencies` empty.
-- Use the shared API: `ComponentProps<"span"> & { size?: number; speed?: number; label?: string }` with defaults `size = 40`, `speed = 1.6`, and `label = "Loading"`. `speed` is the cycle duration in seconds.
+- Use the shared API: `ComponentProps<"span"> & { size?: number; speed?: number; label?: string }` with defaults `size = 40`, `speed = 1.6`, and `label = "Loading"`. The spherical, chart, and dot-sweep loaders use slower `speed` defaults of 3.2 or 4.8 seconds; keep `lib/loader-defaults.ts` in sync with their standalone files. `speed` is the cycle duration in seconds.
 - The root is a `<span role="status" aria-label={label}>` that spreads the remaining props and merges `className` and `style`. Decorative children get `aria-hidden="true"`.
 - Put styles in an inline `<style>` tag. Prefix every class name and `@keyframes` name with the loader name so loaders never collide.
 - Draw with `currentColor` so loaders inherit text color.

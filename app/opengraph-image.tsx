@@ -44,7 +44,7 @@ export default function Image() {
               maxWidth: 620,
             }}
           >
-            {`${count} animated grid, orbital, and classic loaders for React.`}
+            {`${count} animated grid, orbital, classic, network, and chart loaders for React.`}
           </div>
         </div>
         <div
