@@ -7,6 +7,10 @@ export type OrbitMorphingSphereProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 // A sparse six-face lattice gives the cube readable edges without a dense mesh.
 // Project both shapes once, then let CSS interpolate their positions and shading.
 const surface = Array.from({ length: 64 }, (_, index) => {
@@ -17,7 +21,7 @@ const surface = Array.from({ length: 64 }, (_, index) => {
 }).filter(({ cells }) => cells.some((value) => value === 0 || value === 3))
 
 const particles = surface.map(({ point: cube }) => {
-  const length = Math.hypot(...cube)
+  const length = round(Math.hypot(...cube))
   const sphere = cube.map((value) => (value / length) * 1.18)
   // A rounded cube retains planar faces and gently pulled-in corners.
   const rounded = cube.map((value, i) => value * 0.9 + sphere[i] * 0.1)

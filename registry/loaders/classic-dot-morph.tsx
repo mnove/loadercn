@@ -7,6 +7,10 @@ export type ClassicDotMorphProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 export function ClassicDotMorph({
   size = 40,
   speed = 1.6,
@@ -41,8 +45,8 @@ export function ClassicDotMorph({
       >
         {Array.from({ length: 24 }, (_, index) => {
           const angle = (index / 24) * Math.PI * 2 - Math.PI / 2
-          const x = Math.cos(angle)
-          const y = Math.sin(angle)
+          const x = round(Math.cos(angle))
+          const y = round(Math.sin(angle))
           const vertices = [
             [50, 12],
             [84, 76],

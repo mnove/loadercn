@@ -162,7 +162,7 @@ export function SiteSearch({ items }: { items: LoaderSummary[] }) {
                       >
                         <span
                           aria-hidden="true"
-                          className="flex size-6 shrink-0 items-center justify-center"
+                          className="flex size-6 shrink-0 items-center justify-center [content-visibility:auto]"
                         >
                           <Loader
                             size={item.name === "classic-progress" ? 24 : 18}

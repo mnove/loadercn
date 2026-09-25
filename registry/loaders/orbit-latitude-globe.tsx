@@ -7,6 +7,10 @@ export type OrbitLatitudeGlobeProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 // A full turn is sampled once; the browser interpolates it without a frame loop.
 const turnFrames = Array.from({ length: 25 }, (_, step) => {
   const angle = (step / 24) * Math.PI * 2
@@ -69,12 +73,12 @@ export function OrbitLatitudeGlobe({
                           "--orbit-latitude-globe-radius": `${depth * 38}px`,
                           "--orbit-latitude-globe-height": `${latitude * 35}px`,
                           "--orbit-latitude-globe-depth": depth,
-                          "--orbit-latitude-globe-rest-x": `${Math.cos(angle) * depth * 38}px`,
-                          "--orbit-latitude-globe-rest-y": `${latitude * 35 - Math.sin(angle) * depth * 38 * 0.38}px`,
+                          "--orbit-latitude-globe-rest-x": `${round(Math.cos(angle)) * depth * 38}px`,
+                          "--orbit-latitude-globe-rest-y": `${latitude * 35 - round(Math.sin(angle)) * depth * 38 * 0.38}px`,
                           "--orbit-latitude-globe-rest-scale":
-                            0.76 + depth * Math.sin(angle) * 0.24,
+                            0.76 + depth * round(Math.sin(angle)) * 0.24,
                           "--orbit-latitude-globe-rest-opacity":
-                            0.48 + depth * Math.sin(angle) * 0.42,
+                            0.48 + depth * round(Math.sin(angle)) * 0.42,
                           animationDirection: signal ? "reverse" : "normal",
                           animationDelay: `${-phase * Math.max(0.1, speed)}s`,
                         } as CSSProperties

@@ -7,6 +7,10 @@ export type GridRippleProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 export function GridRipple({
   size = 40,
   speed = 1.6,
@@ -38,7 +42,7 @@ export function GridRipple({
             <span
               key={i}
               style={{
-                animationDelay: `${(Math.hypot(row - 1.5, col - 1.5) * -0.25 * Math.max(0.1, speed)) / 1.6}s`,
+                animationDelay: `${(round(Math.hypot(row - 1.5, col - 1.5)) * -0.25 * Math.max(0.1, speed)) / 1.6}s`,
               }}
             />
           )
