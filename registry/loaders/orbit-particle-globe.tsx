@@ -11,16 +11,42 @@ export type OrbitParticleGlobeProps = ComponentProps<"span"> & {
 // breaks hydration. Rounding them keeps server and client markup identical.
 const round = (value: number) => Number(value.toFixed(6))
 
-// A full turn is sampled once; the browser interpolates it without a frame loop.
-const turnFrames = Array.from({ length: 25 }, (_, step) => {
-  const angle = (step / 24) * Math.PI * 2
-  const x = Math.cos(angle).toFixed(6)
-  const depth = Math.sin(angle).toFixed(6)
-  return `${(step / 24) * 100}% {
-    transform: translate(calc(var(--orbit-particle-globe-radius) * ${x}), calc(var(--orbit-particle-globe-height) - var(--orbit-particle-globe-radius) * ${depth} * .38)) scale(calc(.76 + var(--orbit-particle-globe-depth) * ${depth} * .24));
-    opacity: calc(.48 + var(--orbit-particle-globe-depth) * ${depth} * .42);
-  }`
-}).join("\n")
+// Each dot's box spans its orbit, so a percentage translate traces that orbit.
+// The keyframes then hold no custom properties, which lets the browser run
+// them on the compositor. Depth shading uses four shared levels.
+const depthLevels = [1, 2, 3, 4]
+const turnFrames = depthLevels
+  .map((level) => {
+    const frames = Array.from({ length: 25 }, (_, step) => {
+      const angle = (step / 24) * Math.PI * 2
+      const x = round(Math.cos(angle) * 100)
+      const y = round(-Math.sin(angle) * 100)
+      const shade = (Math.sin(angle) * level) / 4
+      return `${round((step / 24) * 100)}% { transform: translate(${x}%, ${y}%) scale(${round(0.76 + shade * 0.24)}); opacity: ${round(0.48 + shade * 0.42)}; }`
+    }).join("\n")
+    return `@keyframes orbit-particle-globe-loader-turn-${level} { ${frames} }
+      .orbit-particle-globe-loader-depth-${level} { animation-name: orbit-particle-globe-loader-turn-${level}; }`
+  })
+  .join("\n")
+
+const dots = Array.from({ length: 56 }, (_, index) => {
+  const latitude = 1 - (index + 0.5) / 28
+  const depth = Math.sqrt(1 - latitude * latitude)
+  const phase = (index * 0.61803398875) % 1
+  const angle = phase * Math.PI * 2
+  const shade = depth * round(Math.sin(angle))
+  return {
+    level: Math.max(1, Math.round(depth * 4)),
+    phase,
+    style: {
+      top: `${round(50 + latitude * 35)}%`,
+      width: `${round(depth * 38)}%`,
+      height: `${round(depth * 38 * 0.38)}%`,
+      transform: `translate(${round(Math.cos(angle) * 100)}%, ${round(-Math.sin(angle) * 100)}%) scale(${round(0.76 + shade * 0.24)})`,
+      opacity: round(0.48 + shade * 0.42),
+    },
+  }
+})
 
 export function OrbitParticleGlobe({
   size = 40,
@@ -30,6 +56,7 @@ export function OrbitParticleGlobe({
   style,
   ...props
 }: OrbitParticleGlobeProps) {
+  const duration = Math.max(0.1, speed)
   return (
     <span
       role="status"
@@ -42,52 +69,29 @@ export function OrbitParticleGlobe({
         {
           width: size,
           height: size,
-          "--loader-duration": `${Math.max(0.1, speed)}s`,
+          "--loader-duration": `${duration}s`,
           ...style,
         } as CSSProperties
       }
     >
-      <svg
-        aria-hidden="true"
-        focusable="false"
-        viewBox="0 0 100 100"
-        width="100%"
-        height="100%"
-      >
-        <g transform="translate(50 50) rotate(-18)">
-          {Array.from({ length: 56 }, (_, index) => {
-            const latitude = 1 - (index + 0.5) / 28
-            const depth = Math.sqrt(1 - latitude * latitude)
-            const phase = (index * 0.61803398875) % 1
-            const angle = phase * Math.PI * 2
-            return (
-              <circle
-                key={index}
-                r="2.15"
-                className="orbit-particle-globe-loader-dot"
-                style={
-                  {
-                    "--orbit-particle-globe-radius": `${depth * 38}px`,
-                    "--orbit-particle-globe-height": `${latitude * 35}px`,
-                    "--orbit-particle-globe-depth": depth,
-                    "--orbit-particle-globe-rest-x": `${round(Math.cos(angle)) * depth * 38}px`,
-                    "--orbit-particle-globe-rest-y": `${latitude * 35 - round(Math.sin(angle)) * depth * 38 * 0.38}px`,
-                    "--orbit-particle-globe-rest-scale":
-                      0.76 + depth * round(Math.sin(angle)) * 0.24,
-                    "--orbit-particle-globe-rest-opacity":
-                      0.48 + depth * round(Math.sin(angle)) * 0.42,
-                    animationDelay: `${-phase * Math.max(0.1, speed)}s`,
-                  } as CSSProperties
-                }
-              />
-            )
-          })}
-        </g>
-      </svg>
+      <span aria-hidden="true" className="orbit-particle-globe-loader-stage">
+        {dots.map((dot, index) => (
+          <span
+            key={index}
+            className={`orbit-particle-globe-loader-dot orbit-particle-globe-loader-depth-${dot.level}`}
+            style={{
+              ...dot.style,
+              animationDelay: `${-dot.phase * duration}s`,
+            }}
+          />
+        ))}
+      </span>
       <style>{`
-        .orbit-particle-globe-loader { display: inline-flex; flex-shrink: 0; }
-        .orbit-particle-globe-loader-dot { fill: currentColor; transform: translate(var(--orbit-particle-globe-rest-x), var(--orbit-particle-globe-rest-y)) scale(var(--orbit-particle-globe-rest-scale)); opacity: var(--orbit-particle-globe-rest-opacity); animation: orbit-particle-globe-loader-turn var(--loader-duration) linear infinite; }
-        @keyframes orbit-particle-globe-loader-turn { ${turnFrames} }
+        .orbit-particle-globe-loader { position: relative; display: inline-flex; flex-shrink: 0; container-type: size; }
+        .orbit-particle-globe-loader-stage { position: absolute; inset: 0; transform: rotate(-18deg); }
+        .orbit-particle-globe-loader-dot { position: absolute; left: 50%; transform-origin: 0 0; animation: orbit-particle-globe-loader-turn-4 var(--loader-duration) linear infinite; }
+        .orbit-particle-globe-loader-dot::before { content: ""; position: absolute; top: -2.15cqw; left: -2.15cqw; width: 4.3cqw; height: 4.3cqw; border-radius: 50%; background: currentColor; }
+        ${turnFrames}
         @media (prefers-reduced-motion: reduce) { .orbit-particle-globe-loader-dot { animation: none; } }
       `}</style>
     </span>
