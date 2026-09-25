@@ -7,6 +7,10 @@ export type OrbitThoughtOrbProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 // One sampled turn is shared by the particles, each with its own phase.
 const turnFrames = Array.from({ length: 25 }, (_, step) => {
   const angle = (step / 24) * Math.PI * 2
@@ -66,10 +70,10 @@ export function OrbitThoughtOrb({
                     "--orbit-thought-orb-radius": `${depth * 38}px`,
                     "--orbit-thought-orb-height": `${latitude * 35}px`,
                     "--orbit-thought-orb-depth": depth,
-                    "--orbit-thought-orb-rest-x": `${Math.cos(angle) * depth * 38}px`,
-                    "--orbit-thought-orb-rest-y": `${latitude * 35 - Math.sin(angle) * depth * 14.44}px`,
+                    "--orbit-thought-orb-rest-x": `${round(Math.cos(angle)) * depth * 38}px`,
+                    "--orbit-thought-orb-rest-y": `${latitude * 35 - round(Math.sin(angle)) * depth * 14.44}px`,
                     "--orbit-thought-orb-rest-opacity":
-                      0.26 + depth * Math.sin(angle) * 0.2,
+                      0.26 + depth * round(Math.sin(angle)) * 0.2,
                     animationDelay: `${-phase * Math.max(0.1, speed)}s`,
                   } as CSSProperties
                 }

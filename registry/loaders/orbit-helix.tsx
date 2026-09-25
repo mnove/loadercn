@@ -7,6 +7,10 @@ export type OrbitHelixProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 export function OrbitHelix({
   size = 40,
   speed = 1.6,
@@ -39,7 +43,7 @@ export function OrbitHelix({
       >
         {Array.from({ length: 10 }, (_, row) => {
           const phase = row / 12
-          const restX = Math.cos(phase * Math.PI * 2) * 25
+          const restX = round(Math.cos(phase * Math.PI * 2)) * 25
           return (
             <g key={row} transform={`translate(50 ${14 + row * 8})`}>
               <line

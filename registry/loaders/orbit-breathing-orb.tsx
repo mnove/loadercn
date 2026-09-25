@@ -7,6 +7,10 @@ export type OrbitBreathingOrbProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 export function OrbitBreathingOrb({
   size = 40,
   speed = 3.2,
@@ -44,8 +48,8 @@ export function OrbitBreathingOrb({
             const latitude = 1 - (index + 0.5) / 28
             const radius = Math.sqrt(1 - latitude * latitude)
             const angle = index * 2.39996322973
-            const depth = Math.sin(angle) * radius
-            const x = Math.cos(angle) * radius * 35
+            const depth = round(Math.sin(angle)) * radius
+            const x = round(Math.cos(angle)) * radius * 35
             const y = latitude * 32.5 - depth * 13.3
             return (
               <circle

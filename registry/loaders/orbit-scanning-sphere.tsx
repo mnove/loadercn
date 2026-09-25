@@ -7,12 +7,16 @@ export type OrbitScanningSphereProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 // The scan follows a sphere's cross-section; CSS interpolates one sampled pass.
 const scanFrames = Array.from({ length: 25 }, (_, step) => {
   const progress = step / 24
   const latitude = progress * 2 - 1
   const width = Math.sqrt(Math.max(0, 1 - latitude * latitude))
-  const opacity = Math.sin(progress * Math.PI) * 0.5
+  const opacity = round(Math.sin(progress * Math.PI)) * 0.5
   return `${progress * 100}% { transform: translateY(${latitude * 38}px) scaleX(${width.toFixed(6)}); opacity: ${opacity.toFixed(6)}; }`
 }).join("\n")
 
@@ -53,8 +57,8 @@ export function OrbitScanningSphere({
             const latitude = 1 - (index + 0.5) / 28
             const radius = Math.sqrt(1 - latitude * latitude)
             const angle = index * 2.39996322973
-            const depth = Math.sin(angle) * radius
-            const x = Math.cos(angle) * radius * 38
+            const depth = round(Math.sin(angle)) * radius
+            const x = round(Math.cos(angle)) * radius * 38
             const y = latitude * 35 - depth * 14.44
             const phase = (y + 38) / 76
             return (

@@ -7,6 +7,10 @@ export type OrbitSearchingProps = ComponentProps<"span"> & {
   label?: string
 }
 
+// Browsers can disagree with Node in the last digit of trig results, which
+// breaks hydration. Rounding them keeps server and client markup identical.
+const round = (value: number) => Number(value.toFixed(6))
+
 // Sample the globe's turn once. Individual dots share the same path with
 // different latitudes and phases; no browser animation loop is needed.
 const turnFrames = Array.from({ length: 33 }, (_, step) => {
@@ -67,12 +71,12 @@ export function OrbitSearching({
                     "--orbit-searching-radius": `${depth * 38}px`,
                     "--orbit-searching-height": `${latitude * 35.5}px`,
                     "--orbit-searching-depth": depth,
-                    "--orbit-searching-rest-x": `${Math.cos(angle) * depth * 38}px`,
-                    "--orbit-searching-rest-y": `${latitude * 35.5 - Math.sin(angle) * depth * 38 * 0.36}px`,
+                    "--orbit-searching-rest-x": `${round(Math.cos(angle)) * depth * 38}px`,
+                    "--orbit-searching-rest-y": `${latitude * 35.5 - round(Math.sin(angle)) * depth * 38 * 0.36}px`,
                     "--orbit-searching-rest-alpha":
-                      0.5 + depth * Math.sin(angle) * 0.43,
+                      0.5 + depth * round(Math.sin(angle)) * 0.43,
                     "--orbit-searching-rest-scale":
-                      0.8 + depth * Math.sin(angle) * 0.2,
+                      0.8 + depth * round(Math.sin(angle)) * 0.2,
                     animationDelay: `${-phase * duration}s`,
                   } as CSSProperties
                 }

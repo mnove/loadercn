@@ -241,7 +241,7 @@ export function LoaderGallery({ items }: { items: LoaderItem[] }) {
                       type="button"
                       onClick={() => setSelected(item)}
                       aria-label={`View ${item.title} code and installation`}
-                      className="preview-surface relative flex h-52 w-full cursor-pointer items-center justify-center overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset sm:h-60"
+                      className="preview-surface relative flex h-52 w-full cursor-pointer items-center justify-center overflow-hidden outline-none [content-visibility:auto] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset sm:h-60"
                     >
                       <span className="absolute top-4 left-4 font-mono text-[9px] text-muted-foreground/70">
                         {String(items.indexOf(item) + 1).padStart(2, "0")}
