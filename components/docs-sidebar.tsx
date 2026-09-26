@@ -15,7 +15,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import type { LoaderSummary } from "@/lib/loader-items"
-import { CATEGORIES, CATEGORY_ICONS } from "@/lib/loaders"
+import { CATEGORIES, CATEGORY_ICONS, loaderComponents } from "@/lib/loaders"
 
 export function DocsSidebar({
   items,
@@ -60,6 +60,10 @@ export function DocsSidebar({
                     .filter((item) => item.category === category.id)
                     .map((item) => {
                       const href = `/docs/${item.name}`
+                      const Loader =
+                        loaderComponents[
+                          item.name as keyof typeof loaderComponents
+                        ]
                       return (
                         <SidebarMenuItem key={item.name}>
                           <SidebarMenuButton
@@ -67,6 +71,16 @@ export function DocsSidebar({
                             isActive={pathname === href}
                             render={link(href)}
                           >
+                            <span
+                              aria-hidden="true"
+                              className="flex size-5 shrink-0 items-center justify-center [content-visibility:auto]"
+                            >
+                              <Loader
+                                size={
+                                  item.name === "classic-progress" ? 20 : 16
+                                }
+                              />
+                            </span>
                             <span>{item.title}</span>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
