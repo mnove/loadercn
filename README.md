@@ -1,5 +1,12 @@
 # loadercn
 
+<a href="https://loadercn.vercel.app">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/cover-dark.png" />
+    <img alt="loadercn: animated loaders for shadcn/ui" src=".github/assets/cover-light.png" />
+  </picture>
+</a>
+
 Animated React loaders for shadcn/ui, in five families: grid, orbital, classic, network, and chart. Each loader is a single file that depends only on React, inherits text color, and respects `prefers-reduced-motion`.
 
 Browse, preview, and copy them at https://loadercn.vercel.app.
