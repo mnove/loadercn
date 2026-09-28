@@ -95,10 +95,11 @@ export function OrbitAtom({
         .orbit-atom-loader-system { position: relative; width: 100%; height: 100%; }
         .orbit-atom-loader-track { position: absolute; border-radius: 50%; }
         .orbit-atom-loader-rotor { position: absolute; inset: 0; animation: orbit-atom-loader-motion var(--loader-duration) linear infinite; }
-        .orbit-atom-loader-rotor > span { position: absolute; top: 0; left: 50%; width: 16%; aspect-ratio: 1; border-radius: 50%; background: currentColor; transform: translate(-50%, -50%); }
+        .orbit-atom-loader-rotor > span { position: absolute; top: 0; left: 50%; width: 16%; aspect-ratio: 1; border-radius: 50%; background: currentColor; transform: translate(-50%, -50%) rotate(0deg) scaleY(2.381); animation: orbit-atom-loader-electron var(--loader-duration) linear infinite; animation-delay: inherit; animation-direction: inherit; }
         .orbit-atom-loader-core { position: absolute; width: 17%; height: 17%; background: currentColor; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
         @keyframes orbit-atom-loader-motion { to { transform: rotate(360deg); } }
-        @media (prefers-reduced-motion: reduce) { .orbit-atom-loader-rotor { animation: none; transform: rotate(35deg); } }
+        @keyframes orbit-atom-loader-electron { to { transform: translate(-50%, -50%) rotate(-360deg) scaleY(2.381); } }
+        @media (prefers-reduced-motion: reduce) { .orbit-atom-loader-rotor { animation: none; transform: rotate(35deg); } .orbit-atom-loader-rotor > span { animation: none; transform: translate(-50%, -50%) rotate(-35deg) scaleY(2.381); } }
       `}</style>
     </span>
   )
