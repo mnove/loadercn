@@ -7,7 +7,13 @@
   </picture>
 </a>
 
-Animated React loaders for shadcn/ui, in five families: grid, orbital, classic, network, and chart. Each loader is a single file that depends only on React, inherits text color, and respects `prefers-reduced-motion`.
+Animated React loaders for shadcn/ui, in five families: grid, orbital, classic, network, and chart. Each loader is a single self-contained file:
+
+- **Zero dependencies.** Only React. No animation library, no Tailwind, no `cn`.
+- **Pure CSS animation.** Keyframes ship in an inline `<style>` tag, with no JavaScript animation loop.
+- **Works in any React app.** You don't need Tailwind or shadcn, and nearly every loader is server-component safe.
+- **Themeable.** Loaders draw with `currentColor`, so they inherit your text color.
+- **Accessible.** Each has a `role="status"` label and respects `prefers-reduced-motion`.
 
 Browse, preview, and copy them at https://loadercn.vercel.app.
 
